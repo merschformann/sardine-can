@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

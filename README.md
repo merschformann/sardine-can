@@ -10,8 +10,8 @@ In short, the code mainly derives from my (Marius Merschformann) master thesis (
 
 SC comes with a very simple RESTful service. The steps below will quickly set it up:
 
-1. git clone https://github.com/merschformann/sardinecan.git
-1. cd SC.Service
+1. git clone https://github.com/merschformann/sardine-can.git
+1. cd sardine-can/SC.Service/
 1. ./docker-build.sh
 1. ./docker-run.sh
 
