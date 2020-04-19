@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Atto.LinearWrap" Version="0.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
+    <ProjectReference Include="..\SC.Preprocessing\SC.Preprocessing.csproj" />
+  </ItemGroup>
+
+</Project>

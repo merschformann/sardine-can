@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Instance Version="1.0">
+	<Containers>
+		<Container ID="0">
+			<Cube Length="8" Width="3" Height="5.5">
+				<Point X="0" Y="0" Z="0"/>
+			</Cube>
+		</Container>
+	</Containers>
+	<Pieces>
+		<Piece ID="1" ForbiddenOrientations="" Material="Default" Stackable="True">
+			<Components>
+				<Cubes>
+					<Cube Length="7" Width="3" Height="1">
+						<Point X="0" Y="0" Z="0"/>
+					</Cube>
+					<Cube Length="2" Width="3" Height="2.5">
+						<Point X="0" Y="0" Z="1"/>
+					</Cube>
+				</Cubes>
+			</Components>
+		</Piece>
+		<Piece ID="2" ForbiddenOrientations="" Material="Default" Stackable="True">
+			<Components>
+				<Cubes>
+					<Cube Length="8" Width="3" Height="2">
+						<Point X="0" Y="0" Z="0"/>
+					</Cube>
+					<Cube Length="2" Width="3" Height="2.5">
+						<Point X="3" Y="0" Z="2"/>
+					</Cube>
+				</Cubes>
+			</Components>
+		</Piece>
+		<Piece ID="3" ForbiddenOrientations="" Material="Default" Stackable="True">
+			<Components>
+				<Cubes>
+					<Cube Length="3" Width="3" Height="0.5">
+						<Point X="0" Y="0" Z="0"/>
+					</Cube>
+					<Cube Length="2.75" Width="3" Height="0.5">
+						<Point X="0.25" Y="0" Z="0.5"/>
+					</Cube>
+					<Cube Length="2.5" Width="3" Height="0.5">
+						<Point X="0.5" Y="0" Z="1"/>
+					</Cube>
+					<Cube Length="2.25" Width="3" Height="0.5">
+						<Point X="0.75" Y="0" Z="1.5"/>
+					</Cube>
+					<Cube Length="2" Width="3" Height="0.5">
+						<Point X="1" Y="0" Z="2"/>
+					</Cube>
+					<Cube Length="1.75" Width="3" Height="0.5">
+						<Point X="1.25" Y="0" Z="2.5"/>
+					</Cube>
+				</Cubes>
+			</Components>
+		</Piece>
+	</Pieces>
+</Instance>

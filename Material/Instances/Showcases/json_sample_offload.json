@@ -1,0 +1,224 @@
+{
+    "name": "jsonTestOffload",
+    "containers": [
+        {
+            "id": 0,
+            "length": 600,
+            "width": 400,
+            "height": 300
+        },
+        {
+            "id": 1,
+            "length": 600,
+            "width": 400,
+            "height": 300
+        },
+        {
+            "id": 2,
+            "length": 300,
+            "width": 400,
+            "height": 250
+        }
+    ],
+    "pieces": [
+        {
+            "id": 0,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 1
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 304,
+                    "width": 336,
+                    "height": 140
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 0
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 122,
+                    "width": 245,
+                    "height": 367
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 0
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 392,
+                    "width": 145,
+                    "height": 152
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 0
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 271,
+                    "width": 214,
+                    "height": 393
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 0
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 351,
+                    "width": 398,
+                    "height": 287
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 0
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 351,
+                    "width": 245,
+                    "height": 287
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 1
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 294,
+                    "width": 234,
+                    "height": 376
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 0
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 241,
+                    "width": 78,
+                    "height": 115
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 1
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 154,
+                    "width": 395,
+                    "height": 274
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "flags": [
+                {
+                    "flagId": 0,
+                    "flagValue": 1
+                }
+            ],
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 60,
+                    "width": 183,
+                    "height": 170
+                }
+            ]
+        }
+    ],
+    "rules": {
+        "flagRules": [
+            {
+                "flagId": 0,
+                "ruleType": 0,
+                "parameter": 0
+            }
+        ]
+    }
+}

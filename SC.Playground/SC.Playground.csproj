@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SC.ExecutionHandler\SC.ExecutionHandler.csproj" />
+    <ProjectReference Include="..\SC.Heuristics\SC.Heuristics.csproj" />
+    <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
+    <ProjectReference Include="..\SC.Service\SC.Service.csproj" />
+    <ProjectReference Include="..\SC.Toolbox\SC.Toolbox.csproj" />
+    <ProjectReference Include="..\SC.Linear\SC.Linear.csproj" />
+  </ItemGroup>
+
+</Project>

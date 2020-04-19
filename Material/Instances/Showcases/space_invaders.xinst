@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Instance Version="1.1">
+  <Containers>
+    <Container ID="1">
+      <Cube Length="11" Width="3" Height="11">
+        <Point X="0" Y="0" Z="0" />
+      </Cube>
+    </Container>
+  </Containers>
+  <Pieces>
+    <Piece ID="1" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2" Width="1" Height="1">
+            <Point X="3" Y="0" Z="0" />
+          </Cube>
+          <Cube Length="2" Width="1" Height="1">
+            <Point X="6" Y="0" Z="0" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="3">
+            <Point X="0" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="3">
+            <Point X="10" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="2">
+            <Point X="1" Y="0" Z="3" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="2">
+            <Point X="9" Y="0" Z="3" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="5">
+            <Point X="2" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="5">
+            <Point X="8" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="5" Width="1" Height="2">
+            <Point X="3" Y="0" Z="2" />
+          </Cube>
+          <Cube Length="3" Width="1" Height="1">
+            <Point X="4" Y="0" Z="4" />
+          </Cube>
+          <Cube Length="5" Width="1" Height="1">
+            <Point X="3" Y="0" Z="5" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="3" Y="0" Z="6" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="7" Y="0" Z="6" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="2" Y="0" Z="7" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="8" Y="0" Z="7" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="1" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2" Width="1" Height="1">
+            <Point X="3" Y="0" Z="0" />
+          </Cube>
+          <Cube Length="2" Width="1" Height="1">
+            <Point X="6" Y="0" Z="0" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="3">
+            <Point X="0" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="3">
+            <Point X="10" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="2">
+            <Point X="1" Y="0" Z="3" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="2">
+            <Point X="9" Y="0" Z="3" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="5">
+            <Point X="2" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="5">
+            <Point X="8" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="5" Width="1" Height="2">
+            <Point X="3" Y="0" Z="2" />
+          </Cube>
+          <Cube Length="3" Width="1" Height="1">
+            <Point X="4" Y="0" Z="4" />
+          </Cube>
+          <Cube Length="5" Width="1" Height="1">
+            <Point X="3" Y="0" Z="5" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="3" Y="0" Z="6" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="7" Y="0" Z="6" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="2" Y="0" Z="7" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="8" Y="0" Z="7" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="1" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2" Width="1" Height="1">
+            <Point X="3" Y="0" Z="0" />
+          </Cube>
+          <Cube Length="2" Width="1" Height="1">
+            <Point X="6" Y="0" Z="0" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="3">
+            <Point X="0" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="3">
+            <Point X="10" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="2">
+            <Point X="1" Y="0" Z="3" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="2">
+            <Point X="9" Y="0" Z="3" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="5">
+            <Point X="2" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="5">
+            <Point X="8" Y="0" Z="1" />
+          </Cube>
+          <Cube Length="5" Width="1" Height="2">
+            <Point X="3" Y="0" Z="2" />
+          </Cube>
+          <Cube Length="3" Width="1" Height="1">
+            <Point X="4" Y="0" Z="4" />
+          </Cube>
+          <Cube Length="5" Width="1" Height="1">
+            <Point X="3" Y="0" Z="5" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="3" Y="0" Z="6" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="7" Y="0" Z="6" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="2" Y="0" Z="7" />
+          </Cube>
+          <Cube Length="1" Width="1" Height="1">
+            <Point X="8" Y="0" Z="7" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+  </Pieces>
+  <Solutions />
+</Instance>

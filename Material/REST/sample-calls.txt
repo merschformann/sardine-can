@@ -1,0 +1,200 @@
+GET http://localhost:5000/packing/calculations HTTP/1.1
+
+###
+
+GET http://localhost:5000/packing/calculations/0 HTTP/1.1
+
+###
+
+GET http://localhost:5000/packing/calculations/0/status HTTP/1.1
+
+###
+
+GET http://localhost:5000/packing/calculations/0/solution HTTP/1.1
+
+###
+
+POST http://localhost:5000/packing/calculations HTTP/1.1
+content-type: application/json
+
+{
+    "priority": 3,
+    "configuration": {
+        "Name": null,
+        "Type": 0,
+        "TimeLimitInSeconds": 60,
+        "HandleGravity": false,
+        "HandleCompatibility": false,
+        "HandleStackability": false,
+        "HandleRotatability": false,
+        "HandleForbiddenOrientations": false,
+        "Seed": 0,
+        "ThreadLimit": 0,
+        "MarkTuning": null,
+        "MarkTetris": null,
+        "OutputAdditionalInformation": false,
+        "Goal": 0,
+        "SolverToUse": 0,
+        "PieceOrder": 2,
+        "Improvement": true,
+        "Tetris": false,
+        "BestFit": true,
+        "ExhaustiveEPProne": false,
+        "ScoreBasedOrder": false,
+        "MeritType": 1,
+        "RandomSalt": 0,
+        "NormalizationOrder": [0, 1, 2],
+        "StagnationDistance": 3000,
+        "MaximumPercentageOfStoreModification": 2.3622753818267688,
+        "InitialMaximumPercentageOfStoreModification": 0.9173096014024229,
+        "PossibleSwaps": 4,
+        "MaxSwaps": 5,
+        "LongTermScoreReInitDistance": 2001,
+        "InflateAndReplaceInsertion": false,
+        "WorkerThreads": 0,
+        "PushInsertionVIDs": [8, 7, 6, 5, 4, 3, 2, 1]
+    },
+    "instance": {
+        "name": "testinstance",
+        "containers": [
+            {
+                "id": 0,
+                "length": 600,
+                "width": 400,
+                "height": 300
+            }
+        ],
+        "pieces": [
+            {
+                "id": 0,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 304,
+                        "width": 336,
+                        "height": 318
+                    }
+                ]
+            },
+            {
+                "id": 1,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 245,
+                        "width": 122,
+                        "height": 245
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 367,
+                        "width": 204,
+                        "height": 392
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 145,
+                        "width": 152,
+                        "height": 213
+                    }
+                ]
+            },
+            {
+                "id": 4,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 271,
+                        "width": 214,
+                        "height": 393
+                    }
+                ]
+            },
+            {
+                "id": 5,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 60,
+                        "width": 351,
+                        "height": 398
+                    }
+                ]
+            },
+            {
+                "id": 6,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 287,
+                        "width": 160,
+                        "height": 335
+                    }
+                ]
+            },
+            {
+                "id": 7,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 346,
+                        "width": 397,
+                        "height": 61
+                    }
+                ]
+            },
+            {
+                "id": 8,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 294,
+                        "width": 234,
+                        "height": 376
+                    }
+                ]
+            },
+            {
+                "id": 9,
+                "cubes": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "length": 290,
+                        "width": 241,
+                        "height": 78
+                    }
+                ]
+            }
+        ]
+    }
+}

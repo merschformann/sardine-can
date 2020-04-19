@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.Json.Serialization;
+
+namespace SC.ObjectModel.IO.Json
+{
+    /// <summary>
+    /// JSON representation of piece.
+    /// </summary>
+    public class JsonPiece
+    {
+        [JsonPropertyName("id")]
+        public int ID { get; set; }
+        [JsonPropertyName("flags")]
+        public List<JsonFlag> Flags { get; set; }
+        [JsonPropertyName("cubes")]
+        public List<JsonCube> Cubes { get; set; }
+    }
+}

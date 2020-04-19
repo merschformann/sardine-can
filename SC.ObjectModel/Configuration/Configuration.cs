@@ -1,0 +1,487 @@
+﻿using SC.ObjectModel.Additionals;
+using SC.ObjectModel.Configuration;
+using SC.ObjectModel.Interfaces;
+using SC.Toolbox;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace SC.ObjectModel.Configuration
+{
+    /// <summary>
+    /// The basic configuration class
+    /// </summary>
+    public class Configuration
+    {
+        #region Default values constructor
+
+        /// <summary>
+        /// Creates a new configuration
+        /// </summary>
+        public Configuration() { }
+
+        /// <summary>
+        /// Creates a new configuration
+        /// </summary>
+        /// <param name="method">The method to use</param>
+        /// <param name="handleTetris">Indicates whether to respect tetris pieces (applies for some heuristics)</param>
+        public Configuration(MethodType method, bool handleTetris)
+        {
+            Type = method;
+            TimeLimit = TimeSpan.MaxValue;
+            HandleGravity = true;
+            HandleCompatibility = true;
+            HandleStackability = true;
+            HandleRotatability = true;
+            HandleForbiddenOrientations = true;
+            Name = "Default";
+
+            if (method == MethodType.ALNS || method == MethodType.ExtremePointInsertion || method == MethodType.PushInsertion || method == MethodType.SpaceDefragmentation)
+            {
+                Tetris = true;
+                PieceOrder = PieceOrderType.VwH;
+                BestFit = true;
+                MeritType = MeritFunctionType.MEDXYZ;
+                Improvement = true;
+                ScoreBasedOrder = true;
+                RandomSalt = 0.1;
+                InflateAndReplaceInsertion = true;
+                NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
+                ExhaustiveEPProne = false;
+                StagnationDistance = 3000;
+                MaximumPercentageOfStoreModification = 1.0;
+                InitialMaximumPercentageOfStoreModification = 0.1;
+                PossibleSwaps = 1;
+                MaxSwaps = 4;
+                LongTermScoreReInitDistance = 1000;
+                WorkerThreads = Environment.ProcessorCount * 2;
+                PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
+
+                switch (method)
+                {
+                    case MethodType.ExtremePointInsertion:
+                        {
+                            if (handleTetris)
+                            {
+                                Tetris = true;
+                                PieceOrder = PieceOrderType.VwH;
+                                BestFit = false;
+                                MeritType = MeritFunctionType.MEDXYZ;
+                                Improvement = true;
+                                ScoreBasedOrder = true;
+                                RandomSalt = 0.08368586690516754;
+                                InflateAndReplaceInsertion = false;
+                                NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
+                                ExhaustiveEPProne = false;
+                                StagnationDistance = 3000;
+                                MaximumPercentageOfStoreModification = 4.276000422314785;
+                                InitialMaximumPercentageOfStoreModification = 0.12554562961303808;
+                                PossibleSwaps = 1;
+                                MaxSwaps = 8;
+                                LongTermScoreReInitDistance = 623;
+                                WorkerThreads = Environment.ProcessorCount * 2;
+                                PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
+                            }
+                            else
+                            {
+                                Tetris = false;
+                                PieceOrder = PieceOrderType.VwH;
+                                BestFit = true;
+                                MeritType = MeritFunctionType.MFV;
+                                Improvement = true;
+                                ScoreBasedOrder = false;
+                                RandomSalt = 0.030644342734285967;
+                                InflateAndReplaceInsertion = false;
+                                NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
+                                ExhaustiveEPProne = false;
+                                StagnationDistance = 3000;
+                                MaximumPercentageOfStoreModification = 2.3622753818267688;
+                                InitialMaximumPercentageOfStoreModification = 0.9173096014024229;
+                                PossibleSwaps = 4;
+                                MaxSwaps = 5;
+                                LongTermScoreReInitDistance = 2001;
+                                WorkerThreads = Environment.ProcessorCount * 2;
+                                PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
+                            }
+                        }
+                        break;
+                    case MethodType.SpaceDefragmentation:
+                        {
+                            Tetris = false;
+                            PieceOrder = PieceOrderType.HWL;
+                            BestFit = false;
+                            MeritType = MeritFunctionType.MEDXY;
+                            Improvement = true;
+                            ScoreBasedOrder = false;
+                            RandomSalt = 0.8866072829180582;
+                            InflateAndReplaceInsertion = true;
+                            NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
+                            ExhaustiveEPProne = false;
+                            StagnationDistance = 3000;
+                            MaximumPercentageOfStoreModification = 2.3622753818267688;
+                            InitialMaximumPercentageOfStoreModification = 1.0117912386757508;
+                            PossibleSwaps = 1;
+                            MaxSwaps = 7;
+                            LongTermScoreReInitDistance = 691;
+                            WorkerThreads = Environment.ProcessorCount * 2;
+                            PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
+                        }
+                        break;
+                    case MethodType.PushInsertion:
+                        {
+                            if (handleTetris)
+                            {
+                                Tetris = true;
+                                PieceOrder = PieceOrderType.V;
+                                BestFit = false;
+                                MeritType = MeritFunctionType.MEDXY;
+                                Improvement = true;
+                                ScoreBasedOrder = true;
+                                RandomSalt = 0.008158387839849155;
+                                InflateAndReplaceInsertion = false;
+                                NormalizationOrder = new DimensionMarker[3] { DimensionMarker.Z, DimensionMarker.X, DimensionMarker.Y };
+                                ExhaustiveEPProne = false;
+                                StagnationDistance = 3000;
+                                MaximumPercentageOfStoreModification = 3.708327203520489;
+                                InitialMaximumPercentageOfStoreModification = 0.01965795921601555;
+                                PossibleSwaps = 3;
+                                MaxSwaps = 4;
+                                LongTermScoreReInitDistance = 75;
+                                WorkerThreads = Environment.ProcessorCount * 2;
+                                PushInsertionVIDs = new int[] { 8, 7, 6, 4 };
+                            }
+                            else
+                            {
+                                Tetris = false;
+                                PieceOrder = PieceOrderType.HWL;
+                                BestFit = false;
+                                MeritType = MeritFunctionType.MEDXY;
+                                Improvement = true;
+                                ScoreBasedOrder = true;
+                                RandomSalt = 0.12794130221974132;
+                                InflateAndReplaceInsertion = false;
+                                NormalizationOrder = new DimensionMarker[3] { DimensionMarker.Z, DimensionMarker.Y, DimensionMarker.X };
+                                ExhaustiveEPProne = false;
+                                StagnationDistance = 3000;
+                                MaximumPercentageOfStoreModification = 4.934867626876022;
+                                InitialMaximumPercentageOfStoreModification = 0.06707718133633729;
+                                PossibleSwaps = 3;
+                                MaxSwaps = 5;
+                                LongTermScoreReInitDistance = 861;
+                                WorkerThreads = Environment.ProcessorCount * 2;
+                                PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
+                            }
+                        }
+                        break;
+                    case MethodType.ALNS:
+                        {
+                            if (handleTetris)
+                            {
+                                Tetris = true;
+                                PieceOrder = PieceOrderType.VwH;
+                                BestFit = false;
+                                MeritType = MeritFunctionType.MEDXYZ;
+                                Improvement = true;
+                                ScoreBasedOrder = true;
+                                RandomSalt = 0.08368586690516754;
+                                InflateAndReplaceInsertion = false;
+                                NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
+                                ExhaustiveEPProne = false;
+                                StagnationDistance = 3000;
+                                MaximumPercentageOfStoreModification = 4.276000422314785;
+                                InitialMaximumPercentageOfStoreModification = 0.12554562961303808;
+                                PossibleSwaps = 1;
+                                MaxSwaps = 8;
+                                LongTermScoreReInitDistance = 623;
+                                WorkerThreads = Environment.ProcessorCount * 2;
+                                PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
+                            }
+                            else
+                            {
+                                Tetris = false;
+                                PieceOrder = PieceOrderType.VwH;
+                                BestFit = true;
+                                MeritType = MeritFunctionType.MFV;
+                                Improvement = true;
+                                ScoreBasedOrder = false;
+                                RandomSalt = 0.030644342734285967;
+                                InflateAndReplaceInsertion = false;
+                                NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
+                                ExhaustiveEPProne = false;
+                                StagnationDistance = 3000;
+                                MaximumPercentageOfStoreModification = 2.3622753818267688;
+                                InitialMaximumPercentageOfStoreModification = 0.9173096014024229;
+                                PossibleSwaps = 4;
+                                MaxSwaps = 5;
+                                LongTermScoreReInitDistance = 2001;
+                                WorkerThreads = Environment.ProcessorCount * 2;
+                                PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
+                            }
+                        }
+                        break;
+                    case MethodType.FrontLeftBottomStyle:
+                    case MethodType.TetrisStyle:
+                    case MethodType.SpaceIndexed:
+                    default: throw new ArgumentException("Unknown method type: " + method.ToString());
+                }
+            }
+            else
+            {
+                Goal = OptimizationGoal.MaxUtilization;
+                SolverToUse = Solvers.Gurobi;
+            }
+        }
+
+        #endregion
+
+        #region Global stuff
+
+        /// <summary>
+        /// Name of the configuration
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The type of the method to use
+        /// </summary>
+        public MethodType Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timelimit for the solution process
+        /// </summary>
+        [XmlIgnore, JsonIgnore]
+        public TimeSpan TimeLimit { get; set; }
+        /// <summary>
+        /// The timelimit for the solution process in seconds
+        /// </summary>
+        public double TimeLimitInSeconds { get { return TimeLimit.TotalSeconds; } set { TimeLimit = TimeSpan.FromSeconds(value); } }
+
+        /// <summary>
+        /// Indicates whether to respect the gravity contraint or not
+        /// </summary>
+        public bool HandleGravity { get; set; }
+
+        /// <summary>
+        /// Indicates whether to respect the compatibility of pieces when loading them into one container or not
+        /// </summary>
+        public bool HandleCompatibility { get; set; }
+
+        /// <summary>
+        /// Indicates whether to respect the stackability of pieces or not
+        /// </summary>
+        public bool HandleStackability { get; set; }
+
+        /// <summary>
+        /// Indicates whether to enable rotations or use only the default orientation
+        /// </summary>
+        public bool HandleRotatability { get; set; }
+
+        /// <summary>
+        /// Indicates wheter to restrict the orientations of a piece to the feasible ones or not
+        /// </summary>
+        public bool HandleForbiddenOrientations { get; set; }
+
+        /// <summary>
+        /// The seed for any kind of randomization
+        /// </summary>
+        public int Seed { get; set; }
+
+        /// <summary>
+        /// Defines a limit for the number of parallel threads allowed.
+        /// </summary>
+        public int ThreadLimit { get; set; }
+
+        /// <summary>
+        /// An optional marking or identifier to attach to the configuration
+        /// </summary>
+        public string MarkTuning { get; set; }
+
+        /// <summary>
+        /// An optional marking or identifier to attach to the configuration
+        /// </summary>
+        public string MarkTetris { get; set; }
+
+        /// <summary>
+        /// Indicates whether to output additional information about a solution
+        /// </summary>
+        public bool OutputAdditionalInformation { get; set; }
+
+        #endregion
+
+        #region Intermediate fields
+
+        /// <summary>
+        /// Gets or sets basic log function to which all log messages get submitted
+        /// </summary>
+        [XmlIgnore]
+        public Action<string> Log;
+
+        /// <summary>
+        /// Gets or sets the function which submits the current best solution
+        /// </summary>
+        [XmlIgnore]
+        public Action<COSolution, bool, string, string> SubmitSolution;
+
+        /// <summary>
+        /// Used to log the current status of the solution. The first element is the time-stamp and the second one the incumbent value.
+        /// </summary>
+        [XmlIgnore]
+        public Action<double, double> LogSolutionStatus;
+
+        /// <summary>
+        /// The time-stamp of the start of the solve process
+        /// </summary>
+        [XmlIgnore]
+        public DateTime StartTimeStamp;
+
+        #endregion
+
+        #region Transformer related properties
+
+        /// <summary>
+        /// Defines the optimization goal
+        /// </summary>
+        public OptimizationGoal Goal { get; set; }
+
+        /// <summary>
+        /// Defines the solver to use
+        /// </summary>
+        public Solvers SolverToUse { get; set; }
+
+        #endregion
+
+        #region Heuristic related properties
+
+        /// <summary>
+        /// Defines the initial order of the pieces
+        /// </summary>
+        public PieceOrderType PieceOrder { get; set; }
+
+        /// <summary>
+        /// Defines whether to improve the initial solution
+        /// </summary>
+        public bool Improvement { get; set; }
+
+        /// <summary>
+        /// Enables or disables Tetris-level insertion
+        /// </summary>
+        public bool Tetris { get; set; }
+
+        /// <summary>
+        /// Defines whether to use the best available insertion point or the first valid one
+        /// </summary>
+        public bool BestFit { get; set; }
+
+        /// <summary>
+        /// Deletes EPs more extensively
+        /// </summary>
+        public bool ExhaustiveEPProne { get; set; }
+
+        /// <summary>
+        /// Defines whether to use score-based ordering of pieces or just random-order
+        /// </summary>
+        public bool ScoreBasedOrder { get; set; }
+
+        /// <summary>
+        /// Defines the merit function when best-fit is active
+        /// </summary>
+        public MeritFunctionType MeritType { get; set; }
+
+        /// <summary>
+        /// Defines a random salt applied to the score-based ordering
+        /// </summary>
+        public double RandomSalt { get; set; }
+
+        /// <summary>
+        /// Defines the normalization order (SD and PI only)
+        /// </summary>
+        public DimensionMarker[] NormalizationOrder { get; set; }
+
+        /// <summary>
+        /// Defines the iteration count after which the improvement-phase terminates if not better solution is found
+        /// </summary>
+        public int StagnationDistance { get; set; }
+
+        /// <summary>
+        /// p of GASP
+        /// </summary>
+        public double MaximumPercentageOfStoreModification { get; set; }
+
+        /// <summary>
+        /// s (overlined) of GASP
+        /// </summary>
+        public double InitialMaximumPercentageOfStoreModification { get; set; }
+
+        /// <summary>
+        /// k of GASP
+        /// </summary>
+        public int PossibleSwaps { get; set; }
+
+        /// <summary>
+        /// k_max of GASP
+        /// </summary>
+        public int MaxSwaps { get; set; }
+
+        /// <summary>
+        /// The iteration count after which a long term re-initialization is done if no improvement was found
+        /// </summary>
+        public int LongTermScoreReInitDistance { get; set; }
+
+        /// <summary>
+        /// Activates the insertion by replacing other pieces (SD only)
+        /// </summary>
+        public bool InflateAndReplaceInsertion { get; set; }
+
+        /// <summary>
+        /// The number of worker-threads used to search for improved solutions in parallel
+        /// </summary>
+        public int WorkerThreads { get; set; }
+
+        /// <summary>
+        /// The vertex IDs of the container at which PI tries to insert pieces. The order is mandatory.
+        /// </summary>
+        public int[] PushInsertionVIDs { get; set; }
+
+        #endregion
+
+        #region I/O
+
+        /// <summary>
+        /// Default extension for configurations
+        /// </summary>
+        public const string DEFAULT_EXTENSION = ".xconf";
+
+        /// <summary>
+        /// Writes the config to the specified file.
+        /// </summary>
+        /// <param name="path">The path to the file. (default extension will be added if missing)</param>
+        public void Write(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
+            if (!path.EndsWith(DEFAULT_EXTENSION)) { path = path + DEFAULT_EXTENSION; }
+            using (TextWriter sw = new StreamWriter(path))
+                serializer.Serialize(sw, this);
+        }
+
+        /// <summary>
+        /// Reads the config from the file.
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        /// <returns>The config</returns>
+        public static Configuration Read(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
+            Configuration config;
+            using (TextReader sr = new StreamReader(path))
+                config = (Configuration)serializer.Deserialize(sr);
+            return config;
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,430 @@
+﻿<Window x:Class="SC.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:HelixToolkit="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Core.Wpf"
+        Title="SardineCan" Height="800" Width="1465" Icon="Logo.ico">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBox" x:Key="myTextBox">
+                <Setter Property="Opacity" Value="0.25" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <HelixToolkit:HelixViewport3D Grid.RowSpan="4" Grid.ColumnSpan="3" Name="mainViewport" ClipToBounds="True" MouseDoubleClick="mainViewport_MouseDoubleClick" MouseUp="mainViewport_MouseUp" ShowViewCube="False">
+        </HelixToolkit:HelixViewport3D>
+        <DockPanel Background="{x:Null}" Grid.Column="2">
+            <StackPanel DockPanel.Dock="Top" Orientation="Vertical" VerticalAlignment="Top">
+                <ProgressBar x:Name="ProgressBarVolumeUtilization" Orientation="Horizontal" Width="80" Height="20" Margin="5" ToolTip="Shows the exact volume utilization of the containers in use"/>
+                <TextBlock x:Name="TextBlockSolutionTime" TextWrapping="Wrap" Text="0:00:00" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Margin="2" ToolTip="The runtime of the ongoing respectively last executed job"/>
+            </StackPanel>
+        </DockPanel>
+        <TabControl Grid.Column="0" TabStripPlacement="Top" Margin="2">
+            <TabItem Name="tabSimpleSolving" Header="Simple Solving" ToolTip="Execute showcases and single jobs">
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock Height="20" TextWrapping="Wrap" Text=" Goal: " VerticalAlignment="Center" Margin="2"/>
+                    <ComboBox x:Name="ComboBoxGoalSelectorSimple" Margin="2" VerticalAlignment="Center" Width="120" SelectedIndex="1" SelectedValuePath="Content" ToolTip="Select the optimization-goal">
+                        <ComboBoxItem>MinContainer</ComboBoxItem>
+                        <ComboBoxItem>MaxUtilization</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Height="20" TextWrapping="Wrap" Text=" Solver: " VerticalAlignment="Center" Margin="2"/>
+                    <ComboBox x:Name="ComboBoxSolverSelectorSimple" Margin="2" VerticalAlignment="Center" Width="120" SelectedIndex="1" SelectedValuePath="Content" ToolTip="Select the solver-engine to use when solving the model">
+                        <ComboBoxItem>Cplex</ComboBoxItem>
+                        <ComboBoxItem>Gurobi</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Height="20" TextWrapping="Wrap" Text=" Method: " VerticalAlignment="Center" Margin="2"/>
+                    <ComboBox x:Name="ComboBoxMethodSelectorSimple" Margin="2" VerticalAlignment="Center" Width="160" SelectedIndex="3" SelectedValuePath="Content" ToolTip="Select the method used for solving">
+                        <ComboBoxItem>FrontLeftBottomStyle</ComboBoxItem>
+                        <ComboBoxItem>TetrisStyle</ComboBoxItem>
+                        <ComboBoxItem>HybridStyle</ComboBoxItem>
+                        <ComboBoxItem>ExtremePointInsertion</ComboBoxItem>
+                        <ComboBoxItem>SpaceDefragmentation</ComboBoxItem>
+                        <ComboBoxItem>PushInsertion</ComboBoxItem>
+                        <ComboBoxItem>ALNS</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="ButtonLoadShowCase" Click="LoadShowCase" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Loads an instance from a file">
+                        <Image x:Name="ImageLoadShowCase" Width="20" Height="20" Source="data/icon_folder.png"></Image>
+                    </Button>
+                    <Button x:Name="ButtonSaveShowCase" Click="SaveShowCase" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Saves the current instance to a file">
+                        <Image x:Name="ImageSaveShowCase" Width="20" Height="20" Source="data/icon_disk.png"></Image>
+                    </Button>
+                    <Button x:Name="ButtonGenerateInstanceShortcut" Click="GenerateInstance" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Generates an instance with the specified parameters">
+                        <Image x:Name="ImageGenerateInstanceShortcut" Width="20" Height="20" Source="data/icon_generate.png"></Image>
+                    </Button>
+                    <Button x:Name="ButtonExecuteShowCase" Click="ExecuteShowCase" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Executes the specified method on the current instance">
+                        <Image x:Name="ImageExecuteShowCase" Width="20" Height="20" Source="data/icon_solve.png"></Image>
+                    </Button>
+                    <Button x:Name="ButtonExecuteShowCaseFast" Click="ExecuteShowCase" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Executes the specified method on the current instance quickly (disabled improvement / tetris handling / bestfit)">
+                        <Image x:Name="ImageExecuteShowCaseFast" Width="20" Height="20" Source="data/icon_solve_fast.png"></Image>
+                    </Button>
+                    <Button x:Name="ButtonCancelSimple" Click="Cancel" IsEnabled="False" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Cancels all ongoing progress (One click is sufficient)">
+                        <Image x:Name="ImageCancelSimple" Width="20" Height="20" Source="data/icon_cancel.png" Visibility="Hidden"/>
+                    </Button>
+                    <Button x:Name="ButtonValidateSimple" Click="Validate" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Validates the displayed solution">
+                        <Image x:Name="ImageValidateSimple" Width="20" Height="20" Source="data/icon_validate.png"></Image>
+                    </Button>
+                    <Button x:Name="ButtonResetCameraSimple" Click="ResetCamera" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Resets the camera to a default distance and position">
+                        <Image x:Name="ImageResetCameraSimple" Width="20" Height="20" Source="data/icon_camera.png"></Image>
+                    </Button>
+                </WrapPanel>
+            </TabItem>
+            <TabItem Name="TabPreprocessing" Header="Preprocessing" ToolTip="Choose Preprocessing Methods">
+                <StackPanel Orientation="Vertical">
+                    <GroupBox Header="Configuration" ToolTip="Configure a Preprocessing Method" Height="91">
+                        <WrapPanel Orientation="Vertical" Margin="0,0,0,-1">
+                            <WrapPanel Orientation="Horizontal">
+                                <ListBox x:Name="ListAvailPreproMethods"  Height="68" Width="322" Loaded="ListAvailPreproMethodsLoaded">
+                                </ListBox>
+                                <Button x:Name="ButtonAddPreproMethod" Height="24" Content="Add to List" Margin="5" Click="ButtonAddPreproMethod_Click"/>
+                                <Separator/>
+                            </WrapPanel>
+                        </WrapPanel>
+                    </GroupBox>
+                    <StackPanel Orientation="Horizontal">
+                        <GroupBox Header="Selected Preprocessing Methods" Height="222" Width="428">
+                            <WrapPanel Orientation="Horizontal">
+                                <TreeView Name="TreeSelectedPrep" Height="194" Width="326">
+                                </TreeView>
+                                <StackPanel Orientation="Vertical" Margin="5">
+                                    <Button Name="ButtonSaveConfiguration" Margin="2" Width="75" Click="ButtonMoveConfigurationSave_Click">
+                                        <WrapPanel Orientation="Horizontal">
+                                            <Image x:Name="ImageSaveConfiguration" Width="20" Height="20" Source="data/icon_disk.png" />
+                                            <TextBlock Height="20" TextWrapping="Wrap" Text="Save" VerticalAlignment="Center" Margin="2"/>
+                                        </WrapPanel>
+                                    </Button>
+                                    <Button Name="ButtonOpenConfiguration" Margin="2" Width="75" Click="ButtonMoveConfigurationOpen_Click">
+                                        <WrapPanel Orientation="Horizontal">
+                                            <Image x:Name="OpenSaveConfiguration" Width="20" Height="20" Source="data/icon_folder.png" />
+                                            <TextBlock Height="20" TextWrapping="Wrap" Text="Open" VerticalAlignment="Center" Margin="2"/>
+                                        </WrapPanel>
+                                    </Button>
+                                    <Button Name="ButtonMoveConfigurationUp" Content="Up" Margin="2" Width="75" Click="ButtonMoveConfigurationUp_Click"/>
+                                    <Button Name="ButtonMoveConfigurationDown" Content="Down" Margin="2" Width="75" Click="ButtonMoveConfigurationDown_Click"/>
+                                    <Button Name="ButtonRemoveConfiguration" Content="Remove" Margin="2" Width="75" Click="ButtonRemoveConfiguration_Click"/>
+                                    <Button x:Name="ButtonResetPreprocessing" Content="Clear" Margin="2" Click="ButtonResetPreprocessing_Click"/>
+                                </StackPanel>
+                            </WrapPanel>
+                        </GroupBox>
+                        <GroupBox Header="Apply Preprocessing">
+                            <WrapPanel Orientation="Vertical">
+                                <Button x:Name="ButtonApplyPreprocessing" Content="Apply Preprocessing" Margin="5" Click="ButtonApplyPreprocessing_Click"/>
+                                <Button x:Name="ButtonTransformInstanceBack" Content="Transform to original Instance" Margin="5" Click="ButtonTransformInstanceBack_Click"/>
+                            </WrapPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="tabGenerator" Header="Generator" ToolTip="Generates instances according to the specified parameters">
+                <StackPanel Orientation="Vertical">
+                    <GroupBox Header="Container">
+                        <WrapPanel Orientation="Horizontal" Margin="2">
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Container: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="1" Name="BoxContainerCountSimple" ToolTip="The number of containers to generate"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="MinSize: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="10" Name="BoxContainerMinSizeSimple" ToolTip="The minimal side-length of a container"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="MaxSize: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="10" Name="BoxContainerMaxSizeSimple" ToolTip="The maximal side-length of a container"/>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Container (realistic)">
+                        <WrapPanel Orientation="Horizontal" Margin="2">
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="LD3: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="1" Name="BoxLD3CountSimple" ToolTip="The number of LD3 containers to generate"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="AKW: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="1" Name="BoxAKWCountSimple" ToolTip="The number of AKW containers to generate"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="AMP: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="0" Name="BoxAMPCountSimple" ToolTip="The number of AMP containers to generate"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="RKN: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="0" Name="BoxRKNCountSimple" ToolTip="The number of RKN containers to generate"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="AMJ: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="0" Name="BoxAMJCountSimple" ToolTip="The number of AMJ containers to generate"/>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Pieces">
+                        <WrapPanel Orientation="Horizontal" Margin="2">
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Pieces: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="20" Name="BoxPieceCountSimple" ToolTip="The number of pieces to generate"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="MinSize: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="2" Name="BoxMinSizeSimple" ToolTip="The minimal side-length of a piece"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="MaxSize: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="5" Name="BoxMaxSizeSimple" ToolTip="The maximal side-length of a piece"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="MinEquals: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="2" Name="BoxMinEqualsSimple" ToolTip="The minimal number of equal pieces generated in a row"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="MaxEquals: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="4" Name="BoxMaxEqualsSimple" ToolTip="The maximal number of equal pieces generated in a row"/>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Tetris-pieces">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="2">
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="Box-weight: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="20" Text="1" Name="BoxTetrisShapeWeightBox" ToolTip="The weight for generating a box shaped piece"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="L-weight: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="20" Text="1" Name="BoxTetrisShapeWeightL" ToolTip="The weight for generating a L shaped piece"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="T-weight: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="20" Text="1" Name="BoxTetrisShapeWeightT" ToolTip="The weight for generating a T shaped piece"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="U-weight: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="20" Text="1" Name="BoxTetrisShapeWeightU" ToolTip="The weight for generating a U shaped piece"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="Thickness (L): " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="25" Text="0.2" Name="BoxTetrisLengthBreakL" ToolTip="The interior break that determines the detailed shape of the piece (a small value causes small clippings and a big value big ones [0,1])"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="Thickness (T): " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="25" Text="0.5" Name="BoxTetrisLengthBreakT" ToolTip="The interior break that determines the detailed shape of the piece (a small value causes small clippings and a big value big ones [0,1])"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="Thickness (U): " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="25" Text="0.5" Name="BoxTetrisLengthBreakU" ToolTip="The interior break that determines the detailed shape of the piece (a small value causes small clippings and a big value big ones [0,1])"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="General">
+                        <WrapPanel Orientation="Horizontal" Margin="2">
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Rounding: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="25" Text="0" Name="BoxRoundingSimple" ToolTip="The rounding to apply to all lengths"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Seed: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="25" Text="0" Name="BoxSeedSimple" ToolTip="The seed used for randomized generation"/>
+                            <Label Content="Count"/>
+                            <TextBox Height="22" Name="InstanceCount" TextWrapping="Wrap" Text="1" Width="25"/>
+                            <CheckBox x:Name="CheckBoxTetrisSimple" VerticalAlignment="Center" Margin="2" IsChecked="False" ToolTip="Defines whether to generate tetris pieces or only simple boxes">
+                                Tetris
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxRealisticContainers" VerticalAlignment="Center" Margin="2" IsChecked="False" ToolTip="Defines whether to generate realistic containers like the LD3 or completely randomized ones">
+                                Realistic
+                            </CheckBox>
+                            <Button x:Name="ButtonGenerateInstanceSet" Click="GenerateInstances" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Generates a set of multiple instances with the specified parameters">
+                                <Image x:Name="ImageGenerateInstanceSet" Width="20" Height="20" Source="data/icon_generate_set.png"></Image>
+                            </Button>
+                            <Button x:Name="ButtonGenerateInstance" Click="GenerateInstance" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Generates an instance with the specified parameters">
+                                <Image x:Name="ImageGenerateInstance" Width="20" Height="20" Source="data/icon_generate.png"></Image>
+                            </Button>
+                            <Button x:Name="ButtonSaveGenerator" Click="SaveShowCase" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Saves the current instance to a file">
+                                <Image x:Name="ImageSaveGenerator" Width="20" Height="20" Source="data/icon_disk.png"></Image>
+                            </Button>
+                        </WrapPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="tabEvaluation" Header="Evaluation" ToolTip="Execute small evaluations">
+                <StackPanel Orientation="Vertical">
+                    <GroupBox Header="Classic Evaluation">
+                        <WrapPanel Orientation="Vertical" Margin="2">
+                            <WrapPanel Orientation="Horizontal" Margin="2">
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="ContainerMin: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="1" Name="BoxContainerMinEvaluation" ToolTip="The starting number of containers to generate"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="ContainerMax: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="1" Name="BoxContainerMaxEvaluation" ToolTip="The ending number of containers to generate"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="MinSize: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="10" Name="BoxContainerMinSizeEvaluation" ToolTip="The minimal side-length of a container"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="MaxSize: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="10" Name="BoxContainerMaxSizeEvaluation" ToolTip="The maximal side-length of a container"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="Pieces: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="10" Name="BoxPieceCountEvaluation" ToolTip="The maximal number of pieces to generate"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="MinSize: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="1" Name="BoxMinSizeEvaluation" ToolTip="The minimal side-length of a piece"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="MaxSize: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="4" Name="BoxMaxSizeEvaluation" ToolTip="The maximal side-length of a piece"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="MinEquals: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="1" Name="BoxMinEqualsEvaluation" ToolTip="The minimal number of equal pieces generated in a row"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="MaxEquals: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="1" Name="BoxMaxEqualsEvaluation" ToolTip="The maximal number of equal pieces generated in a row"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="Rounding: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="0" Name="BoxRoundingEvaluation" ToolTip="The rounding to apply to all lengths"/>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text=" Goal: " VerticalAlignment="Center" Margin="2"/>
+                            </WrapPanel>
+                            <WrapPanel Orientation="Horizontal" Margin="2">
+                                <ComboBox x:Name="ComboBoxGoalSelectorEvaluation" Margin="2" VerticalAlignment="Center" Width="120" SelectedIndex="1" ToolTip="Defines the optimization-goal">
+                                    <ComboBoxItem>MinContainer</ComboBoxItem>
+                                    <ComboBoxItem>MaxUtilization</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text=" Solver: " VerticalAlignment="Center" Margin="2"/>
+                                <ComboBox x:Name="ComboBoxSolverSelectorEvaluation" Margin="2" VerticalAlignment="Center" Width="120" SelectedIndex="1" ToolTip="Select the solver-engine to use when solving the model">
+                                    <ComboBoxItem>CPLEX</ComboBoxItem>
+                                    <ComboBoxItem>Gurobi</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text=" Method: " VerticalAlignment="Center" Margin="2"/>
+                                <ComboBox x:Name="ComboBoxMethodSelectorEvaluation" Margin="2" VerticalAlignment="Center" Width="160" SelectedIndex="0" ToolTip="Select the method to evaluate">
+                                    <ComboBoxItem>FrontLeftBottomStyle</ComboBoxItem>
+                                    <ComboBoxItem>TetrisStyle</ComboBoxItem>
+                                    <ComboBoxItem>ExtremePointInsertion</ComboBoxItem>
+                                    <ComboBoxItem>SpaceDefragmentation</ComboBoxItem>
+                                    <ComboBoxItem>PushInsertion</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="SeedPasses: " VerticalAlignment="Center" Margin="2"/>
+                                <TextBox Height="20" Width="50" Text="1" Name="BoxSeedPassesEvaluation" ToolTip="The number of passes for the same values but generating with a different random-seed"/>
+                                <Button x:Name="ButtonExecuteEvaluation" Click="ExecuteEvaluation" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Starts the evaluation">
+                                    <Image x:Name="ImageExecuteEvaluation" Width="20" Height="20" Source="data/icon_clipboard.png"></Image>
+                                </Button>
+                                <Button x:Name="ButtonCancelEvaluation" Click="Cancel" IsEnabled="False" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Cancels all ongoing progress (One click is sufficient)">
+                                    <Image x:Name="ImageCancelEvaluation" Width="20" Height="20" Source="data/icon_cancel.png" Visibility="Hidden"/>
+                                </Button>
+                            </WrapPanel>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Folder Evaluation of the settings in Preprocessing and Simple Solving Tab">
+                        <WrapPanel Margin="2,2,147,2" Orientation="Horizontal">
+                            <TextBox Name="EvalutationFolder" HorizontalAlignment="Left" Margin="2" Height="23" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="313"/>
+                            <Button Content="Choose Folder..." Width="111" Margin="2" Click="ButtonFolderChoose"/>
+                            <CheckBox Name="CbxPreprocessingFolderEvaluation" Content="Apply Preprocessing" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="20 2" />
+                            <CheckBox Name="CbxPreprocessingDetail" Content="Detailed Log" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="20 2" />
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Timeout in s: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Name="EvalutationFolderTimeOut" HorizontalAlignment="Left" Margin="2" Height="23" TextWrapping="NoWrap" Text="300" VerticalAlignment="Top" Width="76"/>
+                            <Button x:Name="ButtonExecuteFolderEvaluation" Click="ExecuteFolderEvaluation" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Starts the evaluation">
+                                <Image x:Name="ImgButtonExecuteFolderEvaluation" Width="20" Height="20" Source="data/icon_solve.png" Margin="10 0"></Image>
+                            </Button>
+                            <Button x:Name="ButtonExecuteFolderEvaluationCancel" Click="StopFolderEvaluation" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Stops the evaluation">
+                                <Image x:Name="ImgButtonExecuteFolderEvaluationCancel" Width="20" Height="20" Source="data/icon_cancel.png" Visibility="Hidden"></Image>
+                            </Button>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Homogeneous piece filling">
+                        <WrapPanel Margin="2" Orientation="Horizontal">
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Length: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="30" Text="600" Name="BoxFillContainerLength" ToolTip="The length of the container to fill"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Width: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="30" Text="400" Name="BoxFillContainerWidth" ToolTip="The width of the container to fill"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Height: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="30" Text="330" Name="BoxFillContainerHeight" ToolTip="The height of the container to fill"/>
+                            <Button x:Name="ButtonPieceFillingLoad" Click="SelectFillingData" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Loads the data for piece filling">
+                                <Image x:Name="ImagePieceFillingLoad" Width="20" Height="20" Source="data/icon_folder.png"></Image>
+                            </Button>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Timeout (s): " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="30" Text="60" Name="BoxFillContainerTimeout" ToolTip="The timeout per run in seconds"/>
+                            <Button x:Name="ButtonPieceFillingExecute" Click="ExecuteFillingEvaluation" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Starts the execution">
+                                <Image x:Name="ImagePieceFillingExecute" Width="20" Height="20" Source="data/icon_solve.png"></Image>
+                            </Button>
+                        </WrapPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="tabExperimental" Header="Experimental" ToolTip="Experimental functionality">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <GroupBox Header="Orientation-overview">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="CheckBoxOrientationBreak" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Breaks the line of the visualized orientations after half of them">
+                                Break
+                            </CheckBox>
+                            <Button x:Name="ButtonOrientationOverview" Click="ShowOrientations" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Provides an overview of all possible rotations for some pieces">
+                                <Image x:Name="ImageOrientationOverview" Width="20" Height="20" Source="data/icon_rotate.png"></Image>
+                            </Button>
+                        </WrapPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="tabSettings" Header="Settings" ToolTip="Settings (methods and drawing)">
+                <StackPanel Orientation="Vertical">
+                    <GroupBox Header="General">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="CheckBoxDrawSolution" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Defines whether to draw the solution of a loaded instance (if available) or just the instance itself">
+                                DrawLoadedSolution
+                            </CheckBox>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Height="20" TextWrapping="Wrap" Text="Export: " VerticalAlignment="Center" Margin="5,2"/>
+                                <ComboBox x:Name="ComboBoxExportGraphics" Margin="2" VerticalAlignment="Center" Width="110" SelectedIndex="0" SelectedValuePath="Content" ToolTip="Defines whether the solution is exported to other formats">
+                                    <ComboBoxItem>No export</ComboBoxItem>
+                                    <ComboBoxItem>Screenshot only</ComboBoxItem>
+                                    <ComboBoxItem>All formats</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <CheckBox x:Name="CheckBoxExportOffload" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Defines whether to export the offload pieces when exporting">
+                                ExportOffload
+                            </CheckBox>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Constraints">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="CheckBoxGravity" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables the handling of gravity where available">
+                                Gravity
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxRotation" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables the handling of rotations where available">
+                                AllowRotation
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxForbiddenOrientation" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables the handling of forbidden rotations where available">
+                                ForbiddenOrientation
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxStackability" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables the handling of stability where available">
+                                Stackability
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxCompatibility" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables the handling of compatibility where available">
+                                Compatibility
+                            </CheckBox>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Heuristic">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="CheckBoxUseTunedParameters" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables usage of tuned parameter values">
+                                Tuned
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxTetris" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables tetris-like pieces where available">
+                                Tetris
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxImprovement" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables improvement of constructed solutions in heuristic methods">
+                                Improve
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxScoreBasedOrder" VerticalAlignment="Center" Margin="2" IsChecked="True" ToolTip="Enables / disables the score based piece order substituting it with a random order">
+                                ScoreOrder
+                            </CheckBox>
+                            <ComboBox x:Name="ComboBoxMerit" Margin="2" VerticalAlignment="Center" Width="110" SelectedIndex="0" SelectionChanged="ComboBoxMerit_SelectionChanged" SelectedValuePath="Content" ToolTip="Selects the merit-type to use for best-fit methods">
+                                <ComboBoxItem>None</ComboBoxItem>
+                                <ComboBoxItem>MFV</ComboBoxItem>
+                                <ComboBoxItem>MMPSXY</ComboBoxItem>
+                                <ComboBoxItem>LPXY</ComboBoxItem>
+                                <ComboBoxItem>MRSU</ComboBoxItem>
+                                <ComboBoxItem>MEDXYZ</ComboBoxItem>
+                                <ComboBoxItem>MEDXY</ComboBoxItem>
+                            </ComboBox>
+                            <ComboBox x:Name="ComboBoxPieceOrder" Margin="2" VerticalAlignment="Center" Width="90" SelectedIndex="2" SelectionChanged="ComboBoxPieceOrder_SelectionChanged" SelectedValuePath="Content" ToolTip="Selects the piece-order to use initially">
+                                <ComboBoxItem>V</ComboBoxItem>
+                                <ComboBoxItem>HWL</ComboBoxItem>
+                                <ComboBoxItem>VwH</ComboBoxItem>
+                                <ComboBoxItem>HwV</ComboBoxItem>
+                                <ComboBoxItem>AwH</ComboBoxItem>
+                                <ComboBoxItem>HwA</ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Threads: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="0" Name="BoxThreads" ToolTip="The number of threads to use (&lt;= means all)"/>
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Seed: " VerticalAlignment="Center" Margin="2"/>
+                            <TextBox Height="20" Width="33" Text="3" Name="BoxSeed" ToolTip="The seed to use with heuristics"/>
+                        </WrapPanel>
+                    </GroupBox>
+                    <GroupBox Header="Drawing">
+                        <WrapPanel Orientation="Horizontal">
+                            <TextBlock Height="20" TextWrapping="Wrap" Text="Coloring: " VerticalAlignment="Center" Margin="2"/>
+                            <ComboBox x:Name="ComboBoxColoring" Margin="2" VerticalAlignment="Center" Width="110" SelectedIndex="0" SelectionChanged="ComboBoxColoring_SelectionChanged" ToolTip="Selects the coloring mode when drawing instances / solutions"/>
+                            <ComboBox x:Name="ComboBoxPallet" Margin="2" VerticalAlignment="Center" Width="110" SelectedIndex="0" SelectionChanged="ComboBoxPallet_SelectionChanged" ToolTip="Selects the coloring pallet when drawing instances / solutions"/>
+                            <CheckBox x:Name="CheckBoxResetCameraAfterDrawing" VerticalAlignment="Center" Margin="2" IsChecked="False" ToolTip="Enables / disables resetting of camera position after drawing">
+                                ResetCamera
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxDrawText" VerticalAlignment="Center" Margin="2" IsChecked="False" ToolTip="Enables / disables drawing of text (IDs, handling symbols, etc.) onto objects">
+                                DrawText
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxMarkSpecials" VerticalAlignment="Center" Margin="2" IsChecked="False" ToolTip="Enables / disables marking of special items by drawing them striped">
+                                MarkSpecials
+                            </CheckBox>
+                            <CheckBox x:Name="CheckBoxLighting" VerticalAlignment="Center" Margin="2" IsChecked="False" Checked="CheckBoxLighting_Checked" Unchecked="CheckBoxLighting_Unchecked" ToolTip="Enables / disables usage of ambient light (no shadow)">
+                                AmbientLight
+                            </CheckBox>
+                            <Button x:Name="ButtonRedrawSolution" Click="RedrawSolution" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Redraws the solution with current settings">
+                                <Image x:Name="ImageRedrawSolution" Width="20" Height="20" Source="data/icon_refresh.png"></Image>
+                            </Button>
+                        </WrapPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <GridSplitter Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="true" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" Height="5"/>
+        <TextBox x:Name="OutputTextBox" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource myTextBox}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontFamily="Consolas" Focusable="True"/>
+    </Grid>
+</Window>

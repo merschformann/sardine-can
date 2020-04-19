@@ -1,0 +1,2273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Instance Version="1.1">
+  <Containers>
+    <Container ID="1">
+      <Cube Length="8.90497" Width="9.2693" Height="9.07209">
+        <Point X="0" Y="0" Z="0" />
+      </Cube>
+    </Container>
+    <Container ID="2">
+      <Cube Length="8.23264" Width="6.82413" Height="8.23554">
+        <Point X="0" Y="0" Z="0" />
+      </Cube>
+    </Container>
+    <Container ID="3">
+      <Cube Length="9.62411" Width="7.76871" Height="9.9102">
+        <Point X="0" Y="0" Z="0" />
+      </Cube>
+    </Container>
+  </Containers>
+  <Pieces>
+    <Piece ID="1" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.82127" Width="1.54802" Height="1.69593">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="2" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.82127" Width="1.54802" Height="1.69593">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="3" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.82127" Width="1.54802" Height="1.69593">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="4" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.82127" Width="1.54802" Height="1.69593">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="5" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.67347" Width="1.06735" Height="3.17889">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="6" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.67347" Width="1.06735" Height="3.17889">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="7" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.67347" Width="1.06735" Height="3.17889">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="8" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.05355" Width="3.9089" Height="1.41289">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="9" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.05355" Width="3.9089" Height="1.41289">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="10" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.05355" Width="3.9089" Height="1.41289">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="11" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.05355" Width="3.9089" Height="1.41289">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="12" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.45584" Width="1.02429" Height="3.90212">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="13" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.45584" Width="1.02429" Height="3.90212">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="14" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.45584" Width="1.02429" Height="3.90212">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="15" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.45584" Width="1.02429" Height="3.90212">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="16" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="2.35955" Width="3.75667" Height="3.43863">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="17" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="2.35955" Width="3.75667" Height="3.43863">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="18" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="2.35955" Width="3.75667" Height="3.43863">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="19" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.71111" Width="3.90882" Height="2.85699">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="20" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.71111" Width="3.90882" Height="2.85699">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="21" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.71111" Width="3.90882" Height="2.85699">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="22" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.71111" Width="3.90882" Height="2.85699">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="23" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.64313" Width="3.17965" Height="1.27871">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="24" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.64313" Width="3.17965" Height="1.27871">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="25" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.33606" Width="2.76978" Height="1.84382">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="26" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.33606" Width="2.76978" Height="1.84382">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="27" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.33606" Width="2.76978" Height="1.84382">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="28" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.33606" Width="2.76978" Height="1.84382">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="29" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.52373" Width="1.79381" Height="1.42534">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="30" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.52373" Width="1.79381" Height="1.42534">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="31" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.52373" Width="1.79381" Height="1.42534">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="32" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.52373" Width="1.79381" Height="1.42534">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="33" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.31068" Width="3.74026" Height="1.48426">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="34" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.31068" Width="3.74026" Height="1.48426">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="35" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.00008" Width="2.5559" Height="2.04338">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="36" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.00008" Width="2.5559" Height="2.04338">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="37" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.00008" Width="2.5559" Height="2.04338">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="38" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.00008" Width="2.5559" Height="2.04338">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="39" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.84465" Width="3.62342" Height="1.28447">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="40" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.84465" Width="3.62342" Height="1.28447">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="41" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.98689" Width="2.59481" Height="1.49951">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="42" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.98689" Width="2.59481" Height="1.49951">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="43" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.98689" Width="2.59481" Height="1.49951">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="44" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.98689" Width="2.59481" Height="1.49951">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="45" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.11501" Width="2.43164" Height="2.00982">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="46" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.11501" Width="2.43164" Height="2.00982">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="47" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="3.43939" Width="3.79444" Height="2.12613">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="48" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="3.43939" Width="3.79444" Height="2.12613">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="49" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.21388" Width="3.80044" Height="1.29969">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="50" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.21388" Width="3.80044" Height="1.29969">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="51" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.17039" Width="1.14087" Height="2.52812">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="52" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.17039" Width="1.14087" Height="2.52812">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="53" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.14545" Width="3.98475" Height="2.91718">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="54" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.14545" Width="3.98475" Height="2.91718">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="55" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.14545" Width="3.98475" Height="2.91718">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="56" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.14545" Width="3.98475" Height="2.91718">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="57" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.12426" Width="1.03356" Height="2.83859">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="58" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.12426" Width="1.03356" Height="2.83859">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="59" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.12426" Width="1.03356" Height="2.83859">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="60" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.82897" Width="3.15834" Height="2.51176">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="61" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.82897" Width="3.15834" Height="2.51176">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="62" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.82897" Width="3.15834" Height="2.51176">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="63" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.82897" Width="3.15834" Height="2.51176">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="64" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.79437" Width="1.19982" Height="3.6079">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="65" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.79437" Width="1.19982" Height="3.6079">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="66" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.79437" Width="1.19982" Height="3.6079">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="67" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.79437" Width="1.19982" Height="3.6079">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="68" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="2.29077" Width="3.4817" Height="3.4464">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="69" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="2.29077" Width="3.4817" Height="3.4464">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="70" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="2.29077" Width="3.4817" Height="3.4464">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="71" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.80969" Width="3.20895" Height="1.47232">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="72" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.80969" Width="3.20895" Height="1.47232">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="73" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.80969" Width="3.20895" Height="1.47232">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="74" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.80969" Width="3.20895" Height="1.47232">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="75" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.76687" Width="2.4611" Height="3.5327">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="76" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.76687" Width="2.4611" Height="3.5327">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="77" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.76687" Width="2.4611" Height="3.5327">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="78" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.98253" Width="1.01636" Height="3.09508">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="79" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.98253" Width="1.01636" Height="3.09508">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="80" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.78493" Width="3.30928" Height="3.5475">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="81" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.78493" Width="3.30928" Height="3.5475">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="82" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.78493" Width="3.30928" Height="3.5475">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="83" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55187" Width="3.39219" Height="1.25911">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="84" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55187" Width="3.39219" Height="1.25911">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="85" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55187" Width="3.39219" Height="1.25911">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="86" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55187" Width="3.39219" Height="1.25911">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="87" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.94939" Width="2.03944" Height="3.16501">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="88" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.94939" Width="2.03944" Height="3.16501">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="89" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.73872" Width="1.0752" Height="1.342">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="90" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.73872" Width="1.0752" Height="1.342">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="91" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.73872" Width="1.0752" Height="1.342">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="92" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.73872" Width="1.0752" Height="1.342">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="93" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.46534" Width="1.35132" Height="2.36603">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="94" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.46534" Width="1.35132" Height="2.36603">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="95" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.46534" Width="1.35132" Height="2.36603">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="96" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.46534" Width="1.35132" Height="2.36603">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="97" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.89967" Width="1.92482" Height="3.63644">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="98" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.89967" Width="1.92482" Height="3.63644">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="99" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.06891" Width="3.27359" Height="1.64777">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="100" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.06891" Width="3.27359" Height="1.64777">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="101" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.06891" Width="3.27359" Height="1.64777">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="102" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.97692" Width="3.93007" Height="3.70814">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="103" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.97692" Width="3.93007" Height="3.70814">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="104" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.97692" Width="3.93007" Height="3.70814">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="105" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.23408" Width="3.2055" Height="2.57796">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="106" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.23408" Width="3.2055" Height="2.57796">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="107" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.23408" Width="3.2055" Height="2.57796">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="108" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.04086" Width="2.89308" Height="3.2664">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="109" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.04086" Width="2.89308" Height="3.2664">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="110" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.04086" Width="2.89308" Height="3.2664">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="111" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.04086" Width="2.89308" Height="3.2664">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="112" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.11463" Width="3.52857" Height="1.68323">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="113" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.11463" Width="3.52857" Height="1.68323">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="114" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.80161" Width="3.69423" Height="1.48052">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="115" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.80161" Width="3.69423" Height="1.48052">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="116" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.80161" Width="3.69423" Height="1.48052">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="117" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.80161" Width="3.69423" Height="1.48052">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="118" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.42126" Width="2.65789" Height="1.2786">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="119" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.42126" Width="2.65789" Height="1.2786">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="120" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.42126" Width="2.65789" Height="1.2786">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="121" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.42126" Width="2.65789" Height="1.2786">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="122" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.71932" Width="2.05848" Height="1.00298">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="123" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.71932" Width="2.05848" Height="1.00298">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="124" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.71932" Width="2.05848" Height="1.00298">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="125" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.71932" Width="2.05848" Height="1.00298">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="126" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.38051" Width="2.38137" Height="3.58708">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="127" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.38051" Width="2.38137" Height="3.58708">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="128" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.38051" Width="2.38137" Height="3.58708">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="129" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.4015" Width="3.02491" Height="1.6401">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="130" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.4015" Width="3.02491" Height="1.6401">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="131" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.4015" Width="3.02491" Height="1.6401">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="132" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.51127" Width="2.09744" Height="2.3403">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="133" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.51127" Width="2.09744" Height="2.3403">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="134" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.51127" Width="2.09744" Height="2.3403">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="135" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.2352" Width="2.98781" Height="3.42324">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="136" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.2352" Width="2.98781" Height="3.42324">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="137" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.2352" Width="2.98781" Height="3.42324">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="138" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.47009" Width="1.68025" Height="2.55297">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="139" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.47009" Width="1.68025" Height="2.55297">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="140" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.47009" Width="1.68025" Height="2.55297">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="141" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.47009" Width="1.68025" Height="2.55297">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="142" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.31286" Width="1.89344" Height="2.07798">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="143" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.31286" Width="1.89344" Height="2.07798">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="144" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.31286" Width="1.89344" Height="2.07798">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="145" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.31286" Width="1.89344" Height="2.07798">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="146" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.63297" Width="3.6385" Height="3.15037">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="147" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.63297" Width="3.6385" Height="3.15037">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="148" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.96104" Width="2.66268" Height="3.11703">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="149" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.96104" Width="2.66268" Height="3.11703">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="150" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.96104" Width="2.66268" Height="3.11703">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="151" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.96104" Width="2.66268" Height="3.11703">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="152" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.39356" Width="1.16384" Height="1.44479">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="153" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.39356" Width="1.16384" Height="1.44479">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="154" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.39356" Width="1.16384" Height="1.44479">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="155" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.34467" Width="3.08713" Height="2.74374">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="156" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.34467" Width="3.08713" Height="2.74374">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="157" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.34467" Width="3.08713" Height="2.74374">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="158" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.20401" Width="1.26232" Height="3.1027">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="159" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.20401" Width="1.26232" Height="3.1027">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="160" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.20401" Width="1.26232" Height="3.1027">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="161" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.20401" Width="1.26232" Height="3.1027">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="162" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.34931" Width="1.27287" Height="2.44104">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="163" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.34931" Width="1.27287" Height="2.44104">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="164" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.34931" Width="1.27287" Height="2.44104">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="165" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="3.01756" Width="3.43594" Height="3.21564">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="166" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="3.01756" Width="3.43594" Height="3.21564">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="167" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="3.01756" Width="3.43594" Height="3.21564">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="168" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.7296" Width="1.63319" Height="3.64184">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="169" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.7296" Width="1.63319" Height="3.64184">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="170" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.7296" Width="1.63319" Height="3.64184">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="171" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55137" Width="1.40663" Height="3.2811">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="172" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55137" Width="1.40663" Height="3.2811">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="173" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.40037" Width="1.01434" Height="3.52226">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="174" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.40037" Width="1.01434" Height="3.52226">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="175" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.40037" Width="1.01434" Height="3.52226">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="176" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.40037" Width="1.01434" Height="3.52226">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="177" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.89097" Width="3.00375" Height="3.89781">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="178" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.89097" Width="3.00375" Height="3.89781">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="179" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.65119" Width="3.5281" Height="1.67343">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="180" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.65119" Width="3.5281" Height="1.67343">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="181" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.62913" Width="3.46085" Height="2.26609">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="182" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.62913" Width="3.46085" Height="2.26609">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="183" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.62913" Width="3.46085" Height="2.26609">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="184" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.86624" Width="3.15994" Height="2.54628">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="185" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.86624" Width="3.15994" Height="2.54628">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="186" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.86624" Width="3.15994" Height="2.54628">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="187" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.86624" Width="3.15994" Height="2.54628">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="188" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.4216" Width="3.69338" Height="3.59526">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="189" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.4216" Width="3.69338" Height="3.59526">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="190" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.4216" Width="3.69338" Height="3.59526">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="191" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.4216" Width="3.69338" Height="3.59526">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="192" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.62943" Width="3.74403" Height="2.24408">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="193" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.62943" Width="3.74403" Height="2.24408">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="194" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.62943" Width="3.74403" Height="2.24408">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="195" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.62943" Width="3.74403" Height="2.24408">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="196" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.87853" Width="2.60767" Height="2.36623">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="197" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.87853" Width="2.60767" Height="2.36623">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="198" ForbiddenOrientations="" Material="Default" Stackable="False">
+      <Components>
+        <Cubes>
+          <Cube Length="1.87853" Width="2.60767" Height="2.36623">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="199" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55348" Width="2.25617" Height="1.74556">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="200" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55348" Width="2.25617" Height="1.74556">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="201" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55348" Width="2.25617" Height="1.74556">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="202" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55348" Width="2.25617" Height="1.74556">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="203" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.84382" Width="2.35153" Height="3.51906">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="204" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.84382" Width="2.35153" Height="3.51906">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="205" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.84382" Width="2.35153" Height="3.51906">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="206" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.84382" Width="2.35153" Height="3.51906">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="207" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.83473" Width="2.07817" Height="3.07657">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="208" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.83473" Width="2.07817" Height="3.07657">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="209" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.83473" Width="2.07817" Height="3.07657">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="210" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.83473" Width="2.07817" Height="3.07657">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="211" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.71683" Width="1.02201" Height="1.9334">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="212" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.71683" Width="1.02201" Height="1.9334">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="213" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.71683" Width="1.02201" Height="1.9334">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="214" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55227" Width="1.18005" Height="2.44306">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="215" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55227" Width="1.18005" Height="2.44306">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="216" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.55227" Width="1.18005" Height="2.44306">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="217" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.43721" Width="2.8497" Height="3.12762">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="218" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.43721" Width="2.8497" Height="3.12762">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="219" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.43721" Width="2.8497" Height="3.12762">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="220" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.3925" Width="2.72502" Height="3.77735">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="221" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.3925" Width="2.72502" Height="3.77735">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="222" ForbiddenOrientations="" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.3925" Width="2.72502" Height="3.77735">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="223" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.5295" Width="3.28966" Height="1.48331">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="224" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.5295" Width="3.28966" Height="1.48331">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="225" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.5295" Width="3.28966" Height="1.48331">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="226" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.5295" Width="3.28966" Height="1.48331">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="227" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.23416" Width="3.81216" Height="3.45162">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="228" ForbiddenOrientations="" Material="FlammableGas" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.23416" Width="3.81216" Height="3.45162">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="229" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.17148" Width="2.076" Height="1.65497">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="230" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.17148" Width="2.076" Height="1.65497">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="231" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.17148" Width="2.076" Height="1.65497">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="232" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.22847" Width="3.94895" Height="3.49933">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="233" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.22847" Width="3.94895" Height="3.49933">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="234" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.22847" Width="3.94895" Height="3.49933">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="235" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.29699" Width="2.15605" Height="1.84981">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="236" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.29699" Width="2.15605" Height="1.84981">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="237" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.29699" Width="2.15605" Height="1.84981">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="238" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Explosive" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="2.29699" Width="2.15605" Height="1.84981">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="239" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.8904" Width="1.95974" Height="2.12065">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="240" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.8904" Width="1.95974" Height="2.12065">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="241" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.8904" Width="1.95974" Height="2.12065">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="242" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.8904" Width="1.95974" Height="2.12065">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="243" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.03754" Width="3.676" Height="1.62709">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="244" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.03754" Width="3.676" Height="1.62709">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="245" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.03754" Width="3.676" Height="1.62709">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="246" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.03754" Width="3.676" Height="1.62709">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="247" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.64903" Width="3.12238" Height="2.79476">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="248" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.64903" Width="3.12238" Height="2.79476">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="249" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="1.64903" Width="3.12238" Height="2.79476">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+    <Piece ID="250" ForbiddenOrientations="" Material="Default" Stackable="True">
+      <Components>
+        <Cubes>
+          <Cube Length="3.3407" Width="1.98398" Height="2.55113">
+            <Point X="0" Y="0" Z="0" />
+          </Cube>
+        </Cubes>
+      </Components>
+    </Piece>
+  </Pieces>
+  <Solutions/>
+</Instance>
