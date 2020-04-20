@@ -21,14 +21,20 @@ After deploying, a Swagger UI description of the RESTful service can be found he
 
 --> Windows only :-/
 
-1. git clone https://github.com/merschformann/sardinecan.git
+1. git clone https://github.com/merschformann/sardine-can.git
 1. Open *SardineCan.sln* with Visual Studio
 1. Set *SC.GUI* as startup project
 1. Compile and execute
 
+### Gurobi & CPLEX support ###
+
+Unfortunately, I cannot ship the Gurobi and CPLEX libraries with the code.  
+I made an attempt of not relying on these during compile time by moving them to a Nuget package (Atto.LinearWrap). Even though this part works, I had some issues when supplying the dlls later on. Let me know, if you have ideas how to overcome this.
+
+I hope I can provide a solution for all who have access to Gurobi and/or CPLEX in the future, so that the model formulations can also be tested.
+
 ### Contributors ###
 
- The code mainly originated from the master-thesis of Marius Merschformann in 2014.
- The implementations around pre-processing were done by Daniel Erdmann and Simon Moss during a university project.
- Further work on ALNS & some further extensions were done in collaboration with Daniela Guericke.
- 
+The code mainly originated from the master-thesis of Marius Merschformann in 2014.
+The implementations around pre-processing were done by Daniel Erdmann and Simon Moss during a university project.
+Further work on ALNS & some further extensions were done in collaboration with Daniela Guericke.
