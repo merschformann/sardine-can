@@ -59,7 +59,6 @@ namespace SC.ObjectModel.Configuration
                 PossibleSwaps = 1;
                 MaxSwaps = 4;
                 LongTermScoreReInitDistance = 1000;
-                WorkerThreads = Environment.ProcessorCount * 2;
                 PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
 
                 switch (method)
@@ -84,7 +83,6 @@ namespace SC.ObjectModel.Configuration
                                 PossibleSwaps = 1;
                                 MaxSwaps = 8;
                                 LongTermScoreReInitDistance = 623;
-                                WorkerThreads = Environment.ProcessorCount * 2;
                                 PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
                             }
                             else
@@ -105,7 +103,6 @@ namespace SC.ObjectModel.Configuration
                                 PossibleSwaps = 4;
                                 MaxSwaps = 5;
                                 LongTermScoreReInitDistance = 2001;
-                                WorkerThreads = Environment.ProcessorCount * 2;
                                 PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
                             }
                         }
@@ -128,7 +125,6 @@ namespace SC.ObjectModel.Configuration
                             PossibleSwaps = 1;
                             MaxSwaps = 7;
                             LongTermScoreReInitDistance = 691;
-                            WorkerThreads = Environment.ProcessorCount * 2;
                             PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
                         }
                         break;
@@ -152,7 +148,6 @@ namespace SC.ObjectModel.Configuration
                                 PossibleSwaps = 3;
                                 MaxSwaps = 4;
                                 LongTermScoreReInitDistance = 75;
-                                WorkerThreads = Environment.ProcessorCount * 2;
                                 PushInsertionVIDs = new int[] { 8, 7, 6, 4 };
                             }
                             else
@@ -173,7 +168,6 @@ namespace SC.ObjectModel.Configuration
                                 PossibleSwaps = 3;
                                 MaxSwaps = 5;
                                 LongTermScoreReInitDistance = 861;
-                                WorkerThreads = Environment.ProcessorCount * 2;
                                 PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
                             }
                         }
@@ -198,7 +192,6 @@ namespace SC.ObjectModel.Configuration
                                 PossibleSwaps = 1;
                                 MaxSwaps = 8;
                                 LongTermScoreReInitDistance = 623;
-                                WorkerThreads = Environment.ProcessorCount * 2;
                                 PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
                             }
                             else
@@ -219,7 +212,6 @@ namespace SC.ObjectModel.Configuration
                                 PossibleSwaps = 4;
                                 MaxSwaps = 5;
                                 LongTermScoreReInitDistance = 2001;
-                                WorkerThreads = Environment.ProcessorCount * 2;
                                 PushInsertionVIDs = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
                             }
                         }
@@ -244,18 +236,18 @@ namespace SC.ObjectModel.Configuration
         /// <summary>
         /// Name of the configuration
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = "default";
 
         /// <summary>
         /// The type of the method to use
         /// </summary>
-        public MethodType Type { get; set; }
+        public MethodType Type { get; set; } = MethodType.ExtremePointInsertion;
 
         /// <summary>
         /// Gets or sets the timelimit for the solution process
         /// </summary>
         [XmlIgnore, JsonIgnore]
-        public TimeSpan TimeLimit { get; set; }
+        public TimeSpan TimeLimit { get; set; } = TimeSpan.FromMinutes(10);
         /// <summary>
         /// The timelimit for the solution process in seconds
         /// </summary>
@@ -264,52 +256,37 @@ namespace SC.ObjectModel.Configuration
         /// <summary>
         /// Indicates whether to respect the gravity contraint or not
         /// </summary>
-        public bool HandleGravity { get; set; }
+        public bool HandleGravity { get; set; } = false;
 
         /// <summary>
         /// Indicates whether to respect the compatibility of pieces when loading them into one container or not
         /// </summary>
-        public bool HandleCompatibility { get; set; }
+        public bool HandleCompatibility { get; set; } = true;
 
         /// <summary>
         /// Indicates whether to respect the stackability of pieces or not
         /// </summary>
-        public bool HandleStackability { get; set; }
+        public bool HandleStackability { get; set; } = false;
 
         /// <summary>
         /// Indicates whether to enable rotations or use only the default orientation
         /// </summary>
-        public bool HandleRotatability { get; set; }
+        public bool HandleRotatability { get; set; } = true;
 
         /// <summary>
         /// Indicates wheter to restrict the orientations of a piece to the feasible ones or not
         /// </summary>
-        public bool HandleForbiddenOrientations { get; set; }
+        public bool HandleForbiddenOrientations { get; set; } = true;
 
         /// <summary>
         /// The seed for any kind of randomization
         /// </summary>
-        public int Seed { get; set; }
+        public int Seed { get; set; } = 0;
 
         /// <summary>
         /// Defines a limit for the number of parallel threads allowed.
         /// </summary>
-        public int ThreadLimit { get; set; }
-
-        /// <summary>
-        /// An optional marking or identifier to attach to the configuration
-        /// </summary>
-        public string MarkTuning { get; set; }
-
-        /// <summary>
-        /// An optional marking or identifier to attach to the configuration
-        /// </summary>
-        public string MarkTetris { get; set; }
-
-        /// <summary>
-        /// Indicates whether to output additional information about a solution
-        /// </summary>
-        public bool OutputAdditionalInformation { get; set; }
+        public int ThreadLimit { get; set; } = 0;
 
         #endregion
 
@@ -346,12 +323,12 @@ namespace SC.ObjectModel.Configuration
         /// <summary>
         /// Defines the optimization goal
         /// </summary>
-        public OptimizationGoal Goal { get; set; }
+        public OptimizationGoal Goal { get; set; } = OptimizationGoal.MaxUtilization;
 
         /// <summary>
         /// Defines the solver to use
         /// </summary>
-        public Solvers SolverToUse { get; set; }
+        public Solvers SolverToUse { get; set; } = Solvers.Gurobi;
 
         #endregion
 
@@ -360,92 +337,87 @@ namespace SC.ObjectModel.Configuration
         /// <summary>
         /// Defines the initial order of the pieces
         /// </summary>
-        public PieceOrderType PieceOrder { get; set; }
+        public PieceOrderType PieceOrder { get; set; } = PieceOrderType.VwH;
 
         /// <summary>
         /// Defines whether to improve the initial solution
         /// </summary>
-        public bool Improvement { get; set; }
+        public bool Improvement { get; set; } = true;
 
         /// <summary>
         /// Enables or disables Tetris-level insertion
         /// </summary>
-        public bool Tetris { get; set; }
+        public bool Tetris { get; set; } = true;
 
         /// <summary>
         /// Defines whether to use the best available insertion point or the first valid one
         /// </summary>
-        public bool BestFit { get; set; }
+        public bool BestFit { get; set; } = true;
 
         /// <summary>
         /// Deletes EPs more extensively
         /// </summary>
-        public bool ExhaustiveEPProne { get; set; }
+        public bool ExhaustiveEPProne { get; set; } = false;
 
         /// <summary>
         /// Defines whether to use score-based ordering of pieces or just random-order
         /// </summary>
-        public bool ScoreBasedOrder { get; set; }
+        public bool ScoreBasedOrder { get; set; } = true;
 
         /// <summary>
         /// Defines the merit function when best-fit is active
         /// </summary>
-        public MeritFunctionType MeritType { get; set; }
+        public MeritFunctionType MeritType { get; set; } = MeritFunctionType.MEDXYZ;
 
         /// <summary>
         /// Defines a random salt applied to the score-based ordering
         /// </summary>
-        public double RandomSalt { get; set; }
+        public double RandomSalt { get; set; } = 0.1;
 
         /// <summary>
         /// Defines the normalization order (SD and PI only)
         /// </summary>
-        public DimensionMarker[] NormalizationOrder { get; set; }
+        public DimensionMarker[] NormalizationOrder { get; set; } = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
 
         /// <summary>
         /// Defines the iteration count after which the improvement-phase terminates if not better solution is found
         /// </summary>
-        public int StagnationDistance { get; set; }
+        public int StagnationDistance { get; set; } = 3000;
 
         /// <summary>
         /// p of GASP
         /// </summary>
-        public double MaximumPercentageOfStoreModification { get; set; }
+        public double MaximumPercentageOfStoreModification { get; set; } = 1.0;
 
         /// <summary>
         /// s (overlined) of GASP
         /// </summary>
-        public double InitialMaximumPercentageOfStoreModification { get; set; }
+        public double InitialMaximumPercentageOfStoreModification { get; set; } = 0.1;
 
         /// <summary>
         /// k of GASP
         /// </summary>
-        public int PossibleSwaps { get; set; }
+        public int PossibleSwaps { get; set; } = 1;
 
         /// <summary>
         /// k_max of GASP
         /// </summary>
-        public int MaxSwaps { get; set; }
+        public int MaxSwaps { get; set; } = 4;
 
         /// <summary>
         /// The iteration count after which a long term re-initialization is done if no improvement was found
         /// </summary>
-        public int LongTermScoreReInitDistance { get; set; }
+        public int LongTermScoreReInitDistance { get; set; } = 600;
 
         /// <summary>
         /// Activates the insertion by replacing other pieces (SD only)
         /// </summary>
-        public bool InflateAndReplaceInsertion { get; set; }
-
-        /// <summary>
-        /// The number of worker-threads used to search for improved solutions in parallel
-        /// </summary>
-        public int WorkerThreads { get; set; }
+        public bool InflateAndReplaceInsertion { get; set; } = false;
 
         /// <summary>
         /// The vertex IDs of the container at which PI tries to insert pieces. The order is mandatory.
         /// </summary>
-        public int[] PushInsertionVIDs { get; set; }
+        public int[] PushInsertionVIDs { get; set; } = new int[] { 8, 7, 6, 4, 5, 3, 2, 1 };
 
         #endregion
 

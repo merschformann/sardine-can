@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SC.ObjectModel.IO;
 
 namespace SC.Service
 {
@@ -30,6 +31,12 @@ namespace SC.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Alter JSON behavior
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                JsonIO.SetJsonSerializerOptions(options.JsonSerializerOptions);
+            });
 
             // Add swagger
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }); });

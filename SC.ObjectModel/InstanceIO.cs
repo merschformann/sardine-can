@@ -1,5 +1,6 @@
 ﻿using SC.ObjectModel.Additionals;
 using SC.ObjectModel.Elements;
+using SC.ObjectModel.IO;
 using SC.ObjectModel.IO.Json;
 using SC.ObjectModel.Rules;
 using SC.Toolbox;
@@ -315,7 +316,7 @@ namespace SC.ObjectModel
         public static Instance ReadJson(string json)
         {
             // Deserialize JSON
-            var jsonInstance = JsonSerializer.Deserialize<JsonInstance>(json);
+            var jsonInstance = JsonIO.From<JsonInstance>(json);
             // Convert and return it
             return FromJsonInstance(jsonInstance);
         }
@@ -326,7 +327,7 @@ namespace SC.ObjectModel
         public string WriteJson()
         {
             // Serialize
-            string json = JsonSerializer.Serialize(ToJsonInstance());
+            string json = JsonIO.To(ToJsonInstance());
             // Return JSON string
             return json;
         }

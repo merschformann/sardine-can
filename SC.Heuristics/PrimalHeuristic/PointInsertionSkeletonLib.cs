@@ -2230,8 +2230,7 @@ namespace SC.Heuristics.PrimalHeuristic
             // Init parallelization
             int workerCount =
                 !Config.HandleRotatability ? 1 : // If rotatability is not enabled, we don't need any threads
-                Config.ThreadLimit > 0 ? Math.Min(Config.ThreadLimit, Config.WorkerThreads) : // If a thread-limit is given, we need to respect it
-                Config.WorkerThreads; // No limitations are given - just use the proposed number of worker threads
+                Config.ThreadLimit > 0 ? Math.Min(Environment.ProcessorCount, Config.ThreadLimit) : Environment.ProcessorCount; // If a thread-limit is given, we need to respect it (otherwise use all processors)
             COSolution[] localSolutions = new COSolution[workerCount];
             int[] workers = new int[workerCount];
             Random[] randomizer = new Random[workerCount];

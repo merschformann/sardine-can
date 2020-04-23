@@ -134,7 +134,7 @@ namespace SC.Playground.Lib
                     case "PossibleSwaps": config.PossibleSwaps = int.Parse(paramValue); break;
                     case "MaxSwaps": config.MaxSwaps = int.Parse(paramValue); break;
                     case "LongTermScoreReInitDistance": config.LongTermScoreReInitDistance = int.Parse(paramValue); break;
-                    case "WorkerThreads": config.WorkerThreads = int.Parse(paramValue); break;
+                    case "ThreadLimit": config.ThreadLimit = int.Parse(paramValue); break;
                     case "Instance": instancePath = paramValue; break;
                     case "TimeLimit": config.TimeLimit = TimeSpan.FromSeconds(double.Parse(paramValue, ExportationConstants.FORMATTER)); break;
                     case "PushInsertionVIDs":

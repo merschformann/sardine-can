@@ -1,6 +1,7 @@
 ﻿using SC.ObjectModel;
 using SC.ObjectModel.Configuration;
 using SC.ObjectModel.Elements;
+using SC.ObjectModel.IO;
 using SC.ObjectModel.Rules;
 using SC.Service.Elements.IO;
 using System;
@@ -41,7 +42,7 @@ namespace SC.Playground.Lib
                 Priority = 3
             };
             // Serialize
-            string json = JsonSerializer.Serialize(calculation);
+            string json = JsonIO.To(calculation);
             // Write JSON to disk
             File.WriteAllText("calculation.json", json);
         }
@@ -49,7 +50,7 @@ namespace SC.Playground.Lib
         public static void ParseJson()
         {
             // Read JSON file from disk
-            var calculation = JsonSerializer.Deserialize<JsonCalculation>(File.ReadAllText("calculation.json"));
+            var calculation = JsonIO.From<JsonCalculation>(File.ReadAllText("calculation.json"));
             Console.WriteLine($"Instance \"{calculation.Instance.Name}\" parsed from JSON successfully!");
         }
     }

@@ -196,16 +196,6 @@ namespace SC.Linear
             {
                 Retransform();
                 // Log if desired
-                if (Config.OutputAdditionalInformation)
-                {
-                    string infoFilename = (this is LinearModelTetris) ?
-                        Path.Combine(ExportationConstants.ExportDir, Instance.GetIdent() + "_tetris_solution_info.txt") :
-                        Path.Combine(ExportationConstants.ExportDir, Instance.GetIdent() + "_flb_solution_info.txt");
-                    using (StreamWriter sw = new StreamWriter(File.Open(infoFilename, FileMode.Create)))
-                    {
-                        PrintSolution(sw);
-                    }
-                }
                 Instance.OutputInfo(Console.Out);
                 HasSolution = true;
             }
