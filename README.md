@@ -35,6 +35,6 @@ I hope I can provide a solution for all who have access to Gurobi and/or CPLEX i
 
 ### Contributors ###
 
-The code mainly originated from the master-thesis of Marius Merschformann in 2014.
+The code mainly originated from the master-thesis of Marius Merschformann in 2014. Find a copy [here](./Material/MasterThesis/MasterThesis_MariusMerschformann.pdf).
 The implementations around pre-processing were done by Daniel Erdmann and Simon Moss during a university project.
 Further work on ALNS & some further extensions were done in collaboration with Daniela Guericke.
