@@ -304,10 +304,16 @@ namespace SC.Service.Elements
                 // Trigger next job to enter waiting position again (fire and forget)
                 Task.Run(EnterNextJob);
             }
-            finally
+            catch (Exception ex)
             {
                 // Mark erroneous
                 calc.Status.Status = StatusCodes.Error;
+                calc.Status.ErrorMessage =
+                    ex.Message + Environment.NewLine +
+                    ex.StackTrace + Environment.NewLine;
+            }
+            finally
+            {
                 // Release grabbed threads
                 lock (_threadCountLock)
                     _threadsInUse -= threads;
