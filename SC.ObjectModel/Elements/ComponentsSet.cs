@@ -63,9 +63,9 @@ namespace SC.ObjectModel.Elements
         {
             return
                 "Set-#C" + Components.Count.ToString() +
-                "-Dim-(" + this.BoundingBox.Length.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-                "," + this.BoundingBox.Width.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-                "," + this.BoundingBox.Height.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
+                "-Dim-(" + BoundingBox.Length.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
+                "," + BoundingBox.Width.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
+                "," + BoundingBox.Height.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
                 ")";
         }
 
@@ -73,10 +73,12 @@ namespace SC.ObjectModel.Elements
 
         public void Seal()
         {
-            BoundingBox = new MeshCube();
-            BoundingBox.Length = Components.Max(c => c.RelPosition.X + c.Length);
-            BoundingBox.Width = Components.Max(c => c.RelPosition.Y + c.Width);
-            BoundingBox.Height = Components.Max(c => c.RelPosition.Z + c.Height);
+            BoundingBox = new MeshCube
+            {
+                Length = Components.Max(c => c.RelPosition.X + c.Length),
+                Width = Components.Max(c => c.RelPosition.Y + c.Width),
+                Height = Components.Max(c => c.RelPosition.Z + c.Height)
+            };
             if (ComponentsByID == null)
             {
                 ComponentsByID = Components.ToArray();
@@ -89,9 +91,11 @@ namespace SC.ObjectModel.Elements
 
         public ComponentsSet Clone()
         {
-            ComponentsSet clone = new ComponentsSet();
-            clone.BoundingBox = BoundingBox.Clone();
-            clone.ComponentsByID = ComponentsByID.Select(e => e.Clone()).ToArray();
+            ComponentsSet clone = new ComponentsSet
+            {
+                BoundingBox = BoundingBox.Clone(),
+                ComponentsByID = ComponentsByID.Select(e => e.Clone()).ToArray()
+            };
             clone.Components = clone.ComponentsByID.ToList();
             return clone;
         }
@@ -109,11 +113,11 @@ namespace SC.ObjectModel.Elements
                 MeshCube cube = new MeshCube();
                 cube.ID = componentID++;
                 cube.LoadXML(childNode);
-                this.AddComponent(cube);
+                AddComponent(cube);
             }
 
             // Seal
-            this.Seal();
+            Seal();
         }
 
         public XmlNode WriteXML(XmlDocument document)

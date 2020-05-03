@@ -47,14 +47,8 @@ namespace SC.ObjectModel.Elements
         /// <returns>The shape corresponding to the given orientation</returns>
         public ComponentsSet this[int orientationID]
         {
-            get
-            {
-                return _meshesPerOrientation[orientationID];
-            }
-            set
-            {
-                _meshesPerOrientation[orientationID] = value;
-            }
+            get => _meshesPerOrientation[orientationID];
+            set => _meshesPerOrientation[orientationID] = value;
         }
 
         /// <summary>

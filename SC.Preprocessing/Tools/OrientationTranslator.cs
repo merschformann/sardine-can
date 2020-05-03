@@ -13,7 +13,7 @@ namespace SC.Preprocessing.Tools
         /// <summary>
         /// 24 Matrices for the orientation
         /// </summary>
-        private static readonly List<Matrix> RotationMatrices;
+        private static readonly IReadOnlyList<Matrix> RotationMatrices;
 
         /// <summary>
         /// precomputed translations

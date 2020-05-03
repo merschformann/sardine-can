@@ -168,7 +168,7 @@ namespace SC.ObjectModel.Additionals
         private static void GenerateVertexInformation(Piece piece)
         {
             // Init
-            List<Matrix> rotationMatrices = RotationMatrices.GetRotationMatrices();
+            IReadOnlyList<Matrix> rotationMatrices = RotationMatrices.GetRotationMatrices();
             int index = 0;
             Dictionary<int, Matrix> _rotationMatrices = new Dictionary<int, Matrix>();
             foreach (var matrix in rotationMatrices)

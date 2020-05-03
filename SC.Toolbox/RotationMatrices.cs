@@ -110,13 +110,17 @@ namespace SC.Toolbox
     public class RotationMatrices
     {
         /// <summary>
-        /// Generates all necessary rotation matrices
+        /// All rotation matrices.
         /// </summary>
-        /// <returns>The rotation-matrices</returns>
-        public static List<Matrix> GetRotationMatrices()
-        {
-            List<Matrix> matrices = new List<Matrix>();
+        private static List<Matrix> _rotationMatrices;
 
+        /// <summary>
+        /// Generates all rotation matrices.
+        /// </summary>
+        private static void GenerateRotationMatrices()
+        {
+            _rotationMatrices = new List<Matrix>();
+            // Generate all necessary ones
             for (int x = 0; x < 3; x++)
             {
                 for (int a = 1; a >= -1; a -= 2)
@@ -137,7 +141,7 @@ namespace SC.Toolbox
                                             matrix[0, x] = a;
                                             matrix[1, y] = b;
                                             matrix[2, z] = c;
-                                            matrices.Add(matrix);
+                                            _rotationMatrices.Add(matrix);
                                         }
                                     }
                                 }
@@ -146,35 +150,42 @@ namespace SC.Toolbox
                     }
                 }
             }
+            // Remove redundants
+            _rotationMatrices.RemoveAt(46);
+            _rotationMatrices.RemoveAt(45);
+            _rotationMatrices.RemoveAt(43);
+            _rotationMatrices.RemoveAt(40);
+            _rotationMatrices.RemoveAt(39);
+            _rotationMatrices.RemoveAt(36);
+            _rotationMatrices.RemoveAt(34);
+            _rotationMatrices.RemoveAt(33);
+            _rotationMatrices.RemoveAt(31);
+            _rotationMatrices.RemoveAt(28);
+            _rotationMatrices.RemoveAt(26);
+            _rotationMatrices.RemoveAt(25);
+            _rotationMatrices.RemoveAt(22);
+            _rotationMatrices.RemoveAt(21);
+            _rotationMatrices.RemoveAt(19);
+            _rotationMatrices.RemoveAt(16);
+            _rotationMatrices.RemoveAt(14);
+            _rotationMatrices.RemoveAt(13);
+            _rotationMatrices.RemoveAt(11);
+            _rotationMatrices.RemoveAt(8);
+            _rotationMatrices.RemoveAt(7);
+            _rotationMatrices.RemoveAt(4);
+            _rotationMatrices.RemoveAt(2);
+            _rotationMatrices.RemoveAt(1);
+        }
 
-            //matrices = matrices.Distinct(new RotationMatrixEqualityComparer()).ToList();
-
-            matrices.RemoveAt(46);
-            matrices.RemoveAt(45);
-            matrices.RemoveAt(43);
-            matrices.RemoveAt(40);
-            matrices.RemoveAt(39);
-            matrices.RemoveAt(36);
-            matrices.RemoveAt(34);
-            matrices.RemoveAt(33);
-            matrices.RemoveAt(31);
-            matrices.RemoveAt(28);
-            matrices.RemoveAt(26);
-            matrices.RemoveAt(25);
-            matrices.RemoveAt(22);
-            matrices.RemoveAt(21);
-            matrices.RemoveAt(19);
-            matrices.RemoveAt(16);
-            matrices.RemoveAt(14);
-            matrices.RemoveAt(13);
-            matrices.RemoveAt(11);
-            matrices.RemoveAt(8);
-            matrices.RemoveAt(7);
-            matrices.RemoveAt(4);
-            matrices.RemoveAt(2);
-            matrices.RemoveAt(1);
-
-            return matrices;
+        /// <summary>
+        /// Provides all rotation matrices.
+        /// </summary>
+        /// <returns>The rotation-matrices</returns>
+        public static IReadOnlyList<Matrix> GetRotationMatrices()
+        {
+            if (_rotationMatrices == null)
+                GenerateRotationMatrices();
+            return _rotationMatrices;
         }
     }
 }
