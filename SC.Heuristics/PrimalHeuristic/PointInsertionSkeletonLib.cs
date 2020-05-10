@@ -2433,18 +2433,18 @@ namespace SC.Heuristics.PrimalHeuristic
                 // Inc iteration counter
                 currentIteration++;
                 // Log
-                if (DateTime.Now.Ticks - LogOldMillis > 1000000)
+                if (DateTime.Now.Ticks - LogOldMillis > 5000000)
                 {
                     LogOldMillis = DateTime.Now.Ticks;
                     Config.Log?.Invoke(currentIteration + ". " +
-    solution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
-    VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-    " (" + (solution.ExploitedVolume / VolumeOfContainers * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %) - Current: " +
-    localSolution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
-    VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-    " (" + ((solution.ExploitedVolume / VolumeOfContainers - initialExploitedVolume / VolumeOfContainers) * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %)" +
-    " Time: " + (DateTime.Now - Config.StartTimeStamp).TotalSeconds +
-    " \n");
+                        solution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
+                        VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
+                        " (" + (solution.ExploitedVolume / VolumeOfContainers * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %) - Current: " +
+                        localSolution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
+                        VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
+                        " (" + ((solution.ExploitedVolume / VolumeOfContainers - initialExploitedVolume / VolumeOfContainers) * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %)" +
+                        " Time: " + (DateTime.Now - Config.StartTimeStamp).TotalSeconds +
+                        " \n");
                     Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, solution.ExploitedVolume);
                 }
             }

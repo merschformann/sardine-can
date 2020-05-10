@@ -140,7 +140,7 @@ namespace SC.Heuristics
         /// <param name="container">The container to which the piece is added</param>
         protected void LogProgress(COSolution solution, Piece piece, Container container)
         {
-            if (Config.Log != null && DateTime.Now.Ticks - LogOldMillis > 5000000)
+            if (Config.Log != null && DateTime.Now.Ticks - LogOldMillis > 10000000)
             {
                 LogOldMillis = DateTime.Now.Ticks;
                 Config.Log(solution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
