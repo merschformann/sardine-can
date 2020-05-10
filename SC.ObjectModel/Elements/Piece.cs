@@ -38,7 +38,7 @@ namespace SC.ObjectModel.Elements
         /// <summary>
         /// The cloned shapes per orientation.
         /// </summary>
-        protected ComponentsSet[] _meshesPerOrientation = new ComponentsSet[24];
+        protected ComponentsSet[] _meshesPerOrientation = new ComponentsSet[MeshConstants.ORIENTATIONS.Length];
 
         /// <summary>
         /// Gets and sets a shape of this piece for a specific orientation

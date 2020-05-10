@@ -416,10 +416,15 @@ namespace SC.GUI
             pieceL.AddComponent(0, 0, 1, 1, 1, 1);
             pieceL.Seal();
             pieces.Add(pieceL);
+            VariablePiece pieceComplex = new VariablePiece() { ID = 3 };
+            pieceComplex.AddComponent(0, 0, 0, 3, 1, 1);
+            pieceComplex.AddComponent(0, 0, 1, 1, 2, 1);
+            pieceComplex.Seal();
+            pieces.Add(pieceComplex);
 
             // Translate pieces
             Color[] pallet = SelectedPallet;
-            List<ModelVisual3D> models = HelixAdapter.TranslateToOrientationOverview(pieces, (int id) => { return pallet[id % pallet.Length]; }, CheckBoxOrientationBreak.IsChecked == true).ToList();
+            List<ModelVisual3D> models = HelixAdapter.TranslateToOrientationOverview(pieces, (int id) => { return pallet[id % pieces.Count]; }, CheckBoxOrientationBreak.IsChecked == true).ToList();
             DisplayNewSolution(models);
         }
 

@@ -25,7 +25,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <HelixToolkit:HelixViewport3D Grid.RowSpan="4" Grid.ColumnSpan="3" Name="mainViewport" ClipToBounds="True" MouseDoubleClick="mainViewport_MouseDoubleClick" MouseUp="mainViewport_MouseUp" ShowViewCube="False">
+        <HelixToolkit:HelixViewport3D Grid.RowSpan="4" Grid.ColumnSpan="3" Name="mainViewport" ClipToBounds="True" MouseDoubleClick="mainViewport_MouseDoubleClick" MouseUp="mainViewport_MouseUp" ShowViewCube="True">
         </HelixToolkit:HelixViewport3D>
         <DockPanel Background="{x:Null}" Grid.Column="2">
             <StackPanel DockPanel.Dock="Top" Orientation="Vertical" VerticalAlignment="Top">

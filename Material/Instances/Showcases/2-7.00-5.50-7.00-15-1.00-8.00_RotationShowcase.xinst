@@ -31,7 +31,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="3" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="3" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="1" Width="8" Height="2">

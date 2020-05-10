@@ -188,49 +188,49 @@ namespace SC.ObjectModel.Additionals
         /// Defined as follows: (Viewing from the origin of coordinates, meaning left is a lesser x than right, front is a lesser y than back and bottom is a lesser z than top): 
         /// (0 = centre, 1 = FLB, 2 = FRB, 3 = BLB, 4 = BRB, 5 = FLT, 6 = FRT, 7 = BLT, 8 = BRT)
         /// </summary>
-        public static int[] VERTEX_IDS = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+        public static readonly int[] VERTEX_IDS = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
         /// <summary>
         /// Defines the different vertices by ID asa they are used by the hybrid model.
         /// Defined as follows: (Viewing from the origin of coordinates, meaning left is a lesser x than right, front is a lesser y than back and bottom is a lesser z than top): 
         /// (1 = FLB, 8 = BRT)
         /// </summary>
-        public static int[] VERTEX_IDS_HYBRID_SUBSET = { 1, 8 };
+        public static readonly int[] VERTEX_IDS_HYBRID_SUBSET = { 1, 8 };
 
         /// <summary>
         /// Defines the different possible orientations by ID. (0-23)
         /// </summary>
-        public static int[] ORIENTATIONS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+        public static readonly int[] ORIENTATIONS = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
 
         /// <summary>
         /// Defines the necessary orientations-IDs to achieve all unique orientations of a parallelepiped
         /// </summary>
-        public static int[] ORIENTATIONS_PARALLELEPIPED_SUBSET = { 0, 2, 8, 10, 16, 18 };
+        public static readonly int[] ORIENTATIONS_PARALLELEPIPED_SUBSET = { 0, 1, 4, 5, 16, 17 };
 
         /// <summary>
         /// Defines the orientations allowed when a piece is declared as 'this side up'
         /// </summary>
-        public static int[] ORIENTATIONS_THIS_SIDE_UP = { 0, 4, 8, 12 };
+        public static readonly int[] ORIENTATIONS_THIS_SIDE_UP = { 0, 1, 2, 3 };
 
         /// <summary>
         /// Defines the dimensions by ID. (x = 0, y = 1, z = 2)
         /// </summary>
-        public static int[] DIMENSION_IDS = { 0, 1, 2 };
+        public static readonly int[] DIMENSION_IDS = { 0, 1, 2 };
 
         /// <summary>
         /// Defines the set of vertex IDs which defines left endpoints regarding x
         /// </summary>
-        public static HashSet<int> VERTEX_IDS_LEFT_ENDPOINTS_X = new HashSet<int>(new int[] { 1, 3, 5, 7 });
+        public static readonly HashSet<int> VERTEX_IDS_LEFT_ENDPOINTS_X = new HashSet<int>(new int[] { 1, 3, 5, 7 });
 
         /// <summary>
         /// Defines the set of vertex IDs which defines left endpoints regarding y
         /// </summary>
-        public static HashSet<int> VERTEX_IDS_LEFT_ENDPOINTS_Y = new HashSet<int>(new int[] { 1, 2, 5, 6 });
+        public static readonly HashSet<int> VERTEX_IDS_LEFT_ENDPOINTS_Y = new HashSet<int>(new int[] { 1, 2, 5, 6 });
 
         /// <summary>
         /// Defines the set of vertex IDs which defines left endpoints regarding z
         /// </summary>
-        public static HashSet<int> VERTEX_IDS_LEFT_ENDPOINTS_Z = new HashSet<int>(new int[] { 1, 2, 3, 4 });
+        public static readonly HashSet<int> VERTEX_IDS_LEFT_ENDPOINTS_Z = new HashSet<int>(new int[] { 1, 2, 3, 4 });
     }
 
     /// <summary>

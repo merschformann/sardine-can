@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using SC.Toolbox;
 
 namespace SC.GUI
 {
@@ -823,7 +824,7 @@ namespace SC.GUI
         /// <param name="pieces">The pieces to draw</param>
         /// <param name="colorProvider">The color provider</param>
         /// <returns>The drawable objects</returns>
-        public static IEnumerable<ModelVisual3D> TranslateToOrientationOverview(IEnumerable<Piece> pieces, Func<int, Color> colorProvider, bool halfbreak)
+        public static IEnumerable<ModelVisual3D> TranslateToOrientationOverview(IEnumerable<Piece> pieces, Func<int, Color> colorProvider, bool wrapAround)
         {
             // Init
             List<ModelVisual3D> models = new List<ModelVisual3D>();
@@ -846,8 +847,13 @@ namespace SC.GUI
                         0));
 
                 // Add all orientations
+                int counter = 0, maxPerLine = 12;
+                double largest = 0;
                 foreach (var orientation in MeshConstants.ORIENTATIONS)
                 {
+                    // Next orientation
+                    counter++;
+                    largest = Math.Max(largest, piece[orientation].BoundingBox.Length);
                     // Determine top component since only this one gets text drawn on it
                     MeshCube topComponent = piece[orientation].Components.OrderByDescending(com => com.RelPosition.Z + com.Height).First();
 
@@ -880,25 +886,18 @@ namespace SC.GUI
                         }
                     }
 
-                    // Break into two lines if desired
+                    // Break into lines if desired
                     offsetY += piece[orientation].BoundingBox.Width + offsetYDelta;
-                    if (halfbreak && orientation == 11)
+                    if (wrapAround && counter % maxPerLine == 0 && counter != MeshConstants.ORIENTATIONS.Length)
                     {
-                        offsetX += MeshConstants.ORIENTATIONS.Take(12).Max(o => piece[o].BoundingBox.Length) + offsetXDelta;
+                        offsetX += largest + offsetXDelta;
                         offsetY = 0;
                     }
                 }
 
                 // Go to next line
-                if (halfbreak)
-                {
-                    offsetX += MeshConstants.ORIENTATIONS.Skip(12).Max(o => piece[o].BoundingBox.Length) + offsetXDelta;
-                }
-                else
-                {
-                    offsetX += MeshConstants.ORIENTATIONS.Max(o => piece[o].BoundingBox.Length) + offsetXDelta;
-                }
                 offsetY = 0;
+                offsetX += largest + offsetXDelta;
             }
 
             // Return

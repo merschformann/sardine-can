@@ -104,7 +104,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="8" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="8" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="3" Width="6" Height="3">
@@ -113,7 +113,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="9" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="9" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="3" Width="6" Height="3">
@@ -122,7 +122,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="10" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="10" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="3" Width="6" Height="3">
@@ -131,7 +131,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="11" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="11" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="3" Width="6" Height="3">
@@ -815,7 +815,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="87" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="87" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="6" Width="4" Height="5">
@@ -824,7 +824,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="88" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="88" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="6" Width="4" Height="5">
@@ -833,7 +833,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="89" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="89" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="5" Width="3" Height="3">
@@ -842,7 +842,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="90" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="90" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="5" Width="3" Height="3">
@@ -851,7 +851,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="91" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="91" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="5" Width="3" Height="3">
@@ -860,7 +860,7 @@
         </Cubes>
       </Components>
     </Piece>
-    <Piece ID="92" ForbiddenOrientations="1;2;3;5;6;7;9;10;11;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
+    <Piece ID="92" ForbiddenOrientations="4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23" Material="Default" Stackable="True">
       <Components>
         <Cubes>
           <Cube Length="5" Width="3" Height="3">

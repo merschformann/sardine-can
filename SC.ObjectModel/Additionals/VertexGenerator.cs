@@ -2,6 +2,7 @@
 using SC.Toolbox;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -169,13 +170,6 @@ namespace SC.ObjectModel.Additionals
         {
             // Init
             IReadOnlyList<Matrix> rotationMatrices = RotationMatrices.GetRotationMatrices();
-            int index = 0;
-            Dictionary<int, Matrix> _rotationMatrices = new Dictionary<int, Matrix>();
-            foreach (var matrix in rotationMatrices)
-            {
-                _rotationMatrices[index++] = matrix;
-            }
-
             // Create vertex info for original
             foreach (var component in piece.Original.Components)
             {
@@ -201,87 +195,56 @@ namespace SC.ObjectModel.Additionals
                 foreach (var component in piece[orientation].Components)
                 {
                     // Calculate rotated sides
-                    Matrix referenceSidesVector = new Matrix(1, 3);
+                    Matrix referenceSidesVector = new Matrix(3, 1);
                     referenceSidesVector[0, 0] = component.Length;
-                    referenceSidesVector[0, 1] = component.Width;
-                    referenceSidesVector[0, 2] = component.Height;
-                    Matrix rotatedSidesVector = referenceSidesVector * _rotationMatrices[orientation];
+                    referenceSidesVector[1, 0] = component.Width;
+                    referenceSidesVector[2, 0] = component.Height;
+                    Matrix rotatedSidesVector = rotationMatrices[orientation] * referenceSidesVector;
                     double length = rotatedSidesVector[0, 0];
-                    double width = rotatedSidesVector[0, 1];
-                    double height = rotatedSidesVector[0, 2];
+                    double width = rotatedSidesVector[1, 0];
+                    double height = rotatedSidesVector[2, 0];
 
                     // Calculate rotated vertices
                     Dictionary<int, MeshPoint> referencePoints = MeshConstants.VERTEX_IDS.ToDictionary(k => k, v => GenerateVertex(v, component, piece));
                     foreach (var vertexID in MeshConstants.VERTEX_IDS)
                     {
                         MeshPoint referencePoint = referencePoints[vertexID];
-                        Matrix referencePointVector = new Matrix(1, 3);
+                        Matrix referencePointVector = new Matrix(3, 1);
                         referencePointVector[0, 0] = referencePoint.X;
-                        referencePointVector[0, 1] = referencePoint.Y;
-                        referencePointVector[0, 2] = referencePoint.Z;
-                        Matrix rotatedPointVector = referencePointVector * _rotationMatrices[orientation];
+                        referencePointVector[1, 0] = referencePoint.Y;
+                        referencePointVector[2, 0] = referencePoint.Z;
+                        Matrix rotatedPointVector = rotationMatrices[orientation] * referencePointVector;
                         component[vertexID] = new MeshPoint() { ParentPiece = piece };
                         component[vertexID].X = rotatedPointVector[0, 0];
-                        component[vertexID].Y = rotatedPointVector[0, 1];
-                        component[vertexID].Z = rotatedPointVector[0, 2];
+                        component[vertexID].Y = rotatedPointVector[1, 0];
+                        component[vertexID].Z = rotatedPointVector[2, 0];
                     }
 
-                    // Set sides
-                    component.Length = length;
-                    component.Width = width;
-                    component.Height = height;
+                    // Set sides (keep them positive - these are lengths after all)
+                    component.Length = Math.Abs(length);
+                    component.Width = Math.Abs(width);
+                    component.Height = Math.Abs(height);
                 }
             }
 
-            // Transform all coordinates into the first octant
+            // Transform all coordinates into the first octant (for all orientations)
             foreach (var orientation in MeshConstants.ORIENTATIONS)
             {
-                double minVertexX = 0;
-                double minVertexY = 0;
-                double minVertexZ = 0;
+                // Determine offset
+                double minVertexX = Math.Abs(piece[orientation].Components.Min(c => MeshConstants.VERTEX_IDS.Min(v => c[v].X)));
+                double minVertexY = Math.Abs(piece[orientation].Components.Min(c => MeshConstants.VERTEX_IDS.Min(v => c[v].Y)));
+                double minVertexZ = Math.Abs(piece[orientation].Components.Min(c => MeshConstants.VERTEX_IDS.Min(v => c[v].Z)));
+                // Move all components to first octant by applying the offset
                 foreach (var component in piece[orientation].Components)
                 {
+                    // Move vertices
                     foreach (var vertexID in MeshConstants.VERTEX_IDS)
                     {
-                        if (component[vertexID].X < minVertexX)
-                        {
-                            minVertexX = component[vertexID].X;
-                        }
-                        if (component[vertexID].Y < minVertexY)
-                        {
-                            minVertexY = component[vertexID].Y;
-                        }
-                        if (component[vertexID].Z < minVertexZ)
-                        {
-                            minVertexZ = component[vertexID].Z;
-                        }
+                        component[vertexID].X += minVertexX;
+                        component[vertexID].Y += minVertexY;
+                        component[vertexID].Z += minVertexZ;
                     }
-                }
-                foreach (var component in piece[orientation].Components)
-                {
-                    foreach (var vertexID in MeshConstants.VERTEX_IDS)
-                    {
-                        component[vertexID].X += Math.Abs(minVertexX);
-                        component[vertexID].Y += Math.Abs(minVertexY);
-                        component[vertexID].Z += Math.Abs(minVertexZ);
-                    }
-                }
-            }
-            // No negative side-lengths
-            foreach (var orientation in MeshConstants.ORIENTATIONS)
-            {
-                foreach (var component in piece[orientation].Components)
-                {
-                    component.Length = Math.Abs(component.Length);
-                    component.Width = Math.Abs(component.Width);
-                    component.Height = Math.Abs(component.Height);
-                }
-            }
-            // Update relative positions
-            foreach (var orientation in MeshConstants.ORIENTATIONS)
-            {
-                foreach (var component in piece[orientation].Components)
-                {
+                    // Update relative position of component accordingly
                     component.RelPosition.X = component.Vertices.Min(v => v.X);
                     component.RelPosition.Y = component.Vertices.Min(v => v.Y);
                     component.RelPosition.Z = component.Vertices.Min(v => v.Z);
