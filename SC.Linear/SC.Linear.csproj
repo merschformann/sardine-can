@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
-    <ProjectReference Include="..\SC.Preprocessing\SC.Preprocessing.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,9 +8,6 @@ using SC.ObjectModel.Additionals;
 using SC.ObjectModel.Elements;
 using SC.ObjectModel.Generator;
 using SC.ObjectModel.Interfaces;
-using SC.Preprocessing;
-using SC.Preprocessing.PreprocessingMethods;
-using SC.Preprocessing.Tools;
 using SC.Toolbox;
 using SC.Linear;
 using HelixToolkit;
@@ -65,8 +62,6 @@ namespace SC.GUI
         private MeritFunctionType _meritType = MeritFunctionType.None;
         private PieceOrderType _pieceOrder = PieceOrderType.VwH;
         private DependencyProperty propertyModelVisual3D;
-
-        public List<IPreprocessorStep> SelectedPreprocessingSteps = new List<IPreprocessorStep>();
 
         public MainWindow()
         {
@@ -722,9 +717,6 @@ namespace SC.GUI
 
         private IMethod GetCurrentChoosenSimpleMethods(object sender, Instance instance)
         {
-            //get the input of the preprocessing tree
-            EvaluateTree();
-
             MethodType methodToUse = GetMethodSimple();
             IMethod method = null;
             OptimizationGoal goal = GetOptimizationGoalSimple();
@@ -1458,365 +1450,6 @@ namespace SC.GUI
             return;
         }
 
-        #region Preprocessing Tab
-
-        /// <summary>
-        /// Handles the Click event of the ButtonRemoveConfiguration control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonRemoveConfiguration_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedIndex = TreeSelectedPrep.Items.IndexOf(TreeSelectedPrep.SelectedItem);
-            if (selectedIndex <= -1) return;
-
-            //remove
-            SelectedPreprocessingSteps.RemoveAt(selectedIndex);
-
-            RefreshTree();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the ButtonMoveConfigurationUp control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonMoveConfigurationUp_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedIndex = TreeSelectedPrep.Items.IndexOf(TreeSelectedPrep.SelectedItem);
-            if (selectedIndex <= 0 || selectedIndex >= SelectedPreprocessingSteps.Count) return;
-
-            EvaluateTree();
-
-            //triagle exchange
-            var tmp = SelectedPreprocessingSteps[selectedIndex];
-            SelectedPreprocessingSteps[selectedIndex] = SelectedPreprocessingSteps[selectedIndex - 1];
-            SelectedPreprocessingSteps[selectedIndex - 1] = tmp;
-
-            RefreshTree();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the ButtonMoveConfigurationDown control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonMoveConfigurationDown_Click(object sender, RoutedEventArgs e)
-        {
-
-            var selectedIndex = TreeSelectedPrep.Items.IndexOf(TreeSelectedPrep.SelectedItem);
-            if (selectedIndex <= -1 || selectedIndex >= SelectedPreprocessingSteps.Count - 1) return;
-
-            EvaluateTree();
-
-            //triagle exchange
-            var tmp = SelectedPreprocessingSteps[selectedIndex];
-            SelectedPreprocessingSteps[selectedIndex] = SelectedPreprocessingSteps[selectedIndex + 1];
-            SelectedPreprocessingSteps[selectedIndex + 1] = tmp;
-
-            RefreshTree();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the ButtonResetPreprocessing control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonResetPreprocessing_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedPreprocessingSteps.Clear();
-            RefreshTree();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the ButtonAddPreproMethod control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonAddPreproMethod_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedIndex = ListAvailPreproMethods.SelectedIndex;
-            if (selectedIndex == -1) return;
-
-            //add the step
-            IPreprocessorStep step;
-            switch ((PreprocessorMethod)Enum.Parse(typeof(PreprocessorMethod), ListAvailPreproMethods.SelectedItem.ToString()))
-            {
-                case PreprocessorMethod.ItemExtruding:
-                    step = new ItemExtrudingPreprocessor.PreprocessorStep();
-                    break;
-                case PreprocessorMethod.ItemPlug:
-                    step = new ItemPlugPreprocessor.PreprocessorStep();
-                    break;
-                case PreprocessorMethod.ItemAbstraction:
-                    step = new ItemAbstractionPreprocessor.PreprocessorStep();
-                    break;
-                case PreprocessorMethod.ComplexCubeReductionStep:
-                    step = new ComplexCubeReductionStep.PreprocessorStep();
-                    break;
-                default:
-                    return;
-            }
-
-            SelectedPreprocessingSteps.Add(step);
-
-            //refresh tree
-            RefreshTree();
-
-        }
-
-        /// <summary>
-        /// recreate the tree
-        /// </summary>
-        private void RefreshTree()
-        {
-            TreeSelectedPrep.Items.Clear();
-
-            //foreach start
-            foreach (var stepParams in SelectedPreprocessingSteps)
-            {
-                // Get property array
-                var parameterList = new List<TreeViewItem>();
-
-                //put every property in the tree
-                foreach (var p in stepParams.GetType().GetFields())
-                {
-                    var wrapPane = new WrapPanel { Orientation = Orientation.Horizontal };
-                    wrapPane.Children.Add(new TextBlock { Text = p.Name + ": " });
-                    wrapPane.Children.Add(new TextBox { Text = p.GetValue(stepParams).ToString() });
-                    parameterList.Add(new TreeViewItem { Header = wrapPane });
-                }
-
-                //add the step to the tree
-                var methodItem = new TreeViewItem
-                {
-                    Header = stepParams.GetMethodType().Name,
-                    ItemsSource = parameterList.ToArray()
-                };
-
-                TreeSelectedPrep.Items.Add(methodItem);
-            }
-        }
-
-        /// <summary>
-        /// recreate the tree
-        /// </summary>
-        private void EvaluateTree()
-        {
-            try
-            {
-                //check every preprocessingStep
-                for (var paramNo = 0; paramNo < SelectedPreprocessingSteps.Count; paramNo++)
-                {
-                    // Get property array
-                    var fields = SelectedPreprocessingSteps[paramNo].GetType().GetFields();
-                    var subtree = TreeSelectedPrep.Items[paramNo] as TreeViewItem;
-                    if (subtree == null)
-                        continue;
-
-                    //for every field get the value
-                    for (var fieldNo = 0; fieldNo < fields.Length; fieldNo++)
-                    {
-                        var parseMethod = fields[fieldNo].FieldType.GetMethod("Parse", new[] { typeof(string) });
-                        var treeView = subtree.Items[fieldNo] as TreeViewItem;
-                        if (treeView == null) continue;
-                        var wrapPanel = treeView.Header as WrapPanel;
-                        if (wrapPanel == null) continue;
-                        var textBox = wrapPanel.Children[1] as TextBox;
-                        if (textBox == null) continue;
-
-                        var val = parseMethod.Invoke(fields[fieldNo], new object[] { textBox.Text });
-
-                        fields[fieldNo].SetValue(SelectedPreprocessingSteps[paramNo], val);
-                    }
-
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(this, "Error on reading parameter!");
-            }
-        }
-
-        /// <summary>
-        /// Handles the Click event of the ButtonApplyPreprocessing control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonApplyPreprocessing_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (_instance == null) return;
-
-            var startTime = DateTime.Now;
-            OutputMessage("Start Preprocessing.\n");
-
-            //get current method
-            var method = GetCurrentChoosenSimpleMethods(null, _instance) as Heuristic;
-            if (method == null) return;
-
-            var preprocessingMethods = GetCurrentChoosenPreprocessingMethods();
-            var preprocessingSteps = SelectedPreprocessingSteps;
-
-            //init
-            foreach (var preprocessingMethod in preprocessingMethods.Values)
-                preprocessingMethod.InitPreprocessing(_instance, method.Config);
-
-
-            //call steps
-            foreach (var step in preprocessingSteps)
-                preprocessingMethods[step.GetMethodType()].Preprocessing(step);
-
-            // Draw instance
-            DrawInstance(_instance.CreateSolution(false, MeritFunctionType.None, true));
-
-            OutputMessage("End Preprocessing. Time: " + (DateTime.Now - startTime).TotalSeconds + "\n");
-
-        }
-
-        private Dictionary<Type, IPreprocessorMethod> GetCurrentChoosenPreprocessingMethods()
-        {
-            var output = new Dictionary<Type, IPreprocessorMethod>();
-
-            EvaluateTree();
-
-            //init
-            foreach (var step in SelectedPreprocessingSteps)
-            {
-                if (!output.ContainsKey(step.GetMethodType()))
-                {
-                    output.Add(step.GetMethodType(), step.GetNewMethodInstance());
-                }
-            }
-
-            return output;
-        }
-
-        /// <summary>
-        /// list out all available methods
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListAvailPreproMethodsLoaded(object sender, RoutedEventArgs e)
-        {
-            if (ListAvailPreproMethods.Items.Count > 0)
-                return;
-
-            foreach (var method in Enum.GetValues(typeof(PreprocessorMethod)))
-                ListAvailPreproMethods.Items.Add(method.ToString());
-        }
-
-        /// <summary>
-        /// translate instance to an preprocessed free instance
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonTransformInstanceBack_Click(object sender, RoutedEventArgs e)
-        {
-            if (_solution != null)
-                InstanceModificator.DecomposePreprocessedPieces(_solution);
-
-            // Draw instance
-            DrawInstance(_solution);
-        }
-
-
-        /// <summary>
-        /// save config
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonMoveConfigurationSave_Click(object sender, RoutedEventArgs e)
-        {
-            EvaluateTree();
-
-            // Initializing Open Dialog
-            var saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "ConfigFile | *.cfg";
-
-            // Show dialog and take result into account
-            bool? result = saveDialog.ShowDialog();
-            if (result == true)
-            {
-                var stream = new StreamWriter(saveDialog.FileName);
-
-                //each step seperately
-                foreach (var step in SelectedPreprocessingSteps)
-                {
-                    var output = new StringBuilder();
-
-                    //classname
-                    output.Append(step.GetEnumValue()).Append(";");
-
-                    //fields
-                    foreach (var field in step.GetType().GetFields())
-                        output.Append(field.GetValue(step)).Append(";");
-
-                    stream.WriteLine(output);
-                }
-
-                stream.Close();
-            }
-        }
-
-        /// <summary>
-        /// load config
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonMoveConfigurationOpen_Click(object sender, RoutedEventArgs e)
-        {
-            // Initializing Open Dialog
-            var openDialog = new OpenFileDialog();
-            openDialog.Filter = "ConfigFile | *.cfg";
-
-            // Show dialog and take result into account
-            bool? result = openDialog.ShowDialog();
-            if (result == true)
-            {
-                LoadConfig(openDialog.FileName);
-            }
-
-        }
-
-        public void LoadConfig(string filename)
-        {
-            var stream = new StreamReader(filename);
-            SelectedPreprocessingSteps.Clear();
-
-            //each step seperately
-            while (!stream.EndOfStream)
-            {
-                var input = stream.ReadLine().Split(';');
-
-                //class create -> simulate click
-                ListAvailPreproMethods.SelectedIndex = ListAvailPreproMethods.Items.IndexOf(input[0]);
-                ButtonAddPreproMethod_Click(null, null);
-
-                var step = SelectedPreprocessingSteps.Last();
-
-                for (var i = 0; i < step.GetType().GetFields().Count(); i++)
-                {
-                    var parseMethod = step.GetType().GetFields()[i].FieldType.GetMethod("Parse", new[] { typeof(string) });
-                    try
-                    {
-                        step.GetType().GetFields()[i].SetValue(step, parseMethod.Invoke(step.GetType().GetFields()[i], new[] { input[i + 1] }));
-                    }
-                    catch (Exception e)
-                    {
-                        OutputMessage(e.Message + "\n");
-                    }
-                }
-
-            }
-
-            stream.Close();
-            RefreshTree();
-
-        }
-
-        #endregion
-
         #region FolderEvaluation
         /// <summary>
         /// chosse folder to evaluate
@@ -1862,17 +1495,6 @@ namespace SC.GUI
         {
             try
             {
-                List<string> preprocessingConfigs;
-
-                //no preprocessing
-                if (CbxPreprocessingFolderEvaluation.IsChecked == true)
-                    preprocessingConfigs =
-                        (from file in Directory.GetFiles(EvalutationFolder.Text)
-                         where file.ToLower().Contains("cfg")
-                         select file).ToList();
-                else
-                    preprocessingConfigs = null;
-
                 // Read instances from xml
                 var instances = new List<Instance>();
                 var names = new Dictionary<Instance, string>();
@@ -1901,11 +1523,10 @@ namespace SC.GUI
 
                 // Execute in thread
                 var timeOut = new TimeSpan(0, 0, 0, int.Parse(EvalutationFolderTimeOut.Text));
-                var runner = new EvaluationFolderRunner(method, instances, names, EvalutationFolder.Text, null, EnableButtons,
-                    timeOut, preprocessingConfigs, this);
-
-                runner.DetailedLog = CbxPreprocessingDetail.IsChecked == true;
-                runner.NameExtrension = "_" + timeOut.TotalSeconds + ((CbxPreprocessingFolderEvaluation.IsChecked == true) ? "_pre" : "");
+                var runner = new EvaluationFolderRunner(method, instances, names, EvalutationFolder.Text, null, EnableButtons, timeOut)
+                {
+                    DetailedLog = CheckBoxPreprocessingDetail.IsChecked == true
+                };
 
 
                 ThreadPool.QueueUserWorkItem(runner.Run);

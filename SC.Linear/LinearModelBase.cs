@@ -2,8 +2,6 @@
 using SC.ObjectModel;
 using SC.ObjectModel.Additionals;
 using SC.ObjectModel.Interfaces;
-using SC.Preprocessing.PreprocessingMethods;
-using SC.Preprocessing.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +24,6 @@ namespace SC.Linear
         {
             Instance = instance;
             Config = config;
-            PreprocessorSteps = null;
         }
 
         #region Auxiliary methods
@@ -67,22 +64,11 @@ namespace SC.Linear
         public Configuration Config { get; set; }
 
         /// <summary>
-        /// Preprocessor
-        /// </summary>
-        public List<IPreprocessorStep> PreprocessorSteps { get; set; }
-
-        /// <summary>
-        /// preprocessor Methods
-        /// </summary>
-        private Dictionary<Type, IPreprocessorMethod> _preprocessingMethods;
-
-        /// <summary>
         /// reset method
         /// </summary>
         public void Reset()
         {
             HasSolution = false;
-            PreprocessorSteps = null;
             Solution = null;
         }
 
@@ -101,15 +87,7 @@ namespace SC.Linear
         /// </summary>
         public void Cancel()
         {
-
-            //cancel preprocessors
-            if (PreprocessorSteps != null)
-            {
-                foreach (var step in PreprocessorSteps)
-                    _preprocessingMethods[step.GetMethodType()].Cancel();
-            }
-
-            //cancel solver
+            // Cancel solver
             if (_solver != null)
             {
                 Action cancelAction = CancelSolver;
@@ -151,31 +129,7 @@ namespace SC.Linear
             // Log first timestamp
             Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, 0);
 
-            //Preprocessing Start
-            //preprocessing, if a preprocessor is supplied
-            //This will normaly change the instance.
-            _preprocessingMethods = new Dictionary<Type, IPreprocessorMethod>();
-            if (PreprocessorSteps != null && PreprocessorSteps.Count > 0)
-            {
-                //init
-                foreach (var step in PreprocessorSteps)
-                {
-                    if (!_preprocessingMethods.ContainsKey(step.GetMethodType()))
-                    {
-                        _preprocessingMethods.Add(step.GetMethodType(), step.GetNewMethodInstance());
-                        _preprocessingMethods[step.GetMethodType()].InitPreprocessing(Instance, Config);
-                    }
-                }
-
-                //call steps
-                foreach (var step in PreprocessorSteps)
-                    _preprocessingMethods[step.GetMethodType()].Preprocessing(step);
-
-                InstanceModificator.GenerateNewPieceNonvolatileIds(Instance);
-                //recreate solution
-                //Solution = Instance.CreateSolution(((PointInsertionConfiguration)Config).Tetris, ((PointInsertionConfiguration)Config).MeritType);
-            }
-
+            // Build model
             LinearModel model = Transform();
             model.SetTimelimit(Config.TimeLimit);
             model.SetThreadLimit(Config.ThreadLimit);
@@ -223,16 +177,7 @@ namespace SC.Linear
             try { bestBound = _solver.GetBestBound(); } catch (Exception) { }
             try { gap = Math.Abs(_solver.GetGap()); } catch (Exception) { }
 
-            //Preprocessing End
-            //Decompose
-            if (PreprocessorSteps != null)
-            {
-                InstanceModificator.DecomposePreprocessedPieces(Solution);
-                foreach (var method in _preprocessingMethods.Values)
-                    method.Dispose();
-            }
-
-            // Build the result
+            // Prepare the result
             PerformanceResult result = new PerformanceResult()
             {
                 Instance = Instance,

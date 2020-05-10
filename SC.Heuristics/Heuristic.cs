@@ -8,9 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SC.Preprocessing;
-using SC.Preprocessing.PreprocessingMethods;
-using SC.Preprocessing.Tools;
 using SC.ObjectModel.Configuration;
 
 namespace SC.Heuristics
@@ -66,16 +63,6 @@ namespace SC.Heuristics
         protected Random Randomizer { get; set; }
 
         /// <summary>
-        /// Preprocessor
-        /// </summary>
-        public List<IPreprocessorStep> PreprocessorSteps { get; set; }
-
-        /// <summary>
-        /// preprocessor Methods
-        /// </summary>
-        private Dictionary<Type, IPreprocessorMethod> _preprocessingMethods;
-
-        /// <summary>
         /// Creates a new mip based approach
         /// </summary>
         /// <param name="instance">The instance to solve</param>
@@ -86,7 +73,6 @@ namespace SC.Heuristics
             Config = config;
             Solution = instance.CreateSolution(config.Tetris, config.MeritType);
             Randomizer = new Random(config.Seed);
-            PreprocessorSteps = null;
         }
 
         /// <summary>
@@ -108,44 +94,10 @@ namespace SC.Heuristics
             // Start solving process
             Config.StartTimeStamp = DateTime.Now;
 
-            //preprocessing, if a preprocessor is supplied
-            //This will normaly change the instance.
-            _preprocessingMethods = new Dictionary<Type, IPreprocessorMethod>();
-            if (PreprocessorSteps != null && PreprocessorSteps.Count > 0)
-            {
-                //init
-                foreach (var step in PreprocessorSteps)
-                {
-                    if (!_preprocessingMethods.ContainsKey(step.GetMethodType()))
-                    {
-                        _preprocessingMethods.Add(step.GetMethodType(), step.GetNewMethodInstance());
-                        _preprocessingMethods[step.GetMethodType()].InitPreprocessing(Instance, Config);
-                    }
-                }
-
-                //call steps
-                foreach (var step in PreprocessorSteps)
-                    _preprocessingMethods[step.GetMethodType()].Preprocessing(step);
-
-                //recreate solution
-                Solution = Instance.CreateSolution(Config.Tetris, Config.MeritType);
-            }
-
-            //Main solve part
+            // Main solve part
             Solve();
 
-            //Decompose
-            if (PreprocessorSteps != null)
-            {
-                InstanceModificator.DecomposePreprocessedPieces(Solution);
-                foreach (var method in _preprocessingMethods.Values)
-                    method.Dispose();
-            }
-
-            //postprocessing, if a preprocessor is supplied
-            //Redo the instance changes done by the preprocessing.
-
-            //End solving process
+            // End solving process
             DateTime afterTimeStamp = DateTime.Now;
 
             // Return performance result
@@ -214,15 +166,7 @@ namespace SC.Heuristics
         /// <summary>
         /// Cancels the solve process
         /// </summary>
-        public virtual void Cancel()
-        {
-            //cancel preprocessors
-            if (PreprocessorSteps != null && _preprocessingMethods != null)
-            {
-                foreach (var step in PreprocessorSteps)
-                    _preprocessingMethods[step.GetMethodType()].Cancel();
-            }
-        }
+        public abstract void Cancel();
 
         /// <summary>
         /// Reset the Method
@@ -231,8 +175,6 @@ namespace SC.Heuristics
         {
             Cancelled = false;
             Solution = Instance.CreateSolution(Config.Tetris, Config.MeritType);
-            PreprocessorSteps = null;
-            _preprocessingMethods = null;
         }
 
         /// <summary>

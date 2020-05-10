@@ -5,7 +5,6 @@ using SC.ObjectModel.Additionals;
 using SC.ObjectModel.Configuration;
 using SC.ObjectModel.Generator;
 using SC.ObjectModel.Interfaces;
-using SC.Preprocessing.PreprocessingMethods;
 using SC.Toolbox;
 using SC.Linear;
 using System;
@@ -166,16 +165,6 @@ namespace SC.GUI
         protected TimeSpan TimeLimit;
 
         /// <summary>
-        /// additional Information to the filename
-        /// </summary>
-        public string NameExtrension = "";
-
-        /// <summary>
-        /// preprocessing Steps
-        /// </summary>
-        private readonly List<string> _preprocessingFiles;
-
-        /// <summary>
         /// Log every Improvement
         /// </summary>
         public bool DetailedLog = false;
@@ -189,9 +178,7 @@ namespace SC.GUI
         /// <param name="instanceFinishedAction">The action to execute when finished one instance</param>
         /// <param name="finishAction">The action to execute when finished</param>
         /// <param name="timeLimit">time limit</param>
-        /// <param name="preprocessingFiles">preprocessing steps</param>
-        /// <param name="mainWindow"></param>
-        public EvaluationFolderRunner(IMethod method, List<Instance> instances, Dictionary<Instance, string> names, string exportDir, Action<PerformanceResult> instanceFinishedAction, Action finishAction, TimeSpan timeLimit, List<string> preprocessingFiles, MainWindow mainWindow)
+        public EvaluationFolderRunner(IMethod method, List<Instance> instances, Dictionary<Instance, string> names, string exportDir, Action<PerformanceResult> instanceFinishedAction, Action finishAction, TimeSpan timeLimit)
         {
             _method = method;
             _names = names;
@@ -200,13 +187,6 @@ namespace SC.GUI
             _instanceFinishedAction = instanceFinishedAction;
             _exportDir = exportDir;
             TimeLimit = timeLimit;
-            _preprocessingFiles = preprocessingFiles;
-
-            if (_preprocessingFiles == null)
-                _preprocessingFiles = new List<string>();
-
-
-            _preprocessingFiles.Insert(0, "No Preprocessing");
         }
 
         /// <summary>
@@ -227,141 +207,7 @@ namespace SC.GUI
                 _method.Instance = instace;
                 _method.Reset(); //Load the instance correctly etc.
 
-                foreach (var preprocessingConfigPath in _preprocessingFiles)
-                {
-                    var isPreprocessing = !preprocessingConfigPath.Equals("No Preprocessing");
-
-                    //file name of config file
-                    string configName;
-                    if (!isPreprocessing)
-                        configName = "No Preprocessing";
-                    else
-                        configName = preprocessingConfigPath.Substring(preprocessingConfigPath.LastIndexOf('\\') + 1, preprocessingConfigPath.LastIndexOf('.') - preprocessingConfigPath.LastIndexOf('\\') - 1);
-
-                    output.Add(configName, new List<Tuple<double, double>>());
-                    output[configName].Add(new Tuple<double, double>(0, 0));
-
-                    //load preprocessing - each step seperately
-                    var preprocessingSteps = new List<IPreprocessorStep>();
-                    if (isPreprocessing)
-                    {
-                        var stream = new StreamReader(preprocessingConfigPath);
-                        while (!stream.EndOfStream)
-                        {
-                            var input = stream.ReadLine().Split(';');
-
-                            //add the step
-                            IPreprocessorStep step;
-                            switch ((PreprocessorMethod)Enum.Parse(typeof(PreprocessorMethod), input[0]))
-                            {
-                                case PreprocessorMethod.ItemExtruding:
-                                    step = new ItemExtrudingPreprocessor.PreprocessorStep();
-                                    break;
-                                case PreprocessorMethod.ItemPlug:
-                                    step = new ItemPlugPreprocessor.PreprocessorStep();
-                                    break;
-                                case PreprocessorMethod.ItemAbstraction:
-                                    step = new ItemAbstractionPreprocessor.PreprocessorStep();
-                                    break;
-                                case PreprocessorMethod.ComplexCubeReductionStep:
-                                    step = new ComplexCubeReductionStep.PreprocessorStep();
-                                    break;
-                                default:
-                                    return;
-                            }
-
-                            for (var i = 0; i < step.GetType().GetFields().Count(); i++)
-                            {
-                                var parseMethod = step.GetType().GetFields()[i].FieldType.GetMethod("Parse", new[] { typeof(string) });
-                                step.GetType().GetFields()[i].SetValue(step, parseMethod.Invoke(step.GetType().GetFields()[i], new[] { input[i + 1] }));
-                            }
-
-                            preprocessingSteps.Add(step);
-
-                        }
-                        stream.Close();
-                    }
-
-                    //cancel after timeout
-                    var taskCanelor = new CancellationTokenSource();
-
-                    var cancelTask = Task.Factory.StartNew(() =>
-                    {
-                        try
-                        {
-                            Task.Delay(TimeLimit, taskCanelor.Token).Wait(taskCanelor.Token);
-                            if (!taskCanelor.Token.IsCancellationRequested && _method != null)
-                                _method.Cancel();
-                        }
-                        catch (OperationCanceledException)
-                        {
-                        }
-                    }, taskCanelor.Token);
-
-                    _method.Reset();
-
-                    //define mode
-                    var heuristic = _method as Heuristic;
-                    var optimizer = _method as LinearModelBase;
-
-                    //set preprocessors
-                    if (heuristic != null)
-                        heuristic.PreprocessorSteps = preprocessingSteps;
-                    if (optimizer != null)
-                        optimizer.PreprocessorSteps = preprocessingSteps;
-
-                    //excact config
-                    var config = (heuristic != null) ? heuristic.Config : (optimizer != null) ? optimizer.Config : null;
-
-                    //Detailed Evaluation
-                    if (DetailedLog)
-                    {
-                        var lclConfigName = configName;
-
-                        config.SubmitSolution = (solution, a, b, c) =>
-                        {
-                            try
-                            {
-                                var timestamp = (DateTime.Now - config.StartTimeStamp).TotalSeconds;
-                                var incumbend = solution.VolumeContained;
-                                if (output[lclConfigName][output[lclConfigName].Count - 1].Item1 < timestamp && output[lclConfigName][output[lclConfigName].Count - 1].Item2 < incumbend)
-                                    output[lclConfigName].Add(new Tuple<double, double>(timestamp, incumbend));
-                            }
-                            catch (Exception)
-                            {
-                            }
-                        };
-
-                        config.LogSolutionStatus = (timestamp, incumbend) =>
-                        {
-                            try
-                            {
-                                if (output[lclConfigName][output[lclConfigName].Count - 1].Item1 < timestamp && output[lclConfigName][output[lclConfigName].Count - 1].Item2 < incumbend)
-                                    output[lclConfigName].Add(new Tuple<double, double>(timestamp, incumbend));
-                            }
-                            catch (Exception)
-                            {
-                            }
-                        };
-                    }
-
-                    var result = _method.Run();
-
-                    taskCanelor.Cancel();
-                    cancelTask.Wait();
-
-                    if (_instanceFinishedAction != null)
-                        _instanceFinishedAction.Invoke(result);
-
-                    if (_method.HasSolution && output[configName][output[configName].Count - 1].Item1 < result.SolutionTime.TotalSeconds && output[configName][output[configName].Count - 1].Item2 < result.ObjectiveValue)
-                        output[configName].Add(new Tuple<double, double>(result.SolutionTime.TotalSeconds, result.ObjectiveValue));
-
-                    if (_canceled)
-                        break;
-                }
-
-
-                using (var sw = new StreamWriter(File.Open(Path.Combine(_exportDir, @"evaluationResult" + NameExtrension + "_" + _names[_method.Instance].Replace(".xinst", "") + @".csv"), FileMode.Create)))
+                using (var sw = new StreamWriter(File.Open(Path.Combine(_exportDir, @"evaluationResult_" + _names[_method.Instance].Replace(".xinst", "") + @".csv"), FileMode.Create)))
                 {
 
                     // Start statistics file

@@ -23,11 +23,7 @@ namespace SC.Heuristics.PrimalHeuristic
         /// <summary>
         /// Cancels the method
         /// </summary>
-        public override void Cancel()
-        {
-            Cancelled = true;
-            base.Cancel();
-        }
+        public override void Cancel() => Cancelled = true;
 
         /// <summary>
         /// Checks whether the solution is optimal. (Since this is a heuristic method the answer will always be <code>false</code>)

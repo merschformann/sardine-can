@@ -82,52 +82,6 @@
                     </Button>
                 </WrapPanel>
             </TabItem>
-            <TabItem Name="TabPreprocessing" Header="Preprocessing" ToolTip="Choose Preprocessing Methods">
-                <StackPanel Orientation="Vertical">
-                    <GroupBox Header="Configuration" ToolTip="Configure a Preprocessing Method" Height="91">
-                        <WrapPanel Orientation="Vertical" Margin="0,0,0,-1">
-                            <WrapPanel Orientation="Horizontal">
-                                <ListBox x:Name="ListAvailPreproMethods"  Height="68" Width="322" Loaded="ListAvailPreproMethodsLoaded">
-                                </ListBox>
-                                <Button x:Name="ButtonAddPreproMethod" Height="24" Content="Add to List" Margin="5" Click="ButtonAddPreproMethod_Click"/>
-                                <Separator/>
-                            </WrapPanel>
-                        </WrapPanel>
-                    </GroupBox>
-                    <StackPanel Orientation="Horizontal">
-                        <GroupBox Header="Selected Preprocessing Methods" Height="222" Width="428">
-                            <WrapPanel Orientation="Horizontal">
-                                <TreeView Name="TreeSelectedPrep" Height="194" Width="326">
-                                </TreeView>
-                                <StackPanel Orientation="Vertical" Margin="5">
-                                    <Button Name="ButtonSaveConfiguration" Margin="2" Width="75" Click="ButtonMoveConfigurationSave_Click">
-                                        <WrapPanel Orientation="Horizontal">
-                                            <Image x:Name="ImageSaveConfiguration" Width="20" Height="20" Source="data/icon_disk.png" />
-                                            <TextBlock Height="20" TextWrapping="Wrap" Text="Save" VerticalAlignment="Center" Margin="2"/>
-                                        </WrapPanel>
-                                    </Button>
-                                    <Button Name="ButtonOpenConfiguration" Margin="2" Width="75" Click="ButtonMoveConfigurationOpen_Click">
-                                        <WrapPanel Orientation="Horizontal">
-                                            <Image x:Name="OpenSaveConfiguration" Width="20" Height="20" Source="data/icon_folder.png" />
-                                            <TextBlock Height="20" TextWrapping="Wrap" Text="Open" VerticalAlignment="Center" Margin="2"/>
-                                        </WrapPanel>
-                                    </Button>
-                                    <Button Name="ButtonMoveConfigurationUp" Content="Up" Margin="2" Width="75" Click="ButtonMoveConfigurationUp_Click"/>
-                                    <Button Name="ButtonMoveConfigurationDown" Content="Down" Margin="2" Width="75" Click="ButtonMoveConfigurationDown_Click"/>
-                                    <Button Name="ButtonRemoveConfiguration" Content="Remove" Margin="2" Width="75" Click="ButtonRemoveConfiguration_Click"/>
-                                    <Button x:Name="ButtonResetPreprocessing" Content="Clear" Margin="2" Click="ButtonResetPreprocessing_Click"/>
-                                </StackPanel>
-                            </WrapPanel>
-                        </GroupBox>
-                        <GroupBox Header="Apply Preprocessing">
-                            <WrapPanel Orientation="Vertical">
-                                <Button x:Name="ButtonApplyPreprocessing" Content="Apply Preprocessing" Margin="5" Click="ButtonApplyPreprocessing_Click"/>
-                                <Button x:Name="ButtonTransformInstanceBack" Content="Transform to original Instance" Margin="5" Click="ButtonTransformInstanceBack_Click"/>
-                            </WrapPanel>
-                        </GroupBox>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
             <TabItem Name="tabGenerator" Header="Generator" ToolTip="Generates instances according to the specified parameters">
                 <StackPanel Orientation="Vertical">
                     <GroupBox Header="Container">
@@ -277,8 +231,7 @@
                         <WrapPanel Margin="2,2,147,2" Orientation="Horizontal">
                             <TextBox Name="EvalutationFolder" HorizontalAlignment="Left" Margin="2" Height="23" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="313"/>
                             <Button Content="Choose Folder..." Width="111" Margin="2" Click="ButtonFolderChoose"/>
-                            <CheckBox Name="CbxPreprocessingFolderEvaluation" Content="Apply Preprocessing" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="20 2" />
-                            <CheckBox Name="CbxPreprocessingDetail" Content="Detailed Log" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="20 2" />
+                            <CheckBox Name="CheckBoxPreprocessingDetail" Content="Detailed Log" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="20 2" />
                             <TextBlock Height="20" TextWrapping="Wrap" Text="Timeout in s: " VerticalAlignment="Center" Margin="2"/>
                             <TextBox Name="EvalutationFolderTimeOut" HorizontalAlignment="Left" Margin="2" Height="23" TextWrapping="NoWrap" Text="300" VerticalAlignment="Top" Width="76"/>
                             <Button x:Name="ButtonExecuteFolderEvaluation" Click="ExecuteFolderEvaluation" Background="Transparent" BorderBrush="Transparent" Margin="2" ToolTip="Starts the evaluation">
