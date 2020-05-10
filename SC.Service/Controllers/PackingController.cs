@@ -19,7 +19,7 @@ namespace SC.Service.Controllers
         public PackingController(ILogger<PackingController> logger)
         {
             _logger = logger;
-            JobManagerProvider.Instance.Logger = (string msg) => _logger.LogInformation(msg);
+            JobManagerProvider.Instance.Logger = _logger;
         }
 
         private const string SUB_CALCULATION_PROBLEMS = "calculations";

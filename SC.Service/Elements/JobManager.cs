@@ -1,4 +1,5 @@
-﻿using SC.ExecutionHandler;
+﻿using Microsoft.Extensions.Logging;
+using SC.ExecutionHandler;
 using SC.ObjectModel;
 using SC.ObjectModel.Additionals;
 using SC.ObjectModel.IO.Json;
@@ -45,20 +46,15 @@ namespace SC.Service.Elements
         /// <summary>
         /// The logging callback to use (or <code>null</code> to silence it).
         /// </summary>
-        internal Action<string> Logger { get; set; }
+        internal ILogger Logger { get; set; }
         /// <summary>
         /// The log callback that is invoked periodically.
         /// </summary>
         /// <param name="state">Not used.</param>
         private void LogCallback(object state)
         {
-            Logger?.Invoke($"{DateTime.Now.ToString("s", CultureInfo.InvariantCulture)}: Jobs: {_backlog.Count}, {_pending.Count}, {_ongoing.Count}, {_completed.Count} (backlog, pending, ongoing, completed)");
+            Logger?.LogInformation($"{DateTime.Now.ToString("s", CultureInfo.InvariantCulture)}: Jobs: {_backlog.Count}, {_pending.Count}, {_ongoing.Count}, {_completed.Count} (backlog, pending, ongoing, completed)");
         }
-        /// <summary>
-        /// Logs a line to the given logger (if available).
-        /// </summary>
-        /// <param name="msg">The message to log.</param>
-        private void Log(string msg) => Logger?.Invoke(msg);
 
         #endregion
 
@@ -342,11 +338,11 @@ namespace SC.Service.Elements
                 // Trigger next job to enter waiting position (fire and forget)
                 Task.Run(EnterNextJob);
                 // Log start
-                Log($"Starting job {calc.Status.Id}");
+                Logger?.LogInformation($"Starting job {calc.Status.Id}");
                 // Execute this job
                 PerformanceResult result = Executor.Execute(Instance.FromJsonInstance(calc.Problem.Instance), calc.Problem.Configuration, calc.Logger);
                 // Log done
-                Log($"Finished job {calc.Status.Id} in {result.SolutionTime.TotalSeconds:F0} s");
+                Logger?.LogInformation($"Finished job {calc.Status.Id} in {result.SolutionTime.TotalSeconds:F0} s");
                 // Complete solution
                 calc.Solution = result.Solution.ToJsonSolution();
                 Complete(calc);
@@ -363,6 +359,9 @@ namespace SC.Service.Elements
                 calc.Status.ErrorMessage =
                     ex.Message + Environment.NewLine +
                     ex.StackTrace + Environment.NewLine;
+                // Log
+                Logger.LogError($"Exception: {ex.Message}");
+                Logger.LogError($"StackTrace:\n{ex.StackTrace}");
             }
             finally
             {
