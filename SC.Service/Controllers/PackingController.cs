@@ -19,6 +19,7 @@ namespace SC.Service.Controllers
         public PackingController(ILogger<PackingController> logger)
         {
             _logger = logger;
+            JobManagerProvider.Instance.Logger = (string msg) => _logger.LogInformation(msg);
         }
 
         private const string SUB_CALCULATION_PROBLEMS = "calculations";
@@ -51,7 +52,7 @@ namespace SC.Service.Controllers
         {
             // Create calculation job
             int calcId = JobManagerProvider.Instance.GetNextId();
-            var calc = new Calculation(calcId, instance, (string msg) => _logger.LogInformation(msg));
+            var calc = new Calculation(calcId, instance, null);
             if (calc.Problem.Configuration == null) // Set a default config, if none is given
                 calc.Problem.Configuration = new ObjectModel.Configuration.Configuration(ObjectModel.MethodType.ExtremePointInsertion, false);
             calc.Status.ProblemUrl = $"{SUB_CALCULATION_PROBLEMS}/{calcId}";

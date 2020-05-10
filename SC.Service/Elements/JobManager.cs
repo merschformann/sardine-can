@@ -6,6 +6,7 @@ using SC.Service.Elements.IO;
 using SC.Toolbox;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +32,35 @@ namespace SC.Service.Elements
         {
             // Init
             _threadCount = threads <= 0 ? Environment.ProcessorCount : threads;
+            _logTimer = new Timer(new TimerCallback(LogCallback), null, 500, 5000);
         }
+
+
+        #region Simple logging
+
+        /// <summary>
+        /// The timer object for periodic logging.
+        /// </summary>
+        private readonly Timer _logTimer;
+        /// <summary>
+        /// The logging callback to use (or <code>null</code> to silence it).
+        /// </summary>
+        internal Action<string> Logger { get; set; }
+        /// <summary>
+        /// The log callback that is invoked periodically.
+        /// </summary>
+        /// <param name="state">Not used.</param>
+        private void LogCallback(object state)
+        {
+            Logger?.Invoke($"{DateTime.Now.ToString("s", CultureInfo.InvariantCulture)}: Jobs: {_backlog.Count}, {_pending.Count}, {_ongoing.Count}, {_completed.Count} (backlog, pending, ongoing, completed)");
+        }
+        /// <summary>
+        /// Logs a line to the given logger (if available).
+        /// </summary>
+        /// <param name="msg">The message to log.</param>
+        private void Log(string msg) => Logger?.Invoke(msg);
+
+        #endregion
 
         /// <summary>
         /// Manages the access to the backlog. Allows multiple parallel reads, but only one write at a time.
@@ -62,6 +91,10 @@ namespace SC.Service.Elements
         /// The calculation backlog.
         /// </summary>
         private readonly List<Calculation> _backlog = new List<Calculation>();
+        /// <summary>
+        /// All currently waiting/imminent jobs.
+        /// </summary>
+        private readonly HashSet<Calculation> _pending = new HashSet<Calculation>();
         /// <summary>
         /// All currently calculating jobs.
         /// </summary>
@@ -126,7 +159,7 @@ namespace SC.Service.Elements
             {
                 // Move to ongoing
                 _backlog.RemoveAt(0);
-                _ongoing.Add(calc);
+                _pending.Add(calc);
                 // Update status
                 calc.Status.Status = StatusCodes.Ongoing;
             }
@@ -146,6 +179,9 @@ namespace SC.Service.Elements
             // Mark calculation completed
             _ongoing.Remove(calc);
             _completed.Add(calc);
+            // Remove oldest jobs, if too many
+            if (_completed.Count > MAX_COMPLETED_JOBS)
+                _completed.RemoveAt(0);
             // Update status
             calc.Status.Status = StatusCodes.Done;
             // Release the lock on the resource
@@ -167,6 +203,7 @@ namespace SC.Service.Elements
             try
             {
                 calculations = _backlog.Select(c => c.Problem)
+                    .Concat(_pending.Select(c => c.Problem))
                     .Concat(_ongoing.Select(c => c.Problem))
                     .Concat(_completed.Select(c => c.Problem))
                     .ToList();
@@ -295,10 +332,22 @@ namespace SC.Service.Elements
                 // Release waiting position
                 lock (_waitPositionLock)
                     _waiting = false;
+                // We need to synchronize all write processes and also the read access
+                _backlogAccess.EnterWriteLock();
+                // Move job to ongoing
+                _pending.Remove(calc);
+                _ongoing.Add(calc);
+                // Release the lock on the resource
+                _backlogAccess.ExitWriteLock();
                 // Trigger next job to enter waiting position (fire and forget)
                 Task.Run(EnterNextJob);
+                // Log start
+                Log($"Starting job {calc.Status.Id}");
                 // Execute this job
                 PerformanceResult result = Executor.Execute(Instance.FromJsonInstance(calc.Problem.Instance), calc.Problem.Configuration, calc.Logger);
+                // Log done
+                Log($"Finished job {calc.Status.Id} in {result.SolutionTime.TotalSeconds:F0} s");
+                // Complete solution
                 calc.Solution = result.Solution.ToJsonSolution();
                 Complete(calc);
                 // Trigger next job to enter waiting position again (fire and forget)
@@ -306,6 +355,9 @@ namespace SC.Service.Elements
             }
             catch (Exception ex)
             {
+                // Remove from sets
+                _pending.Remove(calc);
+                _ongoing.Remove(calc);
                 // Mark erroneous
                 calc.Status.Status = StatusCodes.Error;
                 calc.Status.ErrorMessage =
