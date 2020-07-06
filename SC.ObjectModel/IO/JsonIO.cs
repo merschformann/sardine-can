@@ -14,6 +14,10 @@ namespace SC.ObjectModel.IO
     public static class JsonIO
     {
         /// <summary>
+        /// Simply used for syncing getters.
+        /// </summary>
+        private static readonly object SyncLock = new object();
+        /// <summary>
         /// The options that must be used for all JSON serialization.
         /// </summary>
         private static JsonSerializerOptions _options = null;
@@ -24,12 +28,15 @@ namespace SC.ObjectModel.IO
         {
             get
             {
-                if (_options == null)
+                lock (SyncLock)
                 {
+                    // Simply return options, if already present
+                    if (_options != null) return _options;
+                    // Initiate and return options
                     _options = new JsonSerializerOptions();
                     SetJsonSerializerOptions(_options);
+                    return _options;
                 }
-                return _options;
             }
         }
         /// <summary>
