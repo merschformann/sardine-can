@@ -57,7 +57,7 @@ here: [http://localhost:4550/swagger](http://localhost:4550/swagger)
 
 ### Build the GUI
 
---> Windows only :-/
+(Windows only :-/)
 
 1. Clone this repository
 
