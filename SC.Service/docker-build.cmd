@@ -1,1 +1,1 @@
-docker build -f Dockerfile .. --network=host -t sardinecan-canary
+docker build -f Dockerfile .. --network=host -t sardinecan:latest
