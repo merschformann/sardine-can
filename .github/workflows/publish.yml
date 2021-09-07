@@ -6,10 +6,6 @@ name: publish
 
 on: [workflow_dispatch]
 
-defaults:
-  run:
-    working-directory: ./SC.Service
-
 jobs:
   publish-sardinecan:
     runs-on: ubuntu-latest
@@ -27,3 +23,4 @@ jobs:
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker build . --tag ghcr.io/merschformann/sardinecan:latest --tag ghcr.io/merschformann/sardinecan:$VERSION
         docker push ghcr.io/merschformann/sardinecan
+      working-directory: ./SC.Service
