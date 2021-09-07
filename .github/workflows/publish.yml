@@ -21,5 +21,6 @@ jobs:
         echo "Building SardineCan docker in ${{ env.VERSION }}"
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker build --tag ghcr.io/merschformann/sardinecan:latest --tag ghcr.io/merschformann/sardinecan:${{ env.VERSION }} -f Dockerfile ..
-        docker push ghcr.io/merschformann/sardinecan
+        docker push ghcr.io/merschformann/sardinecan:latest
+        docker push ghcr.io/merschformann/sardinecan:${{ env.VERSION }}
       working-directory: ./SC.Service
