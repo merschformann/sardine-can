@@ -10,52 +10,18 @@ projects. However, I will be very happy, if it is useful to even more people. :)
 
 ![sample screenshot](Material/Screenshots/CO2.png "Sample screenshot")
 
-## Quick intro
+## Use the docker image
 
-### Prerequisites
+Get it running (requires [docker](https://docs.docker.com/get-docker/)):
 
-dotnet (core):
+```bash
+docker run -d --restart always -p 4550:80 --name sardinecan ghcr.io/merschformann/sardinecan:latest
+```
 
-- _Windows_: download & install ([link](https://dotnet.microsoft.com/download))
-- _Linux_: [instructions](https://docs.microsoft.com/en-us/dotnet/core/install/linux)
+Swagger UI description of the RESTful service can be found here (or at the port
+of your choice): [http://localhost:4550/swagger](http://localhost:4550/swagger)
 
-docker (for _SC.Service_ in docker container):
-
-- Docker [instructions](https://docs.docker.com/get-docker/)
-
-### Set SardineCan up as a service
-
-SC comes with a very simple RESTful service. The steps below will set it up:
-
-1. Clone this repository
-
-    ```bash
-    git clone https://github.com/merschformann/sardine-can.git
-    ```
-
-1. Navigate to service project dir
-
-    ```bash
-    cd sardine-can/SC.Service/
-    ```
-
-1. Build docker container
-
-    ```bash
-    ./docker-build.sh
-    ```
-
-1. Start docker container
-
-    ```bash
-    ./docker-run.sh
-    ```
-
-After deploying, a Swagger UI description of the RESTful service can be found
-here: [http://localhost:4550/swagger](http://localhost:4550/swagger)
-(above uses defaults, adjust them as desired)
-
-### Build the GUI
+## Build the GUI
 
 (Windows only :-/)
 
