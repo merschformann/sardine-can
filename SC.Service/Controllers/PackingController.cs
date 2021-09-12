@@ -25,7 +25,7 @@ namespace SC.Service.Controllers
         private const string SUB_CALCULATION_PROBLEMS = "calculations";
 
         [HttpGet(SUB_CALCULATION_PROBLEMS)]
-        public ActionResult<List<JsonCalculation>> ProblemsGet()
+        public ActionResult<List<JsonJob>> ProblemsGet()
         {
             // Get calculations
             var calcs = JobManagerProvider.Instance.GetCalculations();
@@ -36,7 +36,7 @@ namespace SC.Service.Controllers
         }
 
         [HttpGet(SUB_CALCULATION_PROBLEMS + "/{id:int}")]
-        public ActionResult<JsonCalculation> ProblemsGet(int id)
+        public ActionResult<JsonJob> ProblemsGet(int id)
         {
             // Get calculation by ID
             var problem = JobManagerProvider.Instance.GetCalculation(id);
@@ -48,7 +48,7 @@ namespace SC.Service.Controllers
         }
 
         [HttpPost(SUB_CALCULATION_PROBLEMS)]
-        public ActionResult<JsonStatus> ProblemsPost([FromBody] JsonCalculation instance)
+        public ActionResult<JsonStatus> ProblemsPost([FromBody] JsonJob instance)
         {
             // Create calculation job
             int calcId = JobManagerProvider.Instance.GetNextId();

@@ -190,10 +190,10 @@ namespace SC.Service.Elements
         /// Returns all calculations currently present.
         /// </summary>
         /// <returns>All calculations (pending, ongoing & completed).</returns>
-        public List<JsonCalculation> GetCalculations()
+        public List<JsonJob> GetCalculations()
         {
             // Init
-            List<JsonCalculation> calculations = null;
+            List<JsonJob> calculations = null;
             // We need to synchronize access to the backlog
             _backlogAccess.EnterReadLock();
             try
@@ -217,10 +217,10 @@ namespace SC.Service.Elements
         /// </summary>
         /// <param name="id">The id of the calculation.</param>
         /// <returns>The calculation, or <code>null</code> if the calculation is unknown.</returns>
-        public JsonCalculation GetCalculation(int id)
+        public JsonJob GetCalculation(int id)
         {
             // Init
-            JsonCalculation problem = null;
+            JsonJob problem = null;
             // We need to synchronize access to the backlog
             _backlogAccess.EnterReadLock();
             try
