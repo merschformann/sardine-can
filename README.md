@@ -12,7 +12,7 @@ projects. However, I will be very happy, if it is useful to even more people. :)
 
 ## Use the docker image
 
-Get it running (requires [docker](https://docs.docker.com/get-docker/)):
+Spin it up (requires [docker](https://docs.docker.com/get-docker/)):
 
 ```bash
 docker run -d --restart always -p 4550:80 --name sardinecan ghcr.io/merschformann/sardinecan:latest
