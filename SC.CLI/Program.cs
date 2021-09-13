@@ -32,12 +32,12 @@ namespace SC.CLI
             var instance = JsonIO.From<JsonCalculation>(string.IsNullOrWhiteSpace(opts.Input) ? Console.In.ReadToEnd() : File.ReadAllText(opts.Input));
 
             // >> Run calculation
-            Action<string> logger = string.IsNullOrWhiteSpace(opts.Output) ? null : Console.WriteLine; 
+            Action<string> logger = string.IsNullOrWhiteSpace(opts.Output) ? null : Console.Write;
             var result = Executor.Execute(Instance.FromJsonInstance(instance.Instance), instance.Configuration, logger);
-            
+
             // Output result
             if (string.IsNullOrWhiteSpace(opts.Output))
-                Console.Write(JsonIO.To(result.Solution.ToJsonSolution()));
+                Console.WriteLine(JsonIO.To(result.Solution.ToJsonSolution()));
             else
                 File.WriteAllText(opts.Output, JsonIO.To(result.Solution.ToJsonSolution()));
         }
