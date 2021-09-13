@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
     <Platforms>x64;x86</Platforms>
@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HelixToolkit" Version="2.11.0" />
-    <PackageReference Include="HelixToolkit.Core.Wpf" Version="2.11.0" />
+    <PackageReference Include="HelixToolkit" Version="2.18.0" />
+    <PackageReference Include="HelixToolkit.Core.Wpf" Version="2.18.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -30,8 +30,13 @@ namespace SC.Service.Elements
 
         private static void InitJobManager()
         {
+            // READ CONFIG - env variables take precedence over config vars
+            // Read max threads configuration
+            var threads = Config.GetValue(JobManager.CONFIG_MAX_THREADCOUNT, 1) ;
+            var envThreadsGiven = int.TryParse(Environment.GetEnvironmentVariable("MAX_THREADS"), out var envThreads);
+            if (envThreadsGiven)
+                threads= envThreads;
             // Check params
-            int threads = Config.GetValue(JobManager.CONFIG_MAX_THREADCOUNT, 1);
             _jobManager = new JobManager(threads) { };
         }
     }

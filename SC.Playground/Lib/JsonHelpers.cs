@@ -35,14 +35,14 @@ namespace SC.Playground.Lib
             var jsonInstance = instance.ToJsonInstance();
             // Generate configuration
             Configuration config = new Configuration();
-            JsonCalculation calculation = new JsonCalculation()
+            JsonJob job = new JsonJob()
             {
                 Instance = jsonInstance,
                 Configuration = config,
                 Priority = 3
             };
             // Serialize
-            string json = JsonIO.To(calculation);
+            string json = JsonIO.To(job);
             // Write JSON to disk
             File.WriteAllText("calculation.json", json);
         }
@@ -50,7 +50,7 @@ namespace SC.Playground.Lib
         public static void ParseJson()
         {
             // Read JSON file from disk
-            var calculation = JsonIO.From<JsonCalculation>(File.ReadAllText("calculation.json"));
+            var calculation = JsonIO.From<JsonJob>(File.ReadAllText("calculation.json"));
             Console.WriteLine($"Instance \"{calculation.Instance.Name}\" parsed from JSON successfully!");
         }
     }

@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Linear", "SC.Linear\SC.L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Service", "SC.Service\SC.Service.csproj", "{22C5694F-4AE3-47D6-B538-0986F6B74B32}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.CLI", "SC.CLI\SC.CLI.csproj", "{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -101,6 +103,14 @@ Global
 		{22C5694F-4AE3-47D6-B538-0986F6B74B32}.Release|x64.Build.0 = Release|x64
 		{22C5694F-4AE3-47D6-B538-0986F6B74B32}.Release|x86.ActiveCfg = Release|x86
 		{22C5694F-4AE3-47D6-B538-0986F6B74B32}.Release|x86.Build.0 = Release|x86
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Debug|x64.ActiveCfg = Debug|x64
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Debug|x64.Build.0 = Debug|x64
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Debug|x86.ActiveCfg = Debug|x86
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Debug|x86.Build.0 = Debug|x86
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Release|x64.ActiveCfg = Release|x64
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Release|x64.Build.0 = Release|x64
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Release|x86.ActiveCfg = Release|x86
+		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,15 +4,20 @@ SardineCan is a humble 3D knapsack / bin packing solver with some special
 constraints. It is a collection of constructive heuristics, meta-heuristic
 attempts and linear models with CPLEX & Gurobi bindings.
 
-In short, the code mainly derives from my (Marius Merschformann) master thesis
-(2014) and was primarily uploaded to enable colleagues to use it for their
-projects. However, I will be very happy, if it is useful to even more people. :)
-
 ![sample screenshot](Material/Screenshots/CO2.png "Sample screenshot")
 
-## Use the docker image
+## Outline
 
-Get it running (requires [docker](https://docs.docker.com/get-docker/)):
+- [SC.Service](SC.Service/README.md)
+  - Jobmanager/runner as a RESTful service for integration with other applications
+- [SC.GUI](SC.GUI/README.md)
+  - GUI for experimenting with the algorithms and rendering instances
+- [SC.CLI](SC.CLI/README.md)
+  - Command-line interface with a JSON-in/JSON-out style
+
+## Quickstart
+
+Spin it up (requires [docker](https://docs.docker.com/get-docker/)):
 
 ```bash
 docker run -d --restart always -p 4550:80 --name sardinecan ghcr.io/merschformann/sardinecan:latest
@@ -21,21 +26,11 @@ docker run -d --restart always -p 4550:80 --name sardinecan ghcr.io/merschforman
 Swagger UI description of the RESTful service can be found here (or at the port
 of your choice): [http://localhost:4550/swagger](http://localhost:4550/swagger)
 
-## Build the GUI
-
-(Windows only :-/)
-
-1. Clone this repository
-
-    ```bash
-    git clone https://github.com/merschformann/sardine-can.git
-    ```
-
-1. Open _SardineCan.sln_ with Visual Studio (or other IDE)
-1. Set _SC.GUI_ as startup project
-1. Compile and execute
-
 ## Remarks
+
+The code mainly derives from my (Marius Merschformann) master thesis (2014) and
+was primarily uploaded to enable colleagues to use it for their projects.
+However, it would be great, if it is useful to even more people. :)
 
 ### Gurobi & CPLEX support
 
