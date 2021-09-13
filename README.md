@@ -8,11 +8,11 @@ attempts and linear models with CPLEX & Gurobi bindings.
 
 ## Outline
 
-- [SC.Service](SC.Service/README.md)
+- [SC.Service](SC.Service/)
   - Jobmanager/runner as a RESTful service for integration with other applications
-- [SC.GUI](SC.GUI/README.md)
+- [SC.GUI](SC.GUI/)
   - GUI for experimenting with the algorithms and rendering instances
-- [SC.CLI](SC.CLI/README.md)
+- [SC.CLI](SC.CLI/)
   - Command-line interface with a JSON-in/JSON-out style
 
 ## Quickstart
