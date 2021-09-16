@@ -65,6 +65,17 @@ namespace SC.Service.Controllers
             return Ok(calc.Status);
         }
 
+        [HttpGet(SUB_CALCULATION_PROBLEMS+"/status")]
+        public ActionResult<List<JsonStatus>> StatusGet()
+        {
+            // Get status of all calculations
+            var status = JobManagerProvider.Instance.GetStatus();
+            // Log
+            _logger.LogInformation($"GET status (returning {status.Count})");
+            // Return all known calculations
+            return Ok(status);
+        }
+
         [HttpGet(SUB_CALCULATION_PROBLEMS + "/{id:int}/status")]
         public ActionResult<JsonStatus> StatusGet(int id)
         {

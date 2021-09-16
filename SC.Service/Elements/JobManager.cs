@@ -177,7 +177,11 @@ namespace SC.Service.Elements
             _completed.Add(calc);
             // Remove oldest jobs, if too many
             if (_completed.Count > MAX_COMPLETED_JOBS)
+            {
+                var overflowJob = _completed[0];
                 _completed.RemoveAt(0);
+                _idToCalculation.Remove(overflowJob.Id);
+            }
             // Update status
             calc.Status.Status = StatusCodes.Done;
             // Release the lock on the resource
@@ -235,6 +239,32 @@ namespace SC.Service.Elements
             }
             // Return result
             return problem;
+        }
+        /// <summary>
+        /// Returns all calculations status' currently present.
+        /// </summary>
+        /// <returns>All status elements of present calculations.</returns>
+        public List<JsonStatus> GetStatus()
+        {
+            // Init
+            List<JsonStatus> status = null;
+            // We need to synchronize access to the backlog
+            _backlogAccess.EnterReadLock();
+            try
+            {
+                status = _backlog.Select(c => c.Status)
+                    .Concat(_pending.Select(c => c.Status))
+                    .Concat(_ongoing.Select(c => c.Status))
+                    .Concat(_completed.Select(c => c.Status))
+                    .ToList();
+            }
+            finally
+            {
+                // Release the lock on the resource
+                _backlogAccess.ExitReadLock();
+            }
+            // Return result
+            return status;
         }
         /// <summary>
         /// Gets the status of a calculation.
