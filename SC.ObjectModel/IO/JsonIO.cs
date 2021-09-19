@@ -80,6 +80,7 @@ namespace SC.ObjectModel.IO
                 return "no containers provided";
             if ((instance.Pieces?.Count ?? 0) <= 0)
                 return "no pieces provided";
+
             // Check containers
             var knownContainerIDs = new HashSet<int>();
             foreach (var container in instance.Containers)
