@@ -34,21 +34,25 @@
     },
     "instance": {
         "name": "testinstance",
-        "containers": [{
+        "containers": [
+            {
                 "id": 0,
                 "length": 600,
                 "width": 400,
                 "height": 300
             }
         ],
-        "pieces": [{
+        "pieces": [
+            {
                 "id": 0,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 1
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -57,14 +61,17 @@
                         "height": 318
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 1,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 0
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -73,14 +80,17 @@
                         "height": 367
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 2,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 0
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -89,14 +99,17 @@
                         "height": 152
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 3,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 0
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -105,14 +118,17 @@
                         "height": 393
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 4,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 0
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -121,14 +137,17 @@
                         "height": 287
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 5,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 0
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -137,14 +156,17 @@
                         "height": 397
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 6,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 1
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -153,14 +175,17 @@
                         "height": 376
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 7,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 0
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -169,14 +194,17 @@
                         "height": 115
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 8,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 1
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -185,14 +213,17 @@
                         "height": 274
                     }
                 ]
-            }, {
+            },
+            {
                 "id": 9,
-                "flags": [{
+                "flags": [
+                    {
                         "flagId": 0,
                         "flagValue": 1
                     }
                 ],
-                "cubes": [{
+                "cubes": [
+                    {
                         "x": 0,
                         "y": 0,
                         "z": 0,
@@ -204,7 +235,8 @@
             }
         ],
         "rules": {
-            "flagRules": [{
+            "flagRules": [
+                {
                     "flagId": 0,
                     "ruleType": "DISJOINT",
                     "parameter": 0
