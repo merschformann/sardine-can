@@ -7,6 +7,7 @@ using SC.Service.Elements;
 using SC.Service.Elements.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SC.ObjectModel.IO;
 
 namespace SC.Service.Controllers
 {
@@ -50,6 +51,13 @@ namespace SC.Service.Controllers
         [HttpPost(SUB_CALCULATION_PROBLEMS)]
         public ActionResult<JsonStatus> ProblemsPost([FromBody] JsonJob instance)
         {
+            // Sanity check job
+            var inputErr = JsonIO.Validate(instance.Instance);
+            if (inputErr != null)
+            {
+                _logger.LogWarning($"POST calculation had error: {inputErr}");
+                return BadRequest(inputErr);
+            }
             // Create calculation job
             int calcId = JobManagerProvider.Instance.GetNextId();
             var calc = new Calculation(calcId, instance, null);
