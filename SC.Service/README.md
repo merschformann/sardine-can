@@ -39,3 +39,58 @@ All available configuration values are listed in the table below.
 | Parameter            |  type |      json key |  env variable |
 |:-------------------- | -----:| -------------:| -------------:|
 | Maximal thread count | _int_ |  `MaxThreads` | `MAX_THREADS` |
+
+## Input format
+
+Find a short outline of the basic input format entities below. Keys in
+parentheses are optional.
+
+```txt
+[root object]
+├── instance
+|   ├── containers (array of)
+|   │   ├── id: string // identifies the container
+|   │   ├── length: float // side-length (x)
+|   │   ├── width: float // side-length (y)
+|   │   └── height: float // side-length (z)
+|   ├── pieces (array of)
+|   |   ├── id: string // identifies the piece
+|   |   ├── cubes (array of)
+|   |   |   ├── (x): float // x-offset from parent origin
+|   |   |   ├── (y): float // y-offset from parent origin
+|   |   |   ├── (z): float // z-offset from parent origin
+|   |   |   ├── length: float // side-length (x)
+|   |   |   ├── width: float // side-length (y)
+|   |   |   └── height: float // side-length (z)
+|   |   └── (flags) (array of)
+|   |       ├── (flagId): int // flag rule this entry refers to (see rules)
+|   |       └── (flagValue): float // value of this flag rule entry
+|   └── (rules)
+|       └── flagRules (array of)
+|           ├── flagId: int // ID of the flag rule
+|           ├── ruleType: string/enum // one of DISJOINT, LESSEREQUALSPIECES, GREATEREQUALSPIECES
+|           └── parameter: int // min/max per container if <= or >= rule
+├── (priority): int // job priority, lower priorities are executed first
+└── (configuration)
+    ├── (TimeLimitInSeconds): float // calculation is stopped after this duration
+    └── (ThreadLimit): int // number of threads calculation may use (<=0 is all) 
+```
+
+## Output format
+
+Find a short outline of the output format entities below.
+
+```txt
+[root object]
+├── containers (array of)
+|   └── assignments (array of)
+|       ├── piece: int // ID of the piece
+|       └── position: float // side-length (x)
+|           ├── x: float // x-position within container
+|           ├── y: float // y-position within container
+|           ├── z: float // z-position within container
+|           ├── a: float // degree rotation around x-axis
+|           ├── b: float // degree rotation around y-axis
+|           └── c: float // degree rotation around z-axis
+└── offload (array of) // IDs of unassigned pieces
+```
