@@ -112,6 +112,12 @@ namespace SC.ObjectModel.IO
                         return $"invalid width {cube.Width.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
                     if (cube.Height <= 0)
                         return $"invalid height {cube.Height.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.X < 0)
+                        return $"invalid x-offset {cube.X.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.Y < 0)
+                        return $"invalid y-offset {cube.Y.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.Z < 0)
+                        return $"invalid z-offset {cube.Z.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
                 }
             }
 
