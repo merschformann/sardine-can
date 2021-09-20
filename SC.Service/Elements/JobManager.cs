@@ -127,7 +127,7 @@ namespace SC.Service.Elements
         /// <summary>
         /// Enqueues a new calculation job.
         /// </summary>
-        /// <param name="calculation">The calculation job.</param>
+        /// <param name="calc">The calculation job.</param>
         public void Enqueue(Calculation calc)
         {
             // We need to synchronize all write processes and also the read access
