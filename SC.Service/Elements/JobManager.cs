@@ -381,9 +381,13 @@ namespace SC.Service.Elements
             }
             catch (Exception ex)
             {
+                // We need to synchronize all write processes and also the read access
+                _backlogAccess.EnterWriteLock();
                 // Remove from sets
                 _pending.Remove(calc);
                 _ongoing.Remove(calc);
+                // Release the lock on the resource
+                _backlogAccess.ExitWriteLock();
                 // Mark erroneous
                 calc.Status.Status = StatusCodes.Error;
                 calc.Status.ErrorMessage =
