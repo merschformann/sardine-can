@@ -149,7 +149,7 @@ namespace SC.Service.Elements
             // We need to synchronize all write processes and also the read access
             _backlogAccess.EnterWriteLock();
             // Get next job
-            Calculation calc = _backlog?.FirstOrDefault();
+            Calculation calc = _backlog.FirstOrDefault();
             // If there is a next job, remove it from the backlog
             if (calc != null)
             {
