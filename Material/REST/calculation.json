@@ -3,7 +3,7 @@
     "configuration": {
         "Name": "default",
         "Type": "EXTREMEPOINTINSERTION",
-        "TimeLimitInSeconds": 600,
+        "TimeLimitInSeconds": 10,
         "HandleGravity": false,
         "HandleCompatibility": true,
         "HandleStackability": false,

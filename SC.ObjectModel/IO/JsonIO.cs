@@ -2,6 +2,8 @@
 using SC.ObjectModel.IO.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -63,5 +65,65 @@ namespace SC.ObjectModel.IO
         /// <param name="json">The JSON.</param>
         /// <returns>The corresponding object representation.</returns>
         public static T From<T>(string json) => JsonSerializer.Deserialize<T>(json, OPTIONS);
+
+        /// <summary>
+        /// Checks basic inconsistencies of the given instance and returns informative errors if found.
+        /// </summary>
+        /// <param name="instance">The instance to check.</param>
+        /// <returns>Returns an error describing the identified problem or <code>null</code> if no problems were found.</returns>
+        public static string Validate(JsonInstance instance)
+        {
+            // Check mandatory
+            if (instance == null)
+                return "no instance provided";
+            if ((instance.Containers?.Count ?? 0) <= 0)
+                return "no containers provided";
+            if ((instance.Pieces?.Count ?? 0) <= 0)
+                return "no pieces provided";
+
+            // Check containers
+            var knownContainerIDs = new HashSet<int>();
+            foreach (var container in instance.Containers)
+            {
+                var added = knownContainerIDs.Add(container.ID);
+                if (!added)
+                    return $"container ID {container.ID} is duplicated";
+                if (container.Length <= 0)
+                    return $"invalid length {container.Length.ToString(CultureInfo.InvariantCulture)} of container {container.ID}";
+                if (container.Width <= 0)
+                    return $"invalid width {container.Width.ToString(CultureInfo.InvariantCulture)} of container {container.ID}";
+                if (container.Height <= 0)
+                    return $"invalid height {container.Height.ToString(CultureInfo.InvariantCulture)} of container {container.ID}";
+            }
+
+            // Check pieces
+            var knownPieceIDs = new HashSet<int>();
+            foreach (var piece in instance.Pieces)
+            {
+                var added = knownPieceIDs.Add(piece.ID);
+                if (!added)
+                    return $"piece ID {piece.ID} is duplicated";
+                if ((piece.Cubes?.Count ?? 0) <= 0)
+                    return $"no cubes for piece {piece.ID} provided";
+                foreach (var cube in piece.Cubes)
+                {
+                    if (cube.Length <= 0)
+                        return $"invalid length {cube.Length.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.Width <= 0)
+                        return $"invalid width {cube.Width.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.Height <= 0)
+                        return $"invalid height {cube.Height.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.X < 0)
+                        return $"invalid x-offset {cube.X.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.Y < 0)
+                        return $"invalid y-offset {cube.Y.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                    if (cube.Z < 0)
+                        return $"invalid z-offset {cube.Z.ToString(CultureInfo.InvariantCulture)} of cube of piece {piece.ID}";
+                }
+            }
+
+            // No errors found
+            return null;
+        }
     }
 }

@@ -32,8 +32,11 @@ namespace SC.ObjectModel.Configuration
         /// <param name="handleTetris">Indicates whether to respect tetris pieces (applies for some heuristics)</param>
         public Configuration(MethodType method, bool handleTetris)
         {
+            // Set some default time-limit to not accidentally cause infinite runs
+            TimeLimit = TimeSpan.FromSeconds(10);
+            
+            // Base settings
             Type = method;
-            TimeLimit = TimeSpan.MaxValue;
             HandleGravity = true;
             HandleCompatibility = true;
             HandleStackability = true;
