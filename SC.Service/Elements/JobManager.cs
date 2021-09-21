@@ -11,13 +11,14 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace SC.Service.Elements
 {
     /// <summary>
     /// Manages the currently ongoing jobs.
     /// </summary>
-    public class JobManager
+    public class JobManager : IJobManager
     {
         /// <summary>
         /// The param name for the maximal number of threads to be used overall.
@@ -29,8 +30,14 @@ namespace SC.Service.Elements
         /// </summary>
         public const int MAX_COMPLETED_JOBS = 1000;
 
-        public JobManager(int threads)
+        public JobManager(IConfiguration configuration)
         {
+            // READ CONFIG - env variables take precedence over config vars
+            // Read max threads configuration
+            var threads = configuration.GetValue(CONFIG_MAX_THREADCOUNT, 1) ;
+            var envThreadsGiven = int.TryParse(Environment.GetEnvironmentVariable("MAX_THREADS"), out var envThreads);
+            if (envThreadsGiven)
+                threads = envThreads;
             // Init
             _threadCount = threads <= 0 ? Environment.ProcessorCount : threads;
             _logTimer = new Timer(new TimerCallback(LogCallback), null, 500, 5000);
@@ -43,10 +50,12 @@ namespace SC.Service.Elements
         /// The timer object for periodic logging.
         /// </summary>
         private readonly Timer _logTimer;
+
         /// <summary>
         /// The logging callback to use (or <code>null</code> to silence it).
         /// </summary>
         internal ILogger Logger { get; set; }
+
         /// <summary>
         /// The log callback that is invoked periodically.
         /// </summary>
@@ -62,22 +71,27 @@ namespace SC.Service.Elements
         /// Manages the access to the backlog. Allows multiple parallel reads, but only one write at a time.
         /// </summary>
         private ReaderWriterLockSlim _backlogAccess = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+
         /// <summary>
         /// The maximal number of threads used.
         /// </summary>
         private readonly int _threadCount;
+
         /// <summary>
         /// Manages the wait position entry. Jobs either need to wait in that position or can immediately start, if sufficient threads are available.
         /// </summary>
         private object _waitPositionLock = new object();
+
         /// <summary>
         /// Indicates whether a calculation is currently waiting for resources.
         /// </summary>
         private bool _waiting = false;
+
         /// <summary>
         /// Manages access to the number of threads in use.
         /// </summary>
         private object _threadCountLock = new object();
+
         /// <summary>
         /// The number of threads currently in use.
         /// </summary>
@@ -87,22 +101,27 @@ namespace SC.Service.Elements
         /// The calculation backlog.
         /// </summary>
         private readonly List<Calculation> _backlog = new List<Calculation>();
+
         /// <summary>
         /// All currently waiting/imminent jobs.
         /// </summary>
         private readonly HashSet<Calculation> _pending = new HashSet<Calculation>();
+
         /// <summary>
         /// All currently calculating jobs.
         /// </summary>
         private readonly HashSet<Calculation> _ongoing = new HashSet<Calculation>();
+
         /// <summary>
         /// The list of completed calculations.
         /// </summary>
         private readonly List<Calculation> _completed = new List<Calculation>();
+
         /// <summary>
         /// A map translating the job ID to the calculation instance.
         /// </summary>
         private readonly Dictionary<int, Calculation> _idToCalculation = new Dictionary<int, Calculation>();
+
         /// <summary>
         /// The current problem instance ID.
         /// </summary>
@@ -140,6 +159,7 @@ namespace SC.Service.Elements
             // See whether we can immediately start the job (fire and forget)
             Task.Run(EnterNextJob);
         }
+
         /// <summary>
         /// Returns the next calculation problem in queue.
         /// </summary>
@@ -159,11 +179,13 @@ namespace SC.Service.Elements
                 // Update status
                 calc.Status.Status = StatusCodes.Ongoing;
             }
+
             // Release the lock on the resource
             _backlogAccess.ExitWriteLock();
             // Return it
             return calc;
         }
+
         /// <summary>
         /// Marks a calculation done.
         /// </summary>
@@ -182,6 +204,7 @@ namespace SC.Service.Elements
                 _completed.RemoveAt(0);
                 _idToCalculation.Remove(overflowJob.Id);
             }
+
             // Update status
             calc.Status.Status = StatusCodes.Done;
             // Release the lock on the resource
@@ -213,9 +236,11 @@ namespace SC.Service.Elements
                 // Release the lock on the resource
                 _backlogAccess.ExitReadLock();
             }
+
             // Return result
             return calculations;
         }
+
         /// <summary>
         /// Gets a calculation.
         /// </summary>
@@ -237,9 +262,11 @@ namespace SC.Service.Elements
                 // Release the lock on the resource
                 _backlogAccess.ExitReadLock();
             }
+
             // Return result
             return problem;
         }
+
         /// <summary>
         /// Returns all calculations status' currently present.
         /// </summary>
@@ -263,9 +290,11 @@ namespace SC.Service.Elements
                 // Release the lock on the resource
                 _backlogAccess.ExitReadLock();
             }
+
             // Return result
             return status;
         }
+
         /// <summary>
         /// Gets the status of a calculation.
         /// </summary>
@@ -287,9 +316,11 @@ namespace SC.Service.Elements
                 // Release the lock on the resource
                 _backlogAccess.ExitReadLock();
             }
+
             // Return result
             return status;
         }
+
         /// <summary>
         /// Gets the solution of a calculation.
         /// </summary>
@@ -311,6 +342,7 @@ namespace SC.Service.Elements
                 // Release the lock on the resource
                 _backlogAccess.ExitReadLock();
             }
+
             // Return result
             return solution;
         }
@@ -318,32 +350,35 @@ namespace SC.Service.Elements
         private void EnterNextJob()
         {
             // Try to get hold of waiting position
-            bool mine = false;
+            var mine = false;
             lock (_waitPositionLock)
                 if (!_waiting)
                 {
                     _waiting = true;
                     mine = true;
                 }
-            // If we can access the waiting position, enqueue the next job
-            if (mine)
-            {
-                // Get next job
-                var nextJob = Fetch();
-                // Put it in waiting position, if there is another job
-                if (nextJob != null)
-                    Calculate(nextJob);
-                else
+
+            // If we can't access the waiting position, quit
+            if (!mine) return;
+            
+            // Get next job
+            var nextJob = Fetch();
+            // Put it in waiting position, if there is another job
+            if (nextJob != null)
+                Calculate(nextJob);
+            else
+                lock (_waitPositionLock)
                     _waiting = false;
-            }
         }
 
         private void Calculate(Calculation calc)
         {
             // Limit the threads for the job
-            int threads = calc.Problem.Configuration.ThreadLimit = calc.Problem.Configuration.ThreadLimit <= 0 || calc.Problem.Configuration.ThreadLimit > _threadCount ?
+            int threads = calc.Problem.Configuration.ThreadLimit = calc.Problem.Configuration.ThreadLimit <= 0 || calc.Problem.Configuration.ThreadLimit > _threadCount
+                ?
                 // On unlimited/out-of-bounds threads use the maximal capacity of the service
-                _threadCount :
+                _threadCount
+                :
                 // Otherwise use the thread-limit of the job
                 calc.Problem.Configuration.ThreadLimit;
 
@@ -370,7 +405,7 @@ namespace SC.Service.Elements
                 // Log start
                 Logger?.LogInformation($"Starting job {calc.Status.Id}");
                 // Execute this job
-                PerformanceResult result = Executor.Execute(Instance.FromJsonInstance(calc.Problem.Instance), calc.Problem.Configuration, calc.Logger);
+                var result = Executor.Execute(Instance.FromJsonInstance(calc.Problem.Instance), calc.Problem.Configuration, calc.Logger);
                 // Log done
                 Logger?.LogInformation($"Finished job {calc.Status.Id} in {result.SolutionTime.TotalSeconds:F0} s");
                 // Complete solution
