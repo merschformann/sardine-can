@@ -20,9 +20,6 @@ namespace SC.Service
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            // Provide configuration also for job manager creator
-            JobManagerProvider.Config = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +28,8 @@ namespace SC.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            services.AddSingleton<IJobManager, JobManager>();
 
             // Alter JSON behavior
             services.AddMvc().AddJsonOptions(options =>
@@ -58,7 +57,6 @@ namespace SC.Service
             // Enable swagger
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"); });
-
         }
     }
 }

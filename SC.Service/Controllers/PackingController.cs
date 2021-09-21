@@ -16,11 +16,12 @@ namespace SC.Service.Controllers
     public class PackingController : ControllerBase
     {
         private readonly ILogger<PackingController> _logger;
+        private readonly IJobManager _jobManager;
 
-        public PackingController(ILogger<PackingController> logger)
+        public PackingController(ILogger<PackingController> logger, IJobManager jobManager)
         {
+            _jobManager = jobManager;
             _logger = logger;
-            JobManagerProvider.Instance.Logger = _logger;
         }
 
         private const string SUB_CALCULATION_PROBLEMS = "calculations";
@@ -29,7 +30,7 @@ namespace SC.Service.Controllers
         public ActionResult<List<JsonJob>> ProblemsGet()
         {
             // Get calculations
-            var calcs = JobManagerProvider.Instance.GetCalculations();
+            var calcs = _jobManager.GetCalculations();
             // Log
             _logger.LogInformation($"GET calculations (returning {calcs.Count})");
             // Return all known calculations
@@ -40,7 +41,7 @@ namespace SC.Service.Controllers
         public ActionResult<JsonJob> ProblemsGet(int id)
         {
             // Get calculation by ID
-            var problem = JobManagerProvider.Instance.GetCalculation(id);
+            var problem = _jobManager.GetCalculation(id);
             // Log
             _logger.LogInformation($"GET calculation by ID ({id}, present: {problem != null})");
             // Return calculation with given ID or not found (if not present)
@@ -59,7 +60,7 @@ namespace SC.Service.Controllers
                 return BadRequest(inputErr);
             }
             // Create calculation job
-            int calcId = JobManagerProvider.Instance.GetNextId();
+            int calcId = _jobManager.GetNextId();
             var calc = new Calculation(calcId, instance, null);
             if (calc.Problem.Configuration == null) // Set a default config, if none is given
                 calc.Problem.Configuration = new ObjectModel.Configuration.Configuration(ObjectModel.MethodType.ExtremePointInsertion, false);
@@ -69,7 +70,7 @@ namespace SC.Service.Controllers
             // Log
             _logger.LogInformation($"POST calculation (got ID {calcId})");
             // Enqueue the problem
-            JobManagerProvider.Instance.Enqueue(calc);
+            _jobManager.Enqueue(calc);
             return Ok(calc.Status);
         }
 
@@ -77,7 +78,7 @@ namespace SC.Service.Controllers
         public ActionResult<List<JsonStatus>> StatusGet()
         {
             // Get status of all calculations
-            var status = JobManagerProvider.Instance.GetStatus();
+            var status = _jobManager.GetStatus();
             // Log
             _logger.LogInformation($"GET status (returning {status.Count})");
             // Return all known calculations
@@ -88,7 +89,7 @@ namespace SC.Service.Controllers
         public ActionResult<JsonStatus> StatusGet(int id)
         {
             // Get status of calculation by ID
-            var status = JobManagerProvider.Instance.GetStatus(id);
+            var status = _jobManager.GetStatus(id);
             // Log
             _logger.LogInformation($"GET status by ID ({id}, present: {status != null})");
             // Return status of calculation with given ID or not found (if not present)
@@ -100,7 +101,7 @@ namespace SC.Service.Controllers
         public ActionResult<JsonSolution> ResultGet(int id)
         {
             // Get solution of calculation by ID
-            var solution = JobManagerProvider.Instance.GetSolution(id);
+            var solution = _jobManager.GetSolution(id);
             // Log
             _logger.LogInformation($"GET solution by ID ({id}, present: {solution != null})");
             // Return status of calculation with given ID or not found (if not present)
