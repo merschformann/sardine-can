@@ -1,3 +1,5 @@
+<img src="Material/Icon/sardines.svg" align="right" height="110"/>
+
 # SardineCan
 
 SardineCan is a humble 3D knapsack / bin packing solver with some special
