@@ -1,4 +1,4 @@
-<img src="Material/Icon/sardines.svg" align="right" height="110"/>
+<img src="Material/Icon/sardines.svg" align="right" height="50"/>
 
 # SardineCan
 
