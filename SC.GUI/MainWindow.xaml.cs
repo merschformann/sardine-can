@@ -42,6 +42,8 @@ using TextBox = System.Windows.Controls.TextBox;
 using Timer = System.Threading.Timer;
 using SC.ObjectModel.Configuration;
 using System.Globalization;
+using System.IO.Enumeration;
+using SC.ObjectModel.IO;
 
 namespace SC.GUI
 {
@@ -434,7 +436,7 @@ namespace SC.GUI
             OpenFileDialog fileDialog = new OpenFileDialog
             {
                 // Set filter options and filter index.
-                Filter = "XINST Files (.xinst)|*.xinst|Excel Files (.xlsx)|*.xlsx|JSON Files (.json)|*.json",
+                Filter = "XINST Files (.xinst)|*.xinst|JSON Files (.json)|*.json",
                 FilterIndex = 1,
                 Multiselect = false
             };
@@ -452,8 +454,6 @@ namespace SC.GUI
                         _instance = Instance.ReadXML(fileDialog.FileName);
                     else if (fileDialog.FileName.EndsWith(".json"))
                         _instance = Instance.ReadJson(File.ReadAllText(fileDialog.FileName));
-                    //else if (fileDialog.FileName.EndsWith(".xlsx")) // TODO support Excel format again?
-                    //    _instance = Instance.ReadExcel(fileDialog.FileName);
                     else
                     { MessageBox.Show(this, "Unknown instance file ending: " + fileDialog.FileName); }
                 }
@@ -512,7 +512,7 @@ namespace SC.GUI
                 SaveFileDialog dialog = new SaveFileDialog();
                 dialog.FileName = _instance.Name; // Default file name
                 dialog.DefaultExt = ".xinst"; // Default file extension
-                dialog.Filter = "XINST Files (.xinst)|*.xinst"; // Filter files by extension
+                dialog.Filter = "XINST Files (.xinst)|*.xinst|JSON Files (.json)|*.json"; // Filter files by extension
 
                 // Show save file dialog box
                 bool? userClickedOK = dialog.ShowDialog();
@@ -521,9 +521,18 @@ namespace SC.GUI
                 if (userClickedOK == true)
                 {
                     // Save document
-                    string filename = dialog.FileName;
-
-                    _instance.WriteXML(filename);
+                    var filename = dialog.FileName;
+                    if (filename.ToLower().EndsWith(".json"))
+                    {
+                        File.WriteAllText(filename, _instance.WriteJson());
+                        if (_instance.Solutions.Any())
+                        {
+                            var solutionFilename = filename[..^4] + ".solution.json";
+                            File.WriteAllText(solutionFilename, JsonIO.To(_instance.Solutions.Last().ToJsonSolution()));
+                        }
+                    }
+                    else
+                        _instance.WriteXML(filename);
                 }
             }
         }
