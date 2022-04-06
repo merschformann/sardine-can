@@ -527,7 +527,7 @@ namespace SC.GUI
                         File.WriteAllText(filename, _instance.WriteJson());
                         if (_instance.Solutions.Any())
                         {
-                            var solutionFilename = filename[..^4] + ".solution.json";
+                            var solutionFilename = filename[..^5] + ".solution.json";
                             File.WriteAllText(solutionFilename, JsonIO.To(_instance.Solutions.Last().ToJsonSolution()));
                         }
                     }
