@@ -48,7 +48,7 @@ namespace SC.ObjectModel.IO
         public static void SetJsonSerializerOptions(JsonSerializerOptions opts)
         {
             opts.Converters.Add(new JsonStringEnumConverter(CapslockNamingPolicy.Capslock));
-            opts.IgnoreNullValues = true;
+            opts.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         }
 
         /// <summary>
