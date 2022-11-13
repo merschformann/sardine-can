@@ -8,6 +8,7 @@ using SC.Service.Elements.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SC.ObjectModel.IO;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace SC.Service.Controllers
 {
@@ -50,6 +51,7 @@ namespace SC.Service.Controllers
         }
 
         [HttpPost(SUB_CALCULATION_PROBLEMS)]
+        [SwaggerRequestExample(typeof(JsonJob), typeof(JsonJobExample))]
         public ActionResult<JsonStatus> ProblemsPost([FromBody] JsonJob instance)
         {
             // Sanity check job

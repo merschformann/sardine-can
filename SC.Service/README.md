@@ -94,3 +94,83 @@ Find a short outline of the output format entities below.
 |           └── c: float // degree rotation around z-axis
 └── offload (array of) // IDs of unassigned pieces
 ```
+
+## Post a job
+
+To post a job to the service, simply send a POST request to the `/packing/calculations` endpoint
+
+```bash
+curl -X 'POST' \
+  'http://localhost:4550/packing/calculations' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "instance": {
+        "name": "string",
+        "containers": [
+            {
+                "id": 0,
+                "length": 3,
+                "width": 3,
+                "height": 3
+            },
+            {
+                "id": 1,
+                "length": 4,
+                "width": 4,
+                "height": 4
+            }
+        ],
+        "pieces": [
+            {
+                "id": 0,
+                "flags": [
+                    {
+                        "flagId": 0,
+                        "flagValue": 0
+                    }
+                ],
+                "cubes": [
+                    {
+                        "length": 2,
+                        "width": 2,
+                        "height": 2
+                    }
+                ]
+            },
+            {
+                "id": 1,
+                "flags": [
+                    {
+                        "flagId": 0,
+                        "flagValue": 0
+                    }
+                ],
+                "cubes": [
+                    {
+                        "length": 2,
+                        "width": 1,
+                        "height": 1
+                    }
+                ]
+            }
+        ]
+    }
+}'
+```
+
+Poll the status until the job is finished (look for `.status == DONE`). The status is available via the `/packing/calculations/{id}/status` endpoint.
+
+```bash
+curl -X 'GET' \
+  'http://localhost:4550/packing/calculations/0/status' \
+  -H 'accept: text/plain'
+```
+
+Finally, retrieve the result via the `/packing/calculations/{id}/result` endpoint.
+
+```bash
+curl -X 'GET' \
+  'http://localhost:4550/packing/calculations/0/solution' \
+  -H 'accept: text/plain'
+```

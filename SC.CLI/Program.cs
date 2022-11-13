@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using SC.ExecutionHandler;
 using SC.ObjectModel.Additionals;
+using SC.ObjectModel.Configuration;
 using SC.ObjectModel.IO.Json;
 
 namespace SC.CLI
@@ -14,7 +15,7 @@ namespace SC.CLI
         [Option('i', "input", Required = false, HelpText = "Input file to process")]
         public string Input { get; set; }
 
-        [Option('o', "output", Required = false, HelpText = "Order file to process")]
+        [Option('o', "output", Required = false, HelpText = "Output file to write to")]
         public string Output { get; set; }
     }
 
@@ -33,6 +34,7 @@ namespace SC.CLI
 
             // >> Run calculation
             Action<string> logger = string.IsNullOrWhiteSpace(opts.Output) ? null : Console.Write;
+            instance.Configuration ??= new Configuration(MethodType.ExtremePointInsertion, false);
             var result = Executor.Execute(Instance.FromJsonInstance(instance.Instance), instance.Configuration, logger);
 
             // Output result
