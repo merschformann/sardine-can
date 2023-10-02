@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <Platforms>x64;x86</Platforms>
+    <SelfContained>true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,8 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SC.ExecutionHandler\SC.ExecutionHandler.csproj" />
+    <ProjectReference Include="..\SC.Heuristics\SC.Heuristics.csproj" />
     <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
+    <ProjectReference Include="..\SC.Linear\SC.Linear.csproj" />
   </ItemGroup>
 
 </Project>

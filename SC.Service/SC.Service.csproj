@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Platforms>x64;x86</Platforms>
     <Version>1.0.6</Version>
+    <SelfContained>true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SC.ExecutionHandler\SC.ExecutionHandler.csproj" />
+    <ProjectReference Include="..\SC.CLI\SC.CLI.csproj" />
     <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
     <ProjectReference Include="..\SC.Toolbox\SC.Toolbox.csproj" />
   </ItemGroup>

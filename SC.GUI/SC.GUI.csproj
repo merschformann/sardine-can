@@ -5,8 +5,8 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
-    <Platforms>x64;x86</Platforms>
     <Version>1.0.6</Version>
+    <SelfContained>true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
