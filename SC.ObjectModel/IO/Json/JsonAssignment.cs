@@ -14,5 +14,7 @@ namespace SC.ObjectModel.IO.Json
         public int Piece { get; set; }
         [JsonPropertyName("position")]
         public JsonPosition Position { get; set; }
+        [JsonPropertyName("cubes")]
+        public List<JsonCube> Cubes { get; set; }
     }
 }

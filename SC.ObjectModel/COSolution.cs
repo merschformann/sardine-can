@@ -1471,6 +1471,10 @@ namespace SC.ObjectModel
             {
                 Containers = InstanceLinked.Containers.Select(c => new JsonSolutionContainer()
                 {
+                    ID = c.ID,
+                    Length = c.Mesh.Length,
+                    Width = c.Mesh.Width,
+                    Height = c.Mesh.Height,
                     Assignments = ContainerContent[c.VolatileID].Select(p => new JsonAssignment()
                     {
                         Piece = p.ID,
@@ -1483,6 +1487,15 @@ namespace SC.ObjectModel
                             B = RotationMatrices.GetRotationAngles(Orientations[p.VolatileID]).beta,
                             C = RotationMatrices.GetRotationAngles(Orientations[p.VolatileID]).gamma,
                         },
+                        Cubes = p[Orientations[p.VolatileID]].Components.Select(com => new JsonCube()
+                        {
+                            X = com.RelPosition.X,
+                            Y = com.RelPosition.Y,
+                            Z = com.RelPosition.Z,
+                            Length = com.Length,
+                            Width = com.Width,
+                            Height = com.Height,
+                        }).ToList(),
                     }).ToList(),
                 }).ToList(),
                 Offload = OffloadPieces.Select(p => p.ID).ToList(),
