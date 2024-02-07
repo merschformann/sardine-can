@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace SC.ExecutionHandler
+namespace SC.CLI
 {
     /// <summary>
     /// A class used to wrap the methods to enable execution by the CLI

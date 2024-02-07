@@ -3,7 +3,7 @@ using SC.ObjectModel;
 using SC.ObjectModel.IO;
 using System;
 using System.IO;
-using SC.ExecutionHandler;
+using SC.CLI;
 using SC.ObjectModel.Additionals;
 using SC.ObjectModel.Configuration;
 using SC.ObjectModel.IO.Json;
@@ -34,7 +34,7 @@ namespace SC.CLI
 
             // >> Run calculation
             Action<string> logger = string.IsNullOrWhiteSpace(opts.Output) ? null : Console.Write;
-            instance.Configuration ??= new Configuration(MethodType.ExtremePointInsertion, false);
+            instance.Configuration ??= new Configuration(MethodType.ExtremePointInsertion, true);
             var result = Executor.Execute(Instance.FromJsonInstance(instance.Instance), instance.Configuration, logger);
 
             // Output result
