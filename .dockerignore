@@ -1,0 +1,7 @@
+# Ignore build directories
+bin/
+obj/
+
+# Ignore some project files
+.git/
+.vs/
