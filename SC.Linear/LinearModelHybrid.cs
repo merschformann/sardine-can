@@ -227,7 +227,7 @@ namespace SC.Linear
                         foreach (var cube2 in piece2.Original.Components.OrderBy(c => c.ID))
                         {
                             model.AddConstr(
-                                LinearExpression.Sum(_betas.Select(beta => 
+                                LinearExpression.Sum(_betas.Select(beta =>
                                     _sigmaPlus[beta, cube1, cube2, piece1, piece2] + _sigmaMinus[beta, cube1, cube2, piece1, piece2]))
                                 >= 1,
                                 "NonOverlapLink" + piece1.ToIdentString() + piece2.ToIdentString() + cube1.ToIdentString() + cube2.ToIdentString());
@@ -275,6 +275,13 @@ namespace SC.Linear
                         }
                     }
                 }
+            }
+            // Ensure that the max weight is not exceeded
+            foreach (var container in Instance.Containers)
+            {
+                model.AddConstr(
+                    LinearExpression.Sum(Instance.Pieces.Select(p => _itemIsPicked[p, container] * p.Weight)) <= container.MaxWeight,
+                    "WeightCapacityLimitation" + container.ToIdentString());
             }
             // Ensure gravity-handling only if desired
             if (Config.HandleGravity)

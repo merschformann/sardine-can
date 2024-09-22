@@ -331,6 +331,13 @@ namespace SC.Linear
                     }
                 }
             }
+            // Ensure that the max weight is not exceeded
+            foreach (var container in Instance.Containers)
+            {
+                model.AddConstr(
+                    LinearExpression.Sum(Instance.Pieces.Select(p => _itemIsPicked[p, container] * p.Weight)) <= container.MaxWeight,
+                    "WeightCapacityLimitation" + container.ToIdentString());
+            }
             // Ensure gravity-handling only if desired
             if (Config.HandleGravity)
             {

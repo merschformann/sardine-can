@@ -38,6 +38,7 @@ namespace SC.ObjectModel
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
             ExploitedVolume = 0;
             ExploitedVolumeOfContainers = new double[instance.Containers.Count];
+            ExploitedWeightOfContainers = new double[instance.Containers.Count];
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -107,6 +108,7 @@ namespace SC.ObjectModel
         {
             ExploitedVolume += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
             ExploitedVolumeOfContainers[container.VolatileID] += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            ExploitedWeightOfContainers[container.VolatileID] += piece.Weight;
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]++;
             ContainedPieces.Add(piece);
             OffloadPieces.Remove(piece);
@@ -128,6 +130,7 @@ namespace SC.ObjectModel
         {
             ExploitedVolume -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
             ExploitedVolumeOfContainers[container.VolatileID] -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            ExploitedWeightOfContainers[container.VolatileID] -= piece.Weight;
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
             ContainedPieces.Remove(piece);
             OffloadPieces.Add(piece);
@@ -149,6 +152,7 @@ namespace SC.ObjectModel
         {
             ExploitedVolume -= ContainerContent[container.VolatileID].Sum(p => { return TetrisMode ? p.Volume : p.Original.BoundingBox.Volume; });
             ExploitedVolumeOfContainers[container.VolatileID] = 0;
+            ExploitedWeightOfContainers[container.VolatileID] = 0;
             foreach (var piece in ContainerContent[container.VolatileID])
             {
                 MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
@@ -174,6 +178,7 @@ namespace SC.ObjectModel
             foreach (var container in InstanceLinked.Containers)
             {
                 ExploitedVolumeOfContainers[container.VolatileID] = 0;
+                ExploitedWeightOfContainers[container.VolatileID] = 0;
                 for (int i = 0; i < Enum.GetValues(typeof(MaterialClassification)).Length; i++)
                     MaterialsPerContainer[container.VolatileID, i] = 0;
                 ContainerContent[container.VolatileID].Clear();
@@ -253,6 +258,7 @@ namespace SC.ObjectModel
             }
             clone.ExploitedVolume = ExploitedVolume;
             clone.ExploitedVolumeOfContainers = ExploitedVolumeOfContainers.ToArray();
+            clone.ExploitedWeightOfContainers = ExploitedWeightOfContainers.ToArray();
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
             // Add info about the virtual pieces
             clone.GenerateVirtualPieceInfo();
@@ -308,6 +314,11 @@ namespace SC.ObjectModel
         /// Fast accessible information about the exploited volume per container
         /// </summary>
         public double[] ExploitedVolumeOfContainers = null;
+        
+        /// <summary>
+        /// Fast accessible information about the loaded weight per container
+        /// </summary>
+        public double[] ExploitedWeightOfContainers = null;
 
         /// <summary>
         /// Fast accessible information about the number of items with the correpsonding material per container

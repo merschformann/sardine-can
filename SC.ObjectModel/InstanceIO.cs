@@ -231,7 +231,8 @@ namespace SC.ObjectModel
                     Length = c.Length,
                     Width = c.Width,
                     Height = c.Height
-                }
+                },
+                MaxWeight = c.MaxWeight
             }));
             instance.Pieces.AddRange(jsonInstance.Pieces.Select(p =>
             {

@@ -68,6 +68,11 @@ namespace SC.ObjectModel.Elements
         /// The volume inside the container that is occupied by virtual pieces.
         /// </summary>
         public double VolumeOccupiedByVirtualPieces = 0.0;
+        
+        /// <summary>
+        /// The maximal weight a container can take. Unlimited, if not explicitly set.
+        /// </summary>
+        public double MaxWeight { get; set; } = double.PositiveInfinity;
 
         /// <summary>
         /// Adds the virtual piece to the container
