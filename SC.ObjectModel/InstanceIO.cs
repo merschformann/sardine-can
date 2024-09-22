@@ -236,7 +236,7 @@ namespace SC.ObjectModel
             }));
             instance.Pieces.AddRange(jsonInstance.Pieces.Select(p =>
             {
-                var convp = new VariablePiece() { ID = p.ID, };
+                var convp = new VariablePiece() { ID = p.ID, Weight = p.Weight };
                 if (p.Flags != null)
                     convp.SetFlags(p.Flags.Select(f => (f.FlagId, f.FlagValue)));
                 foreach (var comp in p.Cubes)
@@ -284,6 +284,7 @@ namespace SC.ObjectModel
                     new JsonPiece()
                     {
                         ID = p.ID,
+                        Weight = p.Weight,
                         Flags = p.GetFlags().Select(f => new JsonFlag() { FlagId = f.flag, FlagValue = f.value }).ToList(),
                         Cubes = p.Original.Components.Select(c =>
                             new JsonCube()
