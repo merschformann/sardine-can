@@ -30,7 +30,12 @@ public class Golden
         var instance = Instance.ReadJson(File.ReadAllText(inputFile));
 
         // Run calculation
-        var result = Executor.Execute(instance, new Configuration() { TimeLimitInSeconds = 1 }, Console.WriteLine);
+        var result = Executor.Execute(instance, new Configuration()
+        {
+            TimeLimitInSeconds = 1,
+            ThreadLimit = 1,
+            IterationLimit = 100,
+        }, Console.WriteLine);
 
         var update = Environment.GetEnvironmentVariable("UPDATE") == "1";
         if (update)

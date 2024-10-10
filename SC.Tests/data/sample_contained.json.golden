@@ -7,6 +7,148 @@
       "height": 300,
       "assignments": [
         {
+          "piece": 3,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "a": 90,
+            "b": 0,
+            "c": 0
+          },
+          "cubes": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "length": 271,
+              "width": 393,
+              "height": 214
+            }
+          ]
+        },
+        {
+          "piece": 5,
+          "position": {
+            "x": 271,
+            "y": 0,
+            "z": 0,
+            "a": 0,
+            "b": 0,
+            "c": 90
+          },
+          "cubes": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "length": 245,
+              "width": 351,
+              "height": 287
+            }
+          ]
+        },
+        {
+          "piece": 7,
+          "position": {
+            "x": 516,
+            "y": 0,
+            "z": 0,
+            "a": 0,
+            "b": 0,
+            "c": 90
+          },
+          "cubes": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "length": 78,
+              "width": 241,
+              "height": 115
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "length": 600,
+      "width": 400,
+      "height": 300,
+      "assignments": [
+        {
+          "piece": 4,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "a": 0,
+            "b": 0,
+            "c": 0
+          },
+          "cubes": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "length": 351,
+              "width": 398,
+              "height": 287
+            }
+          ]
+        },
+        {
+          "piece": 2,
+          "position": {
+            "x": 351,
+            "y": 0,
+            "z": 0,
+            "a": 0,
+            "b": 0,
+            "c": 90
+          },
+          "cubes": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "length": 145,
+              "width": 392,
+              "height": 152
+            }
+          ]
+        },
+        {
+          "piece": 1,
+          "position": {
+            "x": 351,
+            "y": 0,
+            "z": 152,
+            "a": 0,
+            "b": 90,
+            "c": 90
+          },
+          "cubes": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "length": 245,
+              "width": 367,
+              "height": 122
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "length": 500,
+      "width": 400,
+      "height": 300,
+      "assignments": [
+        {
           "piece": 0,
           "position": {
             "x": 0,
@@ -14,7 +156,7 @@
             "z": 0,
             "a": 0,
             "b": 0,
-            "c": 180
+            "c": 0
           },
           "cubes": [
             {
@@ -28,12 +170,12 @@
           ]
         },
         {
-          "piece": 9,
+          "piece": 8,
           "position": {
             "x": 304,
             "y": 0,
             "z": 0,
-            "a": 270,
+            "a": 0,
             "b": 0,
             "c": 0
           },
@@ -42,90 +184,19 @@
               "x": 0,
               "y": 0,
               "z": 0,
-              "length": 60,
-              "width": 170,
-              "height": 183
-            }
-          ]
-        },
-        {
-          "piece": 6,
-          "position": {
-            "x": 364,
-            "y": 0,
-            "z": 0,
-            "a": 0,
-            "b": 90,
-            "c": 90
-          },
-          "cubes": [
-            {
-              "x": 0,
-              "y": 0,
-              "z": 0,
-              "length": 234,
-              "width": 376,
-              "height": 294
-            }
-          ]
-        },
-        {
-          "piece": 8,
-          "position": {
-            "x": 0,
-            "y": 0,
-            "z": 140,
-            "a": 0,
-            "b": 270,
-            "c": 0
-          },
-          "cubes": [
-            {
-              "x": 0,
-              "y": 0,
-              "z": 0,
-              "length": 274,
+              "length": 154,
               "width": 395,
-              "height": 154
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "length": 600,
-      "width": 400,
-      "height": 300,
-      "assignments": [
-        {
-          "piece": 5,
-          "position": {
-            "x": 0,
-            "y": 0,
-            "z": 0,
-            "a": 0,
-            "b": 0,
-            "c": 180
-          },
-          "cubes": [
-            {
-              "x": 0,
-              "y": 0,
-              "z": 0,
-              "length": 351,
-              "width": 245,
-              "height": 287
+              "height": 274
             }
           ]
         },
         {
-          "piece": 1,
+          "piece": 9,
           "position": {
             "x": 0,
-            "y": 245,
+            "y": 336,
             "z": 0,
-            "a": 90,
+            "a": 0,
             "b": 0,
             "c": 90
           },
@@ -134,80 +205,9 @@
               "x": 0,
               "y": 0,
               "z": 0,
-              "length": 367,
-              "width": 122,
-              "height": 245
-            }
-          ]
-        },
-        {
-          "piece": 7,
-          "position": {
-            "x": 351,
-            "y": 0,
-            "z": 0,
-            "a": 0,
-            "b": 90,
-            "c": 270
-          },
-          "cubes": [
-            {
-              "x": 0,
-              "y": 0,
-              "z": 0,
-              "length": 78,
-              "width": 115,
-              "height": 241
-            }
-          ]
-        },
-        {
-          "piece": 2,
-          "position": {
-            "x": 429,
-            "y": 0,
-            "z": 0,
-            "a": 0,
-            "b": 0,
-            "c": 270
-          },
-          "cubes": [
-            {
-              "x": 0,
-              "y": 0,
-              "z": 0,
-              "length": 145,
-              "width": 392,
-              "height": 152
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "length": 500,
-      "width": 400,
-      "height": 300,
-      "assignments": [
-        {
-          "piece": 4,
-          "position": {
-            "x": 0,
-            "y": 0,
-            "z": 0,
-            "a": 180,
-            "b": 0,
-            "c": 270
-          },
-          "cubes": [
-            {
-              "x": 0,
-              "y": 0,
-              "z": 0,
-              "length": 398,
-              "width": 351,
-              "height": 287
+              "length": 183,
+              "width": 60,
+              "height": 170
             }
           ]
         }
@@ -220,23 +220,23 @@
       "height": 250,
       "assignments": [
         {
-          "piece": 3,
+          "piece": 6,
           "position": {
             "x": 0,
             "y": 0,
             "z": 0,
             "a": 90,
             "b": 0,
-            "c": 180
+            "c": 0
           },
           "cubes": [
             {
               "x": 0,
               "y": 0,
               "z": 0,
-              "length": 271,
-              "width": 393,
-              "height": 214
+              "length": 294,
+              "width": 376,
+              "height": 234
             }
           ]
         }

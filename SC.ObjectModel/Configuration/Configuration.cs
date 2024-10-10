@@ -34,7 +34,7 @@ namespace SC.ObjectModel.Configuration
         {
             // Set some default time-limit to not accidentally cause infinite runs
             TimeLimit = TimeSpan.FromSeconds(10);
-            
+
             // Base settings
             Type = method;
             HandleGravity = true;
@@ -255,6 +255,11 @@ namespace SC.ObjectModel.Configuration
         /// The timelimit for the solution process in seconds
         /// </summary>
         public double TimeLimitInSeconds { get { return TimeLimit.TotalSeconds; } set { TimeLimit = TimeSpan.FromSeconds(value); } }
+
+        /// <summary>
+        /// The maximum number of iterations for the solution process. A negative value indicates no limit.
+        /// </summary>
+        public int IterationLimit { get; set; } = -1;
 
         /// <summary>
         /// Indicates whether to respect the gravity contraint or not
