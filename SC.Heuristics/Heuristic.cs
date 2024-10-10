@@ -40,7 +40,7 @@ namespace SC.Heuristics
         /// <summary>
         /// Indicates whether the timelimit is reached. <code>true</code> if the timelimit is exceeded, <code>false</code> otherwise.
         /// </summary>
-        public bool TimeUp { get { return (TimeSpan.MaxValue == Config.TimeLimit) ? false : DateTime.Now > TimeStart + Config.TimeLimit; } }
+        public bool TimeUp { get { return TimeSpan.MaxValue != Config.TimeLimit && DateTime.Now > TimeStart + Config.TimeLimit; } }
 
         /// <summary>
         /// The overall available volume across all containers

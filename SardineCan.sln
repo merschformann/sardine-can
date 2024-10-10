@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Service", "SC.Service\SC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.CLI", "SC.CLI\SC.CLI.csproj", "{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SC.Tests", "SC.Tests\SC.Tests.csproj", "{B77B65F0-9413-4452-B507-5BCF7872588C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,18 @@ Global
 		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Release|x64.Build.0 = Release|x64
 		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Release|x86.ActiveCfg = Release|x86
 		{049AFB9E-E6CB-47BE-93DE-C0B67CFED040}.Release|x86.Build.0 = Release|x86
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Debug|x64.Build.0 = Debug|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Release|x64.Build.0 = Release|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Release|x86.ActiveCfg = Release|Any CPU
+		{B77B65F0-9413-4452-B507-5BCF7872588C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
