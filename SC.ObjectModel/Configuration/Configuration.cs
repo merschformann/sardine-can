@@ -259,7 +259,7 @@ namespace SC.ObjectModel.Configuration
         /// <summary>
         /// The maximum number of iterations for the solution process. A negative value indicates no limit.
         /// </summary>
-        public int IterationLimit { get; set; } = -1;
+        public int IterationsLimit { get; set; } = -1;
 
         /// <summary>
         /// Indicates whether to respect the gravity contraint or not

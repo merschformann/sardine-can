@@ -38,6 +38,6 @@ namespace SC.Heuristics.PrimalHeuristic
         /// <summary>
         /// Indicates whether the maximum number of iterations is reached.
         /// </summary>
-        public bool IterationsReached(int current) => Config.IterationLimit >= 0 && current >= Config.IterationLimit;
+        public bool IterationsReached(int current) => Config.IterationsLimit >= 0 && current >= Config.IterationsLimit;
     }
 }
