@@ -135,6 +135,12 @@ namespace SC.ObjectModel.Elements
                 }
             }
 
+            // Weight (only if available - for backwards compatibility)
+            if (node.Attributes[Helper.Check(() => this.Weight)] != null)
+            {
+                this.Weight = double.Parse(node.Attributes[Helper.Check(() => this.Weight)].Value, ExportationConstants.XML_FORMATTER);
+            }
+
             // Material
             this.Material = new Material()
             {
@@ -168,6 +174,11 @@ namespace SC.ObjectModel.Elements
             attr.Value = Helper.GetOneString(
                 this.ForbiddenOrientations.Select(o => o.ToString(ExportationConstants.XML_PATTERN, ExportationConstants.XML_FORMATTER)),
                 ExportationConstants.XML_ATTRIBUTE_DELIMITER.ToString());
+            node.Attributes.Append(attr);
+
+            // Weight
+            attr = document.CreateAttribute(Helper.Check(() => this.Weight));
+            attr.Value = this.Weight.ToString(ExportationConstants.XML_PATTERN, ExportationConstants.XML_FORMATTER);
             node.Attributes.Append(attr);
 
             // Material

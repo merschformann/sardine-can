@@ -70,6 +70,11 @@ namespace SC.ObjectModel.Elements
         public double VolumeOccupiedByVirtualPieces = 0.0;
 
         /// <summary>
+        /// The maximal weight a container can take. Unlimited, if not explicitly set.
+        /// </summary>
+        public double MaxWeight { get; set; } = double.PositiveInfinity;
+
+        /// <summary>
         /// Adds the virtual piece to the container
         /// </summary>
         /// <param name="piece">A virtual piece defining an unusable area of the container</param>
@@ -259,6 +264,12 @@ namespace SC.ObjectModel.Elements
             // ID
             this.ID = int.Parse(node.Attributes[Helper.Check(() => this.ID)].Value, ExportationConstants.XML_FORMATTER);
 
+            // MaxWeight (only if available - for backwards compatibility)
+            if (node.Attributes[Helper.Check(() => this.MaxWeight)] != null)
+                this.MaxWeight = double.Parse(node.Attributes[Helper.Check(() => this.MaxWeight)].Value, ExportationConstants.XML_FORMATTER);
+            else
+                this.MaxWeight = double.PositiveInfinity;
+
             // Mesh
             MeshCube mesh = new MeshCube();
             mesh.LoadXML(node.SelectSingleNode(ExportationConstants.XML_MESHCUBE_IDENT));
@@ -302,6 +313,11 @@ namespace SC.ObjectModel.Elements
             // ID
             XmlAttribute attr = document.CreateAttribute(Helper.Check(() => this.ID));
             attr.Value = this.ID.ToString(ExportationConstants.XML_PATTERN, ExportationConstants.XML_FORMATTER);
+            node.Attributes.Append(attr);
+
+            // MaxWeight
+            attr = document.CreateAttribute(Helper.Check(() => this.MaxWeight));
+            attr.Value = this.MaxWeight.ToString(ExportationConstants.XML_PATTERN, ExportationConstants.XML_FORMATTER);
             node.Attributes.Append(attr);
 
             // Create mesh info

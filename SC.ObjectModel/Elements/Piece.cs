@@ -19,6 +19,11 @@ namespace SC.ObjectModel.Elements
         /// The ID of this piece.
         /// </summary>
         public int ID { get; set; }
+        
+        /// <summary>
+        /// The weight of the piece.
+        /// </summary>
+        public double Weight { get; set; }
 
         /// <summary>
         /// An internal counter to supply IDs for components

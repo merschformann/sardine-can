@@ -52,9 +52,11 @@ parentheses are optional.
 |   │   ├── id: string // identifies the container
 |   │   ├── length: float // side-length (x)
 |   │   ├── width: float // side-length (y)
-|   │   └── height: float // side-length (z)
+|   │   ├── height: float // side-length (z)
+|   │   └── maxWeight: double // maximal weight the container can hold
 |   ├── pieces (array of)
 |   |   ├── id: string // identifies the piece
+|   |   ├── weight: double // weight of the piece
 |   |   ├── cubes (array of)
 |   |   |   ├── (x): float // x-offset from parent origin
 |   |   |   ├── (y): float // y-offset from parent origin

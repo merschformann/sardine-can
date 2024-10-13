@@ -1,0 +1,161 @@
+{
+    "name": "json_max_weight",
+    "containers": [
+        {
+            "id": 0,
+            "length": 600,
+            "width": 400,
+            "height": 300,
+            "maxWeight": 1000
+        },
+        {
+            "id": 1,
+            "length": 600,
+            "width": 400,
+            "height": 300,
+            "maxWeight": 1000
+        }
+    ],
+    "pieces": [
+        {
+            "id": 0,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 304,
+                    "width": 336,
+                    "height": 140
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 122,
+                    "width": 245,
+                    "height": 367
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 392,
+                    "width": 145,
+                    "height": 152
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 271,
+                    "width": 214,
+                    "height": 393
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 351,
+                    "width": 398,
+                    "height": 287
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 351,
+                    "width": 245,
+                    "height": 287
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 294,
+                    "width": 234,
+                    "height": 376
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 241,
+                    "width": 78,
+                    "height": 115
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 154,
+                    "width": 395,
+                    "height": 274
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "weight": 500,
+            "cubes": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "length": 60,
+                    "width": 183,
+                    "height": 170
+                }
+            ]
+        }
+    ]
+}

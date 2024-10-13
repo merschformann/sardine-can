@@ -12,6 +12,8 @@ namespace SC.ObjectModel.IO.Json
     {
         [JsonPropertyName("id")]
         public int ID { get; set; }
+        [JsonPropertyName("weight")]
+        public double Weight { get; set; }
         [JsonPropertyName("flags")]
         public List<JsonFlag> Flags { get; set; }
         [JsonPropertyName("cubes")]

@@ -31,6 +31,9 @@ namespace SC.Heuristics.PrimalHeuristic
             // Check for flag rule compatibility
             if (IsFlagRuleIncompatible(solution, container, piece))
                 return false;
+            // Check weight against MaxWeight
+            if (solution.ExploitedWeightOfContainers[container.VolatileID] + piece.Weight > container.MaxWeight)
+                return false;
 
             // All checks passed, piece is compatible with container
             return true;
