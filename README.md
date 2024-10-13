@@ -1,6 +1,4 @@
-<img src="Material/Icon/sardines.svg" align="left" height="60"/>
-
-# SardineCan
+# SardineCan <img src='Material/Icon/sardines.svg' align="right" height="90" />
 
 SardineCan is a humble 3D knapsack / bin packing solver with some special
 constraints. It is a collection of constructive heuristics, meta-heuristic
