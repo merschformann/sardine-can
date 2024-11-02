@@ -107,7 +107,10 @@ namespace SC.Heuristics.PrimalHeuristic
                 currentIteration++;
                 currentIntervalIteration++;
 
-            } while (currentIteration - lastImprovement < Config.StagnationDistance && !Cancelled && !TimeUp);
+            } while (currentIteration - lastImprovement < Config.StagnationDistance && 
+                     !Cancelled && 
+                     !TimeUp &&
+                     IterationsReached(currentIteration));
         }
 
         #endregion

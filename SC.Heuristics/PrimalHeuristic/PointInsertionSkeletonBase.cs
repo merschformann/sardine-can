@@ -34,5 +34,10 @@ namespace SC.Heuristics.PrimalHeuristic
         /// Checks whether a solution is available. (Since an empty solution is always valid, a valid solution is always available)
         /// </summary>
         public override bool HasSolution { get { return true; } }
+
+        /// <summary>
+        /// Indicates whether the maximum number of iterations is reached.
+        /// </summary>
+        public bool IterationsReached(int current) => Config.IterationsLimit >= 0 && current >= Config.IterationsLimit;
     }
 }
