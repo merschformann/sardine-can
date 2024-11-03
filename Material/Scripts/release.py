@@ -16,7 +16,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def check_version(version: str) -> bool:
+def check_version(version: str) -> None:
     """
     Check whether a given version is in expected format and actually newer than the
     current version.
@@ -26,9 +26,6 @@ def check_version(version: str) -> bool:
 
     with open(VERSION_FILE, "r") as f:
         current_version = f.read().strip()
-
-    version = version.strip("v")
-    current_version = current_version.strip("v")
 
     def parse_version(version: str):
         return tuple(map(int, version.split(".")))
