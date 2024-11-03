@@ -1,4 +1,5 @@
 name: release
+run-name: Release ${{ inputs.VERSION }} by @${{ github.actor }} from ${{ github.ref_name }}
 
 on:
     workflow_dispatch:
