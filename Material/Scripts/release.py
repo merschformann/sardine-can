@@ -49,7 +49,7 @@ def bump_version_csproj(csproj_file: str, version: str) -> None:
 
         bumped = False
         for elem in root.iter():
-            if elem.tag.endswith("Version"):
+            if elem.tag == "Version":
                 elem.text = version
                 bumped = True
 
@@ -80,6 +80,8 @@ def main() -> None:
         recursive=True,
     )
     for csproj_file in csproj_files:
+        if "Test" in csproj_file:
+            continue
         bump_version_csproj(csproj_file, version)
     bump_version_main(version)
 
