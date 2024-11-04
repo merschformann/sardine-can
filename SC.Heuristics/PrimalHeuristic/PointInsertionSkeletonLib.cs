@@ -2252,8 +2252,13 @@ namespace SC.Heuristics.PrimalHeuristic
             // Init solution
             COSolution localSolution = Instance.CreateSolution(Config.Tetris, Config.MeritType, true);
 
+
+
             // Start improvement
-            while (currentIteration - lastImprovement < Config.StagnationDistance && !Cancelled && !TimeUp)
+            while (currentIteration - lastImprovement < Config.StagnationDistance &&
+                   !Cancelled &&
+                   !TimeUp &&
+                   !IterationsReached(currentIteration))
             {
                 // Break if all pieces packed (can only break when minimization of container count is impossible)
                 if (solution.NumberOfContainersInUse == 1 && solution.NumberOfPiecesPacked == Instance.Pieces.Count)

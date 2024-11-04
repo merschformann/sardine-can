@@ -298,9 +298,9 @@ namespace SC.CLI
                     else
                     {
                         if (toStringMethod != null)
-                            value = toStringMethod.Invoke(field.GetValue(config), new object[] { CultureInfo.InvariantCulture }).ToString();
+                            value = toStringMethod.Invoke(field.GetValue(config), new object[] { CultureInfo.InvariantCulture })?.ToString();
                         else
-                            value = field.GetValue(config).ToString();
+                            value = field.GetValue(config)?.ToString();
                     }
                 }
                 // Output it
