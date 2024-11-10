@@ -420,15 +420,18 @@ namespace SC.Linear
                         "LocatedOnGround" + piece.ToIdentString());
                 }
                 // Locate pieces on other pieces or the ground
-                foreach (var piece in Instance.Pieces)
+                if (Instance.Pieces.Count > 1)
                 {
-                    model.AddConstr(
-                        LinearExpression.Sum(_pieceTuples
-                        .Where(t => t.Item1 == piece)
-                        .Select(tuple => _locatedOn[tuple.Item1, tuple.Item2])) +
-                        _locatedOnGround[piece]
-                        == 1,
-                        "LocatedOnAnotherPiece-" + piece.ToIdentString());
+                    foreach (var piece in Instance.Pieces)
+                    {
+                        model.AddConstr(
+                            LinearExpression.Sum(_pieceTuples
+                                .Where(t => t.Item1 == piece)
+                                .Select(tuple => _locatedOn[tuple.Item1, tuple.Item2])) +
+                            _locatedOnGround[piece]
+                            == 1,
+                            "LocatedOnAnotherPiece-" + piece.ToIdentString());
+                    }
                 }
             }
             // Ensure material compatibility only if desired
@@ -607,32 +610,28 @@ namespace SC.Linear
             foreach (var piece in Instance.Pieces)
             {
                 // Get the container the piece is contained in
-                Container container = Instance.Containers.Where(c => _pieceIsInContainer[piece, c].CallbackValue > 0.5).FirstOrDefault();
+                var container = Instance.Containers.FirstOrDefault(c => _pieceIsInContainer[piece, c].CallbackValue > 0.5);
 
-                // If contained in a container add it to the solution
-                if (container != null)
+                // If not contained in a container, no need to add it to the solution
+                if (container == null) continue;
+
+                // Get orientation
+                var orientation = 0;
+                if (_rotation[piece, 1, 1].CallbackValue > 0.5)
                 {
-                    // Get orientation
-                    int orientation = 0;
-                    if (_rotation[piece, 1, 1].CallbackValue > 0.5)
-                        if (_rotation[piece, 2, 2].CallbackValue > 0.5)
-                            orientation = 0;
-                        else
-                            orientation = 4;
-                    else
-                        if (_rotation[piece, 1, 2].CallbackValue > 0.5)
-                        if (_rotation[piece, 2, 1].CallbackValue > 0.5)
-                            orientation = 1;
-                        else
-                            orientation = 17;
-                    else
-                            if (_rotation[piece, 2, 1].CallbackValue > 0.5)
-                        orientation = 5;
-                    else
-                        orientation = 16;
-                    // Add to solution
-                    Solution.Add(container, piece, orientation, new MeshPoint() { X = _frontLeftBottomX[piece].CallbackValue, Y = _frontLeftBottomY[piece].CallbackValue, Z = _frontLeftBottomZ[piece].CallbackValue });
+                    orientation = _rotation[piece, 2, 2].CallbackValue > 0.5 ? 0 : 4;
                 }
+                else if (_rotation[piece, 1, 2].CallbackValue > 0.5)
+                {
+                    orientation = _rotation[piece, 2, 1].CallbackValue > 0.5 ? 1 : 17;
+                }
+                else
+                {
+                    orientation = _rotation[piece, 2, 1].CallbackValue > 0.5 ? 5 : 16;
+                }
+
+                // Add to solution
+                Solution.Add(container, piece, orientation, new MeshPoint() { X = _frontLeftBottomX[piece].CallbackValue, Y = _frontLeftBottomY[piece].CallbackValue, Z = _frontLeftBottomZ[piece].CallbackValue });
             }
         }
 
