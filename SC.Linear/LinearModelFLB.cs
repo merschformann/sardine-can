@@ -616,7 +616,7 @@ namespace SC.Linear
                 if (container == null) continue;
 
                 // Get orientation
-                var orientation = 0;
+                int orientation;
                 if (_rotation[piece, 1, 1].CallbackValue > 0.5)
                 {
                     orientation = _rotation[piece, 2, 2].CallbackValue > 0.5 ? 0 : 4;
@@ -659,23 +659,20 @@ namespace SC.Linear
                 if (container != null)
                 {
                     // Get orientation
-                    int orientation = 0;
+                    int orientation;
                     if (_rotation[piece, 1, 1].Value > 0.5)
-                        if (_rotation[piece, 2, 2].Value > 0.5)
-                            orientation = 0;
-                        else
-                            orientation = 4;
+                    {
+                        orientation = _rotation[piece, 2, 2].Value > 0.5 ? 0 : 4;
+                    }
+                    else if (_rotation[piece, 1, 2].Value > 0.5)
+                    {
+                        orientation = _rotation[piece, 2, 1].Value > 0.5 ? 1 : 17;
+                    }
                     else
-                        if (_rotation[piece, 1, 2].Value > 0.5)
-                        if (_rotation[piece, 2, 1].Value > 0.5)
-                            orientation = 1;
-                        else
-                            orientation = 17;
-                    else
-                            if (_rotation[piece, 2, 1].Value > 0.5)
-                        orientation = 5;
-                    else
-                        orientation = 16;
+                    {
+                        orientation = _rotation[piece, 2, 1].Value > 0.5 ? 5 : 16;
+                    }
+
                     // Add to solution
                     Solution.Add(container, piece, orientation, new MeshPoint() { X = _frontLeftBottomX[piece].Value, Y = _frontLeftBottomY[piece].Value, Z = _frontLeftBottomZ[piece].Value });
                 }
