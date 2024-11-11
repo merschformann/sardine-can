@@ -139,13 +139,6 @@ namespace SC.Linear
                         LinearExpression.Sum(Instance.Containers.Select(c => _pieceIsInContainer[piece, c])) == 1,
                     "AssignToSingleContainer" + piece.ToIdentString());
             }
-            // Ensure that the gross weight is not exceeded // TODO enable again!?
-            //foreach (var container in _instance.Containers)
-            //{
-            //    model.AddConstraint(
-            //        Expression.Sum(_instance.Pieces.Select(p => _pieceIsInContainer[p, container] * p.Weight)) <= containerGrossWeight,
-            //        "GrossWeightCapacityLimitation" + container.ToIdentString());
-            //}
             // Ensure that the pieces stay in the container
             foreach (var piece in Instance.Pieces)
             {
@@ -342,6 +335,13 @@ namespace SC.Linear
                         "VirtualPieceFixPositionZ" + container.ToIdentString() + virtualPiece.ToIdentString());
                 }
             }
+            // Ensure that the max weight is not exceeded
+            foreach (var container in Instance.Containers)
+            {
+                model.AddConstr(
+                    LinearExpression.Sum(Instance.Pieces.Select(p => _pieceIsInContainer[p, container] * p.Weight)) <= container.MaxWeight,
+                    "WeightCapacityLimitation" + container.ToIdentString());
+            }
             // Ensure gravity only if desired
             if (Config.HandleGravity)
             {
@@ -420,15 +420,18 @@ namespace SC.Linear
                         "LocatedOnGround" + piece.ToIdentString());
                 }
                 // Locate pieces on other pieces or the ground
-                foreach (var piece in Instance.Pieces)
+                if (Instance.Pieces.Count > 1)
                 {
-                    model.AddConstr(
-                        LinearExpression.Sum(_pieceTuples
-                        .Where(t => t.Item1 == piece)
-                        .Select(tuple => _locatedOn[tuple.Item1, tuple.Item2])) +
-                        _locatedOnGround[piece]
-                        == 1,
-                        "LocatedOnAnotherPiece-" + piece.ToIdentString());
+                    foreach (var piece in Instance.Pieces)
+                    {
+                        model.AddConstr(
+                            LinearExpression.Sum(_pieceTuples
+                                .Where(t => t.Item1 == piece)
+                                .Select(tuple => _locatedOn[tuple.Item1, tuple.Item2])) +
+                            _locatedOnGround[piece]
+                            == 1,
+                            "LocatedOnAnotherPiece-" + piece.ToIdentString());
+                    }
                 }
             }
             // Ensure material compatibility only if desired
@@ -607,32 +610,28 @@ namespace SC.Linear
             foreach (var piece in Instance.Pieces)
             {
                 // Get the container the piece is contained in
-                Container container = Instance.Containers.Where(c => _pieceIsInContainer[piece, c].CallbackValue > 0.5).FirstOrDefault();
+                var container = Instance.Containers.FirstOrDefault(c => _pieceIsInContainer[piece, c].CallbackValue > 0.5);
 
-                // If contained in a container add it to the solution
-                if (container != null)
+                // If not contained in a container, no need to add it to the solution
+                if (container == null) continue;
+
+                // Get orientation
+                int orientation;
+                if (_rotation[piece, 1, 1].CallbackValue > 0.5)
                 {
-                    // Get orientation
-                    int orientation = 0;
-                    if (_rotation[piece, 1, 1].CallbackValue > 0.5)
-                        if (_rotation[piece, 2, 2].CallbackValue > 0.5)
-                            orientation = 0;
-                        else
-                            orientation = 4;
-                    else
-                        if (_rotation[piece, 1, 2].CallbackValue > 0.5)
-                            if (_rotation[piece, 2, 1].CallbackValue > 0.5)
-                                orientation = 1;
-                            else
-                                orientation = 17;
-                        else
-                            if (_rotation[piece, 2, 1].CallbackValue > 0.5)
-                                orientation = 5;
-                            else
-                                orientation = 16;
-                    // Add to solution
-                    Solution.Add(container, piece, orientation, new MeshPoint() { X = _frontLeftBottomX[piece].CallbackValue, Y = _frontLeftBottomY[piece].CallbackValue, Z = _frontLeftBottomZ[piece].CallbackValue });
+                    orientation = _rotation[piece, 2, 2].CallbackValue > 0.5 ? 0 : 4;
                 }
+                else if (_rotation[piece, 1, 2].CallbackValue > 0.5)
+                {
+                    orientation = _rotation[piece, 2, 1].CallbackValue > 0.5 ? 1 : 17;
+                }
+                else
+                {
+                    orientation = _rotation[piece, 2, 1].CallbackValue > 0.5 ? 5 : 16;
+                }
+
+                // Add to solution
+                Solution.Add(container, piece, orientation, new MeshPoint() { X = _frontLeftBottomX[piece].CallbackValue, Y = _frontLeftBottomY[piece].CallbackValue, Z = _frontLeftBottomZ[piece].CallbackValue });
             }
         }
 
@@ -660,23 +659,20 @@ namespace SC.Linear
                 if (container != null)
                 {
                     // Get orientation
-                    int orientation = 0;
+                    int orientation;
                     if (_rotation[piece, 1, 1].Value > 0.5)
-                        if (_rotation[piece, 2, 2].Value > 0.5)
-                            orientation = 0;
-                        else
-                            orientation = 4;
+                    {
+                        orientation = _rotation[piece, 2, 2].Value > 0.5 ? 0 : 4;
+                    }
+                    else if (_rotation[piece, 1, 2].Value > 0.5)
+                    {
+                        orientation = _rotation[piece, 2, 1].Value > 0.5 ? 1 : 17;
+                    }
                     else
-                        if (_rotation[piece, 1, 2].Value > 0.5)
-                            if (_rotation[piece, 2, 1].Value > 0.5)
-                                orientation = 1;
-                            else
-                                orientation = 17;
-                        else
-                            if (_rotation[piece, 2, 1].Value > 0.5)
-                                orientation = 5;
-                            else
-                                orientation = 16;
+                    {
+                        orientation = _rotation[piece, 2, 1].Value > 0.5 ? 5 : 16;
+                    }
+
                     // Add to solution
                     Solution.Add(container, piece, orientation, new MeshPoint() { X = _frontLeftBottomX[piece].Value, Y = _frontLeftBottomY[piece].Value, Z = _frontLeftBottomZ[piece].Value });
                 }

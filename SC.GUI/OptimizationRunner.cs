@@ -155,11 +155,6 @@ namespace SC.GUI
         private readonly string _exportDir;
 
         /// <summary>
-        /// The export dir
-        /// </summary>
-        private bool _canceled;
-
-        /// <summary>
         /// Time limit
         /// </summary>
         protected TimeSpan TimeLimit;
@@ -270,7 +265,6 @@ namespace SC.GUI
         public void Cancel()
         {
             _method.Cancel();
-            _canceled = true;
         }
 
     }
