@@ -30,9 +30,8 @@ namespace SC.Toolbox
             }
             else
             {
-                if (expr.Body is ConstantExpression)
+                if (expr.Body is ConstantExpression body)
                 {
-                    var body = ((ConstantExpression)expr.Body);
                     return body.Value.ToString();
                 }
                 else
@@ -98,9 +97,9 @@ namespace SC.Toolbox
             {
                 completed = thread.Wait(timeout);
             }
-            catch (AggregateException ex)
+            catch (AggregateException)
             {
-                throw ex;
+                throw;
             }
             result = t;
             return completed;
