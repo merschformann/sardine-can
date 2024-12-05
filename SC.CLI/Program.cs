@@ -29,8 +29,26 @@ namespace SC.CLI
 
         private static void Execute(Options opts)
         {
-            // Read input file (either from file or from stdin)
-            var instance = JsonIO.From<JsonCalculation>(string.IsNullOrWhiteSpace(opts.Input) ? Console.In.ReadToEnd() : File.ReadAllText(opts.Input));
+            // Read the content fully first (either from file or from stdin)
+            var content = string.IsNullOrWhiteSpace(opts.Input) ? Console.In.ReadToEnd() : File.ReadAllText(opts.Input);
+
+            // Try to parse the input as a calculation
+            var instance = JsonIO.From<JsonCalculation>(content);
+
+            // If nothing useful was found, try to parse it as an unnested instance (without a configuration)
+            if (instance == null || instance.Instance == null && instance.Configuration == null)
+            {
+                var inst = JsonIO.From<JsonInstance>(content);
+                if (inst != null)
+                    instance = new JsonCalculation() { Instance = inst };
+            }
+
+            // If still nothing useful was found, abort
+            if (instance == null || instance.Instance == null)
+            {
+                Console.WriteLine("No 'instance' found in input file.");
+                return;
+            }
 
             // >> Run calculation
             Action<string> logger = string.IsNullOrWhiteSpace(opts.Output) ? null : Console.Write;
