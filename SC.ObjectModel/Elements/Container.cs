@@ -75,6 +75,11 @@ namespace SC.ObjectModel.Elements
         public double MaxWeight { get; set; } = double.PositiveInfinity;
 
         /// <summary>
+        /// The maximal capacity a container offers for multiple dimensions. Every dimension is identified by a string and needs a matching "Quantities" entry in the pieces.
+        /// </summary>
+        public Dictionary<string, double> Capacity { get; set; } = [];
+
+        /// <summary>
         /// Adds the virtual piece to the container
         /// </summary>
         /// <param name="piece">A virtual piece defining an unusable area of the container</param>

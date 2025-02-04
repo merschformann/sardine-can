@@ -24,6 +24,16 @@ namespace SC.ObjectModel.Elements
         /// The weight of the piece.
         /// </summary>
         public double Weight { get; set; }
+        
+        /// <summary>
+        /// The quantities this piece consumes out of the capacities a container provides. This works analogously to weight, but allows multiple dimensions.
+        /// </summary>
+        public Dictionary<string, double> Quantities { get; set; }
+        
+        /// <summary>
+        /// The quantities as an array for faster access.
+        /// </summary>
+        internal double[] QuantitiesArray;
 
         /// <summary>
         /// An internal counter to supply IDs for components

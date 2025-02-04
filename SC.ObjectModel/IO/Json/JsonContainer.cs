@@ -20,5 +20,7 @@ namespace SC.ObjectModel.IO.Json
         public double Height { get; set; }
         [JsonPropertyName("maxWeight")]
         public double MaxWeight { get; set; } = double.PositiveInfinity;
+        [JsonPropertyName("capacity")]
+        public Dictionary<string, double> Capacity { get; set; } = [];
     }
 }
