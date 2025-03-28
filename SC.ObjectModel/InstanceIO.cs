@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
+using Microsoft.VisualBasic;
 
 namespace SC.ObjectModel
 {
@@ -239,8 +240,16 @@ namespace SC.ObjectModel
                 var convp = new VariablePiece() { ID = p.ID, Weight = p.Weight };
                 if (p.Flags != null)
                     convp.SetFlags(p.Flags.Select(f => (f.FlagId, f.FlagValue)));
-                if (p.ForbiddenOrientations != null)
+                
+                if (p.ForbiddenOrientations != null && p.AllowedOrientations == null)
                     convp.ForbiddenOrientations = new(p.ForbiddenOrientations);
+                if (p.AllowedOrientations != null)
+                {
+                    convp.ForbiddenOrientations = MeshConstants.ORIENTATIONS.Except(p.AllowedOrientations).ToHashSet();
+                    if (p.ForbiddenOrientations != null)
+                        convp.ForbiddenOrientations.UnionWith(p.ForbiddenOrientations);
+                }
+                
                 foreach (var comp in p.Cubes)
                     convp.AddComponent(comp.X, comp.Y, comp.Z, comp.Length, comp.Width, comp.Height);
                 return convp;
