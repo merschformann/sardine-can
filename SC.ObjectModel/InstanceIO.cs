@@ -239,6 +239,8 @@ namespace SC.ObjectModel
                 var convp = new VariablePiece() { ID = p.ID, Weight = p.Weight };
                 if (p.Flags != null)
                     convp.SetFlags(p.Flags.Select(f => (f.FlagId, f.FlagValue)));
+                if (p.ForbiddenOrientations != null)
+                    convp.ForbiddenOrientations = new(p.ForbiddenOrientations);
                 foreach (var comp in p.Cubes)
                     convp.AddComponent(comp.X, comp.Y, comp.Z, comp.Length, comp.Width, comp.Height);
                 return convp;
@@ -286,6 +288,7 @@ namespace SC.ObjectModel
                         ID = p.ID,
                         Weight = p.Weight,
                         Flags = p.GetFlags().Select(f => new JsonFlag() { FlagId = f.flag, FlagValue = f.value }).ToList(),
+                        ForbiddenOrientations = p.ForbiddenOrientations.ToList(),
                         Cubes = p.Original.Components.Select(c =>
                             new JsonCube()
                             {

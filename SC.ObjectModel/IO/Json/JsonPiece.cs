@@ -16,6 +16,8 @@ namespace SC.ObjectModel.IO.Json
         public double Weight { get; set; }
         [JsonPropertyName("flags")]
         public List<JsonFlag> Flags { get; set; }
+        [JsonPropertyName("forbidden_orientations")]
+        public List<int> ForbiddenOrientations { get; set; }
         [JsonPropertyName("cubes")]
         public List<JsonCube> Cubes { get; set; }
     }
