@@ -14,6 +14,9 @@ namespace SC.CLI
     {
         [Option('i', "input", Required = false, HelpText = "Input file to process")]
         public string Input { get; set; }
+        
+        [Option('c', "config", Required = false, HelpText = "Path to configuration file")]
+        public string Configuration { get; set; }
 
         [Option('o', "output", Required = false, HelpText = "Output file to write to")]
         public string Output { get; set; }
@@ -41,13 +44,20 @@ namespace SC.CLI
                 var inst = JsonIO.From<JsonInstance>(content);
                 if (inst != null)
                     instance = new JsonCalculation() { Instance = inst };
+                
+                // If still nothing useful was found, abort
+                if (instance == null || instance.Instance == null)
+                {
+                    Console.WriteLine("No 'instance' found in input file.");
+                    return;
+                }
             }
-
-            // If still nothing useful was found, abort
-            if (instance == null || instance.Instance == null)
+            
+            // Read configuration if available
+            if (!string.IsNullOrWhiteSpace(opts.Configuration))
             {
-                Console.WriteLine("No 'instance' found in input file.");
-                return;
+                var config = JsonIO.From<Configuration>(File.ReadAllText(opts.Configuration));
+                instance.Configuration = config;
             }
 
             // >> Run calculation

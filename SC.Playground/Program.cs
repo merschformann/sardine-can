@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using SC.ObjectModel.IO;
 
 namespace SC.Playground
 {
@@ -45,10 +46,15 @@ namespace SC.Playground
 
         static void Experimental()
         {
-            Console.WriteLine("Creating JSON ...");
-            JsonHelpers.CreateJson();
-            Console.WriteLine("Parsing JSON ...");
-            JsonHelpers.ParseJson();
+            Console.WriteLine("Create JSON configuration ...");
+            Configuration config = new Configuration(MethodType.ExtremePointInsertion, false);
+            var configString = JsonIO.To(config);
+            Console.WriteLine("Write JSON configuration to disk ...");
+            File.WriteAllText("configuration.json", configString);
+            // Console.WriteLine("Creating JSON ...");
+            // JsonHelpers.CreateJson();
+            // Console.WriteLine("Parsing JSON ...");
+            // JsonHelpers.ParseJson();
         }
     }
 }
