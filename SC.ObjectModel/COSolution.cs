@@ -36,7 +36,7 @@ namespace SC.ObjectModel
             InitMetaInfo();
             InitFlagHandling();
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
-            ExploitedVolume = 0;
+            Objective = new Objective(tetris);
             ContainerInfos = new ContainerInfo[instance.Containers.Count];
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
@@ -105,7 +105,7 @@ namespace SC.ObjectModel
         /// <param name="position">The position of the piece inside the container</param>
         public void Add(Container container, VariablePiece piece, int orientation, MeshPoint position)
         {
-            ExploitedVolume += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            Objective.AddPiece(piece, orientation, position);
             ContainerInfos[container.VolatileID].AddPiece(piece, orientation, position);
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]++;
             ContainedPieces.Add(piece);
@@ -126,7 +126,7 @@ namespace SC.ObjectModel
         /// <returns>The position at which the piece was inserted</returns>
         public MeshPoint Remove(Container container, VariablePiece piece)
         {
-            ExploitedVolume -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            Objective.RemovePiece(piece, Orientations[piece.VolatileID], Positions[piece.VolatileID]);
             ContainerInfos[container.VolatileID].RemovePiece(piece, Orientations[piece.VolatileID], Positions[piece.VolatileID]);
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
             ContainedPieces.Remove(piece);
@@ -147,10 +147,10 @@ namespace SC.ObjectModel
         /// <param name="container">The container to clear</param>
         public void RemoveContainer(Container container)
         {
-            ExploitedVolume -= ContainerContent[container.VolatileID].Sum(p => { return TetrisMode ? p.Volume : p.Original.BoundingBox.Volume; });
             ContainerInfos[container.VolatileID].Clear();
             foreach (var piece in ContainerContent[container.VolatileID])
             {
+                Objective.RemovePiece(piece, Orientations[piece.VolatileID], Positions[piece.VolatileID]);
                 MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
                 ContainedPieces.Remove(piece);
                 OffloadPieces.Add(piece);
@@ -216,7 +216,7 @@ namespace SC.ObjectModel
                     break;
             }
             LevelPackingC = 0;
-            ExploitedVolume = 0.0;
+            Objective.Clear();
             ClearFlagHandling();
         }
 
@@ -251,7 +251,7 @@ namespace SC.ObjectModel
                 clone.Positions[piece.VolatileID] = (Positions[piece.VolatileID] != null) ? Positions[piece.VolatileID].Clone() : null;
                 clone.Containers[piece.VolatileID] = Containers[piece.VolatileID];
             }
-            clone.ExploitedVolume = ExploitedVolume;
+            clone.Objective = Objective.Clone();
             clone.ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
             foreach (var container in InstanceLinked.Containers)
             {
@@ -306,7 +306,7 @@ namespace SC.ObjectModel
         /// <summary>
         /// Fast access field for exploited volume
         /// </summary>
-        public double ExploitedVolume;
+        public Objective Objective { get; private set; }
 
         /// <summary>
         /// Fast accessible information about the number of items with the correpsonding material per container
@@ -424,7 +424,7 @@ namespace SC.ObjectModel
             }
             ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
             foreach (var container in InstanceLinked.Containers)
-                ContainerInfos[container.VolatileID] = new ContainerInfo(container, this);
+                ContainerInfos[container.VolatileID] = new ContainerInfo(container, TetrisMode);
             // Generate default EPs
             GenerateDefaultEPs();
             // Generate merit-info

@@ -3,44 +3,33 @@ using SC.ObjectModel.Elements;
 namespace SC.ObjectModel.Additionals
 {
     /// <summary>
-    /// Tracks meta information about a container.
+    /// Tracks information about the objective.
     /// </summary>
-    public class ContainerInfo
+    public class Objective
     {
         /// <summary>
-        /// Creates a new instance of the container info.
+        /// Creates a new instance of the objective.
         /// </summary>
-        /// <param name="container">The container to track.</param>
         /// <param name="tetris">Indicates whether we are solving in Tetris mode.</param>
-        public ContainerInfo(Container container, bool tetris)
+        public Objective(bool tetris)
         {
             TetrisMode = tetris;
-            Container = container;
-            VolumeContained = 0;
-            WeightContained = 0;
-            NumberOfPieces = 0;
         }
 
-        /// <summary>
-        /// The container which this info is tracking.
-        /// </summary>
-        private Container Container { get; set; }
         /// <summary>
         /// Indicates whether we are solving in Tetris mode.
         /// </summary>
         private bool TetrisMode { get; set; }
+
         /// <summary>
-        /// The volume packed inside of the container.
+        /// The objective value of the corresponding solution.
         /// </summary>
-        public double VolumeContained { get; set; }
+        public double Value => _volumeContained;
+
         /// <summary>
-        /// The weight packed inside of the container.
+        /// The volume packed inside of the containers.
         /// </summary>
-        public double WeightContained { get; set; }
-        /// <summary>
-        /// The number of pieces in the container.
-        /// </summary>
-        public int NumberOfPieces { get; set; }
+        private double _volumeContained;
 
         /// <summary>
         /// Adds a piece to the container.
@@ -50,9 +39,7 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void AddPiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            VolumeContained += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            WeightContained += piece.Weight;
-            NumberOfPieces++;
+            _volumeContained += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
         }
 
         /// <summary>
@@ -63,9 +50,7 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void RemovePiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            VolumeContained -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            WeightContained -= piece.Weight;
-            NumberOfPieces--;
+            _volumeContained -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
         }
 
         /// <summary>
@@ -73,22 +58,18 @@ namespace SC.ObjectModel.Additionals
         /// </summary>
         public void Clear()
         {
-            VolumeContained = 0;
-            WeightContained = 0;
-            NumberOfPieces = 0;
+            _volumeContained = 0;
         }
 
         /// <summary>
         /// Clones the container info.
         /// </summary>
         /// <returns>A new instance of the container info.</returns>
-        public ContainerInfo Clone()
+        public Objective Clone()
         {
-            return new ContainerInfo(Container, TetrisMode)
+            return new Objective(TetrisMode)
             {
-                VolumeContained = VolumeContained,
-                WeightContained = WeightContained,
-                NumberOfPieces = NumberOfPieces
+                _volumeContained = _volumeContained
             };
         }
     }

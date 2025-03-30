@@ -189,7 +189,7 @@ namespace SC.Linear
             };
 
             // Log final timestamp
-            Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.ExploitedVolume);
+            Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.Objective.Value);
 
             // Return the result
             return result;

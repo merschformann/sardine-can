@@ -2209,7 +2209,7 @@ namespace SC.Heuristics.PrimalHeuristic
             Config.Log?.Invoke("Starting improvement ... \n");
 
             // Measure performance compared to given solution
-            double initialExploitedVolume = solution.ExploitedVolume;
+            double initialValue = solution.Objective.Value;
 
             // Initialize score
             double[] scorePieces = new double[pieces.Count];
@@ -2356,10 +2356,10 @@ namespace SC.Heuristics.PrimalHeuristic
                 for (int workerID = 0; workerID < workerCount; workerID++)
                 {
                     // Store solution if it is better
-                    if (localSolutions[workerID].ExploitedVolume >= solution.ExploitedVolume ||
-                        (localSolutions[workerID].ExploitedVolume == solution.ExploitedVolume && localSolutions[workerID].NumberOfContainersInUse < solution.NumberOfContainersInUse))
+                    if (localSolutions[workerID].Objective.Value >= solution.Objective.Value ||
+                        (localSolutions[workerID].Objective.Value == solution.Objective.Value && localSolutions[workerID].NumberOfContainersInUse < solution.NumberOfContainersInUse))
                     {
-                        if (localSolutions[workerID].ExploitedVolume != solution.ExploitedVolume || localSolutions[workerID].NumberOfContainersInUse != solution.NumberOfContainersInUse)
+                        if (localSolutions[workerID].Objective.Value != solution.Objective.Value || localSolutions[workerID].NumberOfContainersInUse != solution.NumberOfContainersInUse)
                         {
                             lastImprovement = currentIteration;
                             lastLongTermScoreReInit = currentIteration;
@@ -2378,7 +2378,7 @@ namespace SC.Heuristics.PrimalHeuristic
                     }
                 }
                 // Keep best one
-                localSolution = localSolutions[workers.OrderByDescending(w => localSolutions[w].ExploitedVolume).ThenBy(w => w).First()];
+                localSolution = localSolutions[workers.OrderByDescending(w => localSolutions[w].Objective.Value).ThenBy(w => w).First()];
                 // Log visuals
                 LogVisuals(solution, false);
                 // Update score
@@ -2445,15 +2445,15 @@ namespace SC.Heuristics.PrimalHeuristic
                 {
                     LogOldMillis = DateTime.Now.Ticks;
                     Config.Log?.Invoke(currentIteration + ". " +
-                        solution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
+                        solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
                         VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-                        " (" + (solution.ExploitedVolume / VolumeOfContainers * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %) - Current: " +
-                        localSolution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
+                        " (" + (solution.Objective.Value / VolumeOfContainers * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %) - Current: " +
+                        localSolution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
                         VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-                        " (" + ((solution.ExploitedVolume / VolumeOfContainers - initialExploitedVolume / VolumeOfContainers) * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %)" +
+                        " (" + ((solution.Objective.Value / VolumeOfContainers - initialValue / VolumeOfContainers) * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %)" +
                         " Time: " + (DateTime.Now - Config.StartTimeStamp).TotalSeconds +
                         " \n");
-                    Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, solution.ExploitedVolume);
+                    Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, solution.Objective.Value);
                 }
             }
 

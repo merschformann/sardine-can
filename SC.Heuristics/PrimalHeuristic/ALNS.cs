@@ -42,7 +42,7 @@ namespace SC.Heuristics.PrimalHeuristic
             Config.Log?.Invoke("Starting improvement ... " + Environment.NewLine);
 
             // Measure performance compared to given solution
-            double initialExploitedVolume = Solution.ExploitedVolume;
+            double initialExploitedVolume = Solution.Objective.Value;
 
             // TODO move the following into the config
             int intervalIterationCountMax = 100;
@@ -70,7 +70,7 @@ namespace SC.Heuristics.PrimalHeuristic
                 ALNSRepair(currentSolution);
 
                 // Check whether we want to accept the solution or discard it
-                if (ALNSAccept(acceptedSolution.ExploitedVolume, currentSolution.ExploitedVolume, Solution.ExploitedVolume, currentTemperature))
+                if (ALNSAccept(acceptedSolution.Objective.Value, currentSolution.Objective.Value, Solution.Objective.Value, currentTemperature))
                     acceptedSolution = currentSolution;
 
                 // Lower temperature if iteration limit is reached
@@ -81,7 +81,7 @@ namespace SC.Heuristics.PrimalHeuristic
                 }
 
                 // Store every new best solution
-                if (acceptedSolution.ExploitedVolume > Solution.ExploitedVolume)
+                if (acceptedSolution.Objective.Value > Solution.Objective.Value)
                     Solution = acceptedSolution;
 
                 // Log visuals
@@ -92,23 +92,23 @@ namespace SC.Heuristics.PrimalHeuristic
                 {
                     LogOldMillis = DateTime.Now.Ticks;
                     Config.Log?.Invoke(currentIteration + ". " +
-    Solution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
+    Solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
     VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-    " (" + (Solution.ExploitedVolume / VolumeOfContainers * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %) - Current: " +
-    acceptedSolution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
+    " (" + (Solution.Objective.Value / VolumeOfContainers * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %) - Current: " +
+    acceptedSolution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
     VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-    " (" + ((Solution.ExploitedVolume / VolumeOfContainers - initialExploitedVolume / VolumeOfContainers) * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %)" +
+    " (" + ((Solution.Objective.Value / VolumeOfContainers - initialExploitedVolume / VolumeOfContainers) * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %)" +
     " Time: " + (DateTime.Now - Config.StartTimeStamp).TotalSeconds +
     " \n");
-                    Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.ExploitedVolume);
+                    Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.Objective.Value);
                 }
 
                 // Update counters
                 currentIteration++;
                 currentIntervalIteration++;
 
-            } while (currentIteration - lastImprovement < Config.StagnationDistance && 
-                     !Cancelled && 
+            } while (currentIteration - lastImprovement < Config.StagnationDistance &&
+                     !Cancelled &&
                      !TimeUp &&
                      IterationsReached(currentIteration));
         }
@@ -164,15 +164,6 @@ namespace SC.Heuristics.PrimalHeuristic
         {
             // Remove all pieces from a random container
             solution.RemoveContainer(Instance.Containers.OrderBy(c => Randomizer.Next(Instance.Containers.Count)).First());
-        }
-
-        private void DestroyContainerExploitedVolumeBased(COSolution solution, double relativeContainerIndex)
-        {
-            // Remove all pieces from the container with the index matching the given relative position when ordered by exploited relative volume
-            IEnumerable<Container> usedContainers = Instance.Containers.Where(c => solution.ExploitedVolumeOfContainers[c.VolatileID] > 0);
-            int containerIndex = (int)(relativeContainerIndex * usedContainers.Count());
-            Container containerToDestroy = usedContainers.OrderByDescending(c => solution.ExploitedVolumeOfContainers[c.VolatileID] / c.Mesh.Volume).ElementAt(containerIndex);
-            solution.RemoveContainer(containerToDestroy);
         }
 
         private bool ALNSAccept(double last, double current, double best, double currentTemperature)

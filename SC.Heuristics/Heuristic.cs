@@ -111,7 +111,7 @@ namespace SC.Heuristics
                 ObjectiveValue = Solution.VolumeContained
             };
             // Log timestamp
-            Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.ExploitedVolume);
+            Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.Objective.Value);
             // Log finish
             if (Config.Log != null)
             {
@@ -143,7 +143,7 @@ namespace SC.Heuristics
             if (Config.Log != null && DateTime.Now.Ticks - LogOldMillis > 10000000)
             {
                 LogOldMillis = DateTime.Now.Ticks;
-                Config.Log(solution.ExploitedVolume.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
+                Config.Log(solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
                     VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
                     " - Piece " + piece.ID + " -> Container " + container.ID + "\n");
             }
