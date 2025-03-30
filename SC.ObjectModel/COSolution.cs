@@ -38,6 +38,8 @@ namespace SC.ObjectModel
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
             Objective = new Objective(tetris);
             ContainerInfos = new ContainerInfo[instance.Containers.Count];
+            for (int i = 0; i < instance.Containers.Count; i++)
+                ContainerInfos[i] = new ContainerInfo(instance.Containers[i], tetris);
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 

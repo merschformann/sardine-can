@@ -32,7 +32,7 @@ namespace SC.Heuristics.PrimalHeuristic
             if (IsFlagRuleIncompatible(solution, container, piece))
                 return false;
             // Check weight against MaxWeight
-            if (solution.ContainerInfos[container.VolatileID].VolumeContained + piece.Weight > container.MaxWeight)
+            if (solution.ContainerInfos[container.VolatileID].WeightContained + piece.Weight > container.MaxWeight)
                 return false;
 
             // All checks passed, piece is compatible with container

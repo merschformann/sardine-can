@@ -343,6 +343,16 @@ namespace SC.ObjectModel.Configuration
         #region Heuristic related properties
 
         /// <summary>
+        /// Defines the objective.
+        /// </summary>
+        public ObjectiveType Objective { get; set; } = ObjectiveType.MaxVolume;
+
+        /// <summary>
+        /// Defines the type of the container sorting to apply.
+        /// </summary>
+        public ContainerSortType ContainerSorting { get; set; } = ContainerSortType.None;
+
+        /// <summary>
         /// Defines the initial order of the pieces
         /// </summary>
         public PieceOrderType PieceOrder { get; set; } = PieceOrderType.VwH;
