@@ -257,7 +257,7 @@ namespace SC.ObjectModel
             clone.ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
             foreach (var container in InstanceLinked.Containers)
             {
-                clone.ContainerInfos[container.VolatileID] = clone.ContainerInfos[container.VolatileID].Clone();
+                clone.ContainerInfos[container.VolatileID] = ContainerInfos[container.VolatileID].Clone();
             }
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
             // Add info about the virtual pieces
