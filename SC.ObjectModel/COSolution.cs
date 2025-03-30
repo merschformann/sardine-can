@@ -1152,6 +1152,10 @@ namespace SC.ObjectModel
                                 Math.Pow(position.X + piece[orientation].BoundingBox.Length, 2) +
                                 Math.Pow(position.Y + piece[orientation].BoundingBox.Width, 2));
                     }
+                case MeritFunctionType.H:
+                    {
+                        return position.X + piece[orientation].BoundingBox.Length;
+                    }
                 case MeritFunctionType.None:
                 default: return 0.0;
             }

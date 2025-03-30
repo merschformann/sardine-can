@@ -44,6 +44,11 @@ namespace SC.ObjectModel.Additionals
         /// <summary>
         /// Aims to minimize the euclidean distance to the origin only regarding x and y
         /// </summary>
-        MEDXY
+        MEDXY,
+
+        /// <summary>
+        /// Aims to minimize packing height
+        /// </summary>
+        H,
     }
 }
