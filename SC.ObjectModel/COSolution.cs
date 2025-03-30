@@ -27,6 +27,7 @@ namespace SC.ObjectModel
         internal COSolution(Instance instance, Configuration.Configuration config)
         {
             InstanceLinked = instance;
+            Configuration = config;
             ContainedPieces = new HashSet<VariablePiece>();
             OffloadPieces = new HashSet<VariablePiece>(instance.Pieces);
             Orientations = new int[instance.PiecesWithVirtuals.Count()];
