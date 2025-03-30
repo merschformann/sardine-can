@@ -36,10 +36,10 @@ namespace SC.ObjectModel
             InitMetaInfo();
             InitFlagHandling();
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
-            Objective = new Objective(tetris);
             ContainerInfos = new ContainerInfo[instance.Containers.Count];
             for (int i = 0; i < instance.Containers.Count; i++)
                 ContainerInfos[i] = new ContainerInfo(instance.Containers[i], tetris);
+            Objective = new Objective(tetris, ContainerInfos);
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -253,12 +253,12 @@ namespace SC.ObjectModel
                 clone.Positions[piece.VolatileID] = (Positions[piece.VolatileID] != null) ? Positions[piece.VolatileID].Clone() : null;
                 clone.Containers[piece.VolatileID] = Containers[piece.VolatileID];
             }
-            clone.Objective = Objective.Clone();
             clone.ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
             foreach (var container in InstanceLinked.Containers)
             {
                 clone.ContainerInfos[container.VolatileID] = ContainerInfos[container.VolatileID].Clone();
             }
+            clone.Objective = Objective.Clone(clone.ContainerInfos);
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
             // Add info about the virtual pieces
             clone.GenerateVirtualPieceInfo();

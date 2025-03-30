@@ -11,15 +11,20 @@ namespace SC.ObjectModel.Additionals
         /// Creates a new instance of the objective.
         /// </summary>
         /// <param name="tetris">Indicates whether we are solving in Tetris mode.</param>
-        public Objective(bool tetris)
+        public Objective(bool tetris, ContainerInfo[] containerInfos)
         {
             TetrisMode = tetris;
+            ContainerInfos = containerInfos;
         }
 
         /// <summary>
         /// Indicates whether we are solving in Tetris mode.
         /// </summary>
         private bool TetrisMode { get; set; }
+        /// <summary>
+        /// The information trackers of all containers.
+        /// </summary>
+        private ContainerInfo[] ContainerInfos { get; set; }
 
         /// <summary>
         /// The objective value of the corresponding solution.
@@ -65,9 +70,9 @@ namespace SC.ObjectModel.Additionals
         /// Clones the container info.
         /// </summary>
         /// <returns>A new instance of the container info.</returns>
-        public Objective Clone()
+        public Objective Clone(ContainerInfo[] containerInfos)
         {
-            return new Objective(TetrisMode)
+            return new Objective(TetrisMode, containerInfos)
             {
                 _volumeContained = _volumeContained
             };
