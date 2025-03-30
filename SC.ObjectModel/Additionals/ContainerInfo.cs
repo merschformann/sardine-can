@@ -1,3 +1,4 @@
+using System;
 using SC.ObjectModel.Elements;
 
 namespace SC.ObjectModel.Additionals
@@ -10,11 +11,11 @@ namespace SC.ObjectModel.Additionals
         /// <summary>
         /// Creates a new instance of the container info.
         /// </summary>
+        /// <param name="solution">The solution this info tracker belongs to.</param>
         /// <param name="container">The container to track.</param>
-        /// <param name="tetris">Indicates whether we are solving in Tetris mode.</param>
-        public ContainerInfo(Container container, bool tetris)
+        public ContainerInfo(COSolution solution, Container container)
         {
-            TetrisMode = tetris;
+            Solution = solution;
             Container = container;
             VolumeContained = 0;
             WeightContained = 0;
@@ -22,13 +23,14 @@ namespace SC.ObjectModel.Additionals
         }
 
         /// <summary>
+        /// The solution this info tracker belongs to.
+        /// </summary>
+        private COSolution Solution { get; set; }
+        /// <summary>
         /// The container which this info is tracking.
         /// </summary>
         private Container Container { get; set; }
-        /// <summary>
-        /// Indicates whether we are solving in Tetris mode.
-        /// </summary>
-        private bool TetrisMode { get; set; }
+
         /// <summary>
         /// The volume packed inside of the container.
         /// </summary>
@@ -41,6 +43,10 @@ namespace SC.ObjectModel.Additionals
         /// The number of pieces in the container.
         /// </summary>
         public int NumberOfPieces { get; set; }
+        /// <summary>
+        /// The height of the packing in the container.
+        /// </summary>
+        public double PackingHeight { get; set; } = 0;
 
         /// <summary>
         /// Adds a piece to the container.
@@ -50,8 +56,9 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void AddPiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            VolumeContained += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            VolumeContained += Solution.TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
             WeightContained += piece.Weight;
+            PackingHeight = Math.Max(PackingHeight, position.Z + piece[orientation].BoundingBox.Height);
             NumberOfPieces++;
         }
 
@@ -63,9 +70,19 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void RemovePiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            VolumeContained -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            VolumeContained -= Solution.TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
             WeightContained -= piece.Weight;
             NumberOfPieces--;
+            // If this was the highest piece, we need to recalculate the packing height
+            if (PackingHeight == position.Z + piece[orientation].BoundingBox.Height)
+            {
+                PackingHeight = 0;
+                foreach (var p in Solution.ContainerContent[Container.VolatileID])
+                {
+                    if (p != piece)
+                        PackingHeight = Math.Max(PackingHeight, Solution.Positions[p.VolatileID].Z + p[orientation].BoundingBox.Height);
+                }
+            }
         }
 
         /// <summary>
@@ -82,9 +99,9 @@ namespace SC.ObjectModel.Additionals
         /// Clones the container info.
         /// </summary>
         /// <returns>A new instance of the container info.</returns>
-        public ContainerInfo Clone()
+        public ContainerInfo Clone(COSolution solution)
         {
-            return new ContainerInfo(Container, TetrisMode)
+            return new ContainerInfo(solution, Container)
             {
                 VolumeContained = VolumeContained,
                 WeightContained = WeightContained,

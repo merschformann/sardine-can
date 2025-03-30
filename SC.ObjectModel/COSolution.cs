@@ -38,7 +38,7 @@ namespace SC.ObjectModel
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
             ContainerInfos = new ContainerInfo[instance.Containers.Count];
             for (int i = 0; i < instance.Containers.Count; i++)
-                ContainerInfos[i] = new ContainerInfo(instance.Containers[i], tetris);
+                ContainerInfos[i] = new ContainerInfo(this, instance.Containers[i]);
             Objective = new Objective(tetris, ContainerInfos);
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
@@ -256,7 +256,7 @@ namespace SC.ObjectModel
             clone.ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
             foreach (var container in InstanceLinked.Containers)
             {
-                clone.ContainerInfos[container.VolatileID] = ContainerInfos[container.VolatileID].Clone();
+                clone.ContainerInfos[container.VolatileID] = ContainerInfos[container.VolatileID].Clone(clone);
             }
             clone.Objective = Objective.Clone(clone.ContainerInfos);
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
@@ -426,7 +426,7 @@ namespace SC.ObjectModel
             }
             ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
             foreach (var container in InstanceLinked.Containers)
-                ContainerInfos[container.VolatileID] = new ContainerInfo(container, TetrisMode);
+                ContainerInfos[container.VolatileID] = new ContainerInfo(this, container);
             // Generate default EPs
             GenerateDefaultEPs();
             // Generate merit-info
