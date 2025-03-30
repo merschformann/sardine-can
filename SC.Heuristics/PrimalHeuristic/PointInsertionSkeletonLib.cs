@@ -32,7 +32,7 @@ namespace SC.Heuristics.PrimalHeuristic
             if (IsFlagRuleIncompatible(solution, container, piece))
                 return false;
             // Check weight against MaxWeight
-            if (solution.ExploitedWeightOfContainers[container.VolatileID] + piece.Weight > container.MaxWeight)
+            if (solution.ContainerInfos[container.VolatileID].VolumeContained + piece.Weight > container.MaxWeight)
                 return false;
 
             // All checks passed, piece is compatible with container
@@ -1692,7 +1692,7 @@ namespace SC.Heuristics.PrimalHeuristic
                             break;
                         }
                         // Only try to insert if sufficient available space detected
-                        if (solution.ExploitedVolumeOfContainers[container.VolatileID] + piece.Volume <= container.Mesh.Volume)
+                        if (solution.ContainerInfos[container.VolatileID].VolumeContained + piece.Volume <= container.Mesh.Volume)
                         {
                             // Prone unnecessary eps
                             solution.ProneEPs(container, Config.ExhaustiveEPProne);
@@ -1887,7 +1887,7 @@ namespace SC.Heuristics.PrimalHeuristic
                             break;
                         }
                         // Only try to insert if sufficient available space detected
-                        if (solution.ExploitedVolumeOfContainers[container.VolatileID] + piece.Original.BoundingBox.Volume <= container.Mesh.Volume)
+                        if (solution.ContainerInfos[container.VolatileID].VolumeContained + piece.Original.BoundingBox.Volume <= container.Mesh.Volume)
                         {
                             // Try to insert the piece at a standard extreme point
                             foreach (var extremePoint in solution.ExtremePoints[container.VolatileID].OrderBy(p => p.Z).ThenBy(p => p.X).ThenBy(p => p.Y).ToList())
@@ -2132,7 +2132,7 @@ namespace SC.Heuristics.PrimalHeuristic
                             if (Config.Tetris)
                             {
                                 // Only try to insert if sufficient available space detected
-                                if (solution.ExploitedVolumeOfContainers[container.VolatileID] + piece.Volume <= container.Mesh.Volume)
+                                if (solution.ContainerInfos[container.VolatileID].VolumeContained + piece.Volume <= container.Mesh.Volume)
                                 {
                                     // Try to insert with tetris exploitation
                                     if (minX >= 0 && minY >= 0 && minZ >= 0 && InsertionCheckTetris(solution, container, piece, null, 1, orientation, minX, minY, minZ))
@@ -2157,7 +2157,7 @@ namespace SC.Heuristics.PrimalHeuristic
                             else
                             {
                                 // Only try to insert if sufficient available space detected
-                                if (solution.ExploitedVolumeOfContainers[container.VolatileID] + piece.Original.BoundingBox.Volume <= container.Mesh.Volume)
+                                if (solution.ContainerInfos[container.VolatileID].VolumeContained + piece.Original.BoundingBox.Volume <= container.Mesh.Volume)
                                 {
                                     // Calculate insertion point on-the-fly
                                     double maxX = minX + piece[orientation].BoundingBox.Length;

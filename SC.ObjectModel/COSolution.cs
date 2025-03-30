@@ -37,7 +37,7 @@ namespace SC.ObjectModel
             InitFlagHandling();
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
             ExploitedVolume = 0;
-            _containerInfos = new ContainerInfo[instance.Containers.Count];
+            ContainerInfos = new ContainerInfo[instance.Containers.Count];
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -106,13 +106,10 @@ namespace SC.ObjectModel
         public void Add(Container container, VariablePiece piece, int orientation, MeshPoint position)
         {
             ExploitedVolume += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            _containerInfos[container.VolatileID].AddPiece(piece, orientation, position);
-            _containerInfos[container.VolatileID].VolumeContained += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            _containerInfos[container.VolatileID].WeightContained += piece.Weight;
+            ContainerInfos[container.VolatileID].AddPiece(piece, orientation, position);
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]++;
             ContainedPieces.Add(piece);
             OffloadPieces.Remove(piece);
-            _containerInfos[container].
             ContainerContent[container.VolatileID].Add(piece);
             Orientations[piece.VolatileID] = orientation;
             Positions[piece.VolatileID] = position;
@@ -130,8 +127,7 @@ namespace SC.ObjectModel
         public MeshPoint Remove(Container container, VariablePiece piece)
         {
             ExploitedVolume -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedVolumeOfContainers[container.VolatileID] -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedWeightOfContainers[container.VolatileID] -= piece.Weight;
+            ContainerInfos[container.VolatileID].RemovePiece(piece, Orientations[piece.VolatileID], Positions[piece.VolatileID]);
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
             ContainedPieces.Remove(piece);
             OffloadPieces.Add(piece);
@@ -152,8 +148,7 @@ namespace SC.ObjectModel
         public void RemoveContainer(Container container)
         {
             ExploitedVolume -= ContainerContent[container.VolatileID].Sum(p => { return TetrisMode ? p.Volume : p.Original.BoundingBox.Volume; });
-            ExploitedVolumeOfContainers[container.VolatileID] = 0;
-            ExploitedWeightOfContainers[container.VolatileID] = 0;
+            ContainerInfos[container.VolatileID].Clear();
             foreach (var piece in ContainerContent[container.VolatileID])
             {
                 MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
@@ -178,8 +173,7 @@ namespace SC.ObjectModel
             OffloadPieces = new HashSet<VariablePiece>(InstanceLinked.Pieces);
             foreach (var container in InstanceLinked.Containers)
             {
-                ExploitedVolumeOfContainers[container.VolatileID] = 0;
-                ExploitedWeightOfContainers[container.VolatileID] = 0;
+                ContainerInfos[container.VolatileID].Clear();
                 for (int i = 0; i < Enum.GetValues(typeof(MaterialClassification)).Length; i++)
                     MaterialsPerContainer[container.VolatileID, i] = 0;
                 ContainerContent[container.VolatileID].Clear();
@@ -258,8 +252,11 @@ namespace SC.ObjectModel
                 clone.Containers[piece.VolatileID] = Containers[piece.VolatileID];
             }
             clone.ExploitedVolume = ExploitedVolume;
-            clone.ExploitedVolumeOfContainers = ExploitedVolumeOfContainers.ToArray();
-            clone.ExploitedWeightOfContainers = ExploitedWeightOfContainers.ToArray();
+            clone.ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
+            foreach (var container in InstanceLinked.Containers)
+            {
+                clone.ContainerInfos[container.VolatileID] = clone.ContainerInfos[container.VolatileID].Clone();
+            }
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
             // Add info about the virtual pieces
             clone.GenerateVirtualPieceInfo();
@@ -304,7 +301,7 @@ namespace SC.ObjectModel
         /// <summary>
         /// Indicates whether we look at the pieces in all available detail or only at their bounding boxes
         /// </summary>
-        private bool TetrisMode = true;
+        internal bool TetrisMode = true;
 
         /// <summary>
         /// Fast access field for exploited volume
@@ -389,7 +386,7 @@ namespace SC.ObjectModel
         /// <summary>
         /// Keeps track of information on container level.
         /// </summary>
-        private ContainerInfo[] _containerInfos = null;
+        public ContainerInfo[] ContainerInfos = null;
 
         /// <summary>
         /// Initiates the meta-information for the underlying instance
@@ -425,9 +422,9 @@ namespace SC.ObjectModel
             {
                 ResidualSpace = new List<MeshPoint>();
             }
-            _containerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
+            ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
             foreach (var container in InstanceLinked.Containers)
-                _containerInfos[container.VolatileID] = new ContainerInfo(container);
+                ContainerInfos[container.VolatileID] = new ContainerInfo(container, this);
             // Generate default EPs
             GenerateDefaultEPs();
             // Generate merit-info
@@ -1102,7 +1099,7 @@ namespace SC.ObjectModel
         {
             switch (MeritType)
             {
-                case MeritFunctionType.MFV: return container.Mesh.Volume - ExploitedVolumeOfContainers[container.VolatileID] - piece.Volume;
+                case MeritFunctionType.MFV: return container.Mesh.Volume - ContainerInfos[container.VolatileID].VolumeContained - piece.Volume;
                 case MeritFunctionType.MMPSXY:
                     {
                         double score = 0.0;
