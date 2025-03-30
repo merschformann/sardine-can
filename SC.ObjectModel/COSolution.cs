@@ -37,8 +37,7 @@ namespace SC.ObjectModel
             InitFlagHandling();
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
             ExploitedVolume = 0;
-            ExploitedVolumeOfContainers = new double[instance.Containers.Count];
-            ExploitedWeightOfContainers = new double[instance.Containers.Count];
+            _containerInfos = new ContainerInfo[instance.Containers.Count];
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -107,11 +106,13 @@ namespace SC.ObjectModel
         public void Add(Container container, VariablePiece piece, int orientation, MeshPoint position)
         {
             ExploitedVolume += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedVolumeOfContainers[container.VolatileID] += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedWeightOfContainers[container.VolatileID] += piece.Weight;
+            _containerInfos[container.VolatileID].AddPiece(piece, orientation, position);
+            _containerInfos[container.VolatileID].VolumeContained += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            _containerInfos[container.VolatileID].WeightContained += piece.Weight;
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]++;
             ContainedPieces.Add(piece);
             OffloadPieces.Remove(piece);
+            _containerInfos[container].
             ContainerContent[container.VolatileID].Add(piece);
             Orientations[piece.VolatileID] = orientation;
             Positions[piece.VolatileID] = position;
@@ -311,16 +312,6 @@ namespace SC.ObjectModel
         public double ExploitedVolume;
 
         /// <summary>
-        /// Fast accessible information about the exploited volume per container
-        /// </summary>
-        public double[] ExploitedVolumeOfContainers = null;
-        
-        /// <summary>
-        /// Fast accessible information about the loaded weight per container
-        /// </summary>
-        public double[] ExploitedWeightOfContainers = null;
-
-        /// <summary>
         /// Fast accessible information about the number of items with the correpsonding material per container
         /// </summary>
         public int[,] MaterialsPerContainer = null;
@@ -396,6 +387,11 @@ namespace SC.ObjectModel
         private double LevelPackingC = 0;
 
         /// <summary>
+        /// Keeps track of information on container level.
+        /// </summary>
+        private ContainerInfo[] _containerInfos = null;
+
+        /// <summary>
         /// Initiates the meta-information for the underlying instance
         /// </summary>
         private void InitMetaInfo()
@@ -429,6 +425,9 @@ namespace SC.ObjectModel
             {
                 ResidualSpace = new List<MeshPoint>();
             }
+            _containerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
+            foreach (var container in InstanceLinked.Containers)
+                _containerInfos[container.VolatileID] = new ContainerInfo(container);
             // Generate default EPs
             GenerateDefaultEPs();
             // Generate merit-info
