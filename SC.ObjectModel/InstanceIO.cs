@@ -198,7 +198,7 @@ namespace SC.ObjectModel
             {
                 foreach (var childNode in solutionsRoot.ChildNodes.OfType<XmlNode>())
                 {
-                    COSolution solution = instance.CreateSolution(false, MeritFunctionType.None);
+                    COSolution solution = instance.CreateSolution(new Configuration.Configuration());
                     solution.LoadXML(childNode);
                     solutions.Add(solution);
                 }
@@ -240,7 +240,7 @@ namespace SC.ObjectModel
                 var convp = new VariablePiece() { ID = p.ID, Weight = p.Weight };
                 if (p.Flags != null)
                     convp.SetFlags(p.Flags.Select(f => (f.FlagId, f.FlagValue)));
-                
+
                 if (p.ForbiddenOrientations != null && p.AllowedOrientations == null)
                     convp.ForbiddenOrientations = new(p.ForbiddenOrientations);
                 if (p.AllowedOrientations != null)
@@ -249,7 +249,7 @@ namespace SC.ObjectModel
                     if (p.ForbiddenOrientations != null)
                         convp.ForbiddenOrientations.UnionWith(p.ForbiddenOrientations);
                 }
-                
+
                 foreach (var comp in p.Cubes)
                     convp.AddComponent(comp.X, comp.Y, comp.Z, comp.Length, comp.Width, comp.Height);
                 return convp;

@@ -2240,7 +2240,7 @@ namespace SC.Heuristics.PrimalHeuristic
             int[][][] workerOrientationsPerPiece = new int[workerCount][][];
             for (int i = 0; i < workerCount; i++)
             {
-                localSolutions[i] = Instance.CreateSolution(Config.Tetris, Config.MeritType, true);
+                localSolutions[i] = Instance.CreateSolution(Config, true);
                 workers[i] = i;
                 int seed = Randomizer.Next();
                 randomizer[i] = new Random(seed);
@@ -2250,7 +2250,7 @@ namespace SC.Heuristics.PrimalHeuristic
 
 
             // Init solution
-            COSolution localSolution = Instance.CreateSolution(Config.Tetris, Config.MeritType, true);
+            COSolution localSolution = Instance.CreateSolution(Config, true);
 
 
 

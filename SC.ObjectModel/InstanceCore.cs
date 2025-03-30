@@ -109,12 +109,11 @@ namespace SC.ObjectModel
         /// Creates a new solution and registers it to the instance
         /// </summary>
         /// <param name="unofficial">Indicates whether to keep track of the created solution or not</param>
-        /// <param name="tetris">Indicates whether the solution shall be capable of keeping track of tetris based information about itself</param>
-        /// <param name="meritType">The merit type to use</param>
+        /// <param name="config">The configuration to use</param>
         /// <returns>The newly created solution</returns>
-        public COSolution CreateSolution(bool tetris, MeritFunctionType meritType, bool unofficial = false)
+        public COSolution CreateSolution(Configuration.Configuration config, bool unofficial = false)
         {
-            COSolution solution = new COSolution(this, tetris, meritType);
+            COSolution solution = new COSolution(this, config);
             if (!unofficial)
             {
                 solution.ID = ++_solutionCounter;

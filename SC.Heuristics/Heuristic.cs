@@ -71,7 +71,7 @@ namespace SC.Heuristics
         {
             Instance = instance;
             Config = config;
-            Solution = instance.CreateSolution(config.Tetris, config.MeritType);
+            Solution = instance.CreateSolution(config);
             Randomizer = new Random(config.Seed);
         }
 
@@ -174,7 +174,7 @@ namespace SC.Heuristics
         public void Reset()
         {
             Cancelled = false;
-            Solution = Instance.CreateSolution(Config.Tetris, Config.MeritType);
+            Solution = Instance.CreateSolution(Config);
         }
 
         /// <summary>

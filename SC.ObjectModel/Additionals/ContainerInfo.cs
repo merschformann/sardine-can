@@ -36,6 +36,18 @@ namespace SC.ObjectModel.Additionals
         /// </summary>
         public double VolumeContained { get; set; }
         /// <summary>
+        /// The volume still available in the container.
+        /// </summary>
+        public double VolumeAvailable => Container.Volume - VolumeContained;
+        /// <summary>
+        /// The volume of the container that is being utilized (0-1).
+        /// </summary>
+        public double VolumeUtilized => VolumeContained / Container.Volume;
+        /// <summary>
+        /// The volume of the container that is being utilized in relation to the packing height (0-1).
+        /// </summary>
+        public double VolumeUtilizedPackingHeight => PackingHeight > 0 ? VolumeContained / (Container.Mesh.Length * Container.Mesh.Width * PackingHeight) : 0;
+        /// <summary>
         /// The weight packed inside of the container.
         /// </summary>
         public double WeightContained { get; set; }
@@ -56,7 +68,7 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void AddPiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            VolumeContained += Solution.TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            VolumeContained += Solution.Configuration.Tetris ? piece.Volume : piece.Original.BoundingBox.Volume;
             WeightContained += piece.Weight;
             PackingHeight = Math.Max(PackingHeight, position.Z + piece[orientation].BoundingBox.Height);
             NumberOfPieces++;
@@ -70,7 +82,7 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void RemovePiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            VolumeContained -= Solution.TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            VolumeContained -= Solution.Configuration.Tetris ? piece.Volume : piece.Original.BoundingBox.Volume;
             WeightContained -= piece.Weight;
             NumberOfPieces--;
             // If this was the highest piece, we need to recalculate the packing height

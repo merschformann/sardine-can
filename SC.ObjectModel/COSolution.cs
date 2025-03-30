@@ -1,4 +1,5 @@
 ﻿using SC.ObjectModel.Additionals;
+using SC.ObjectModel.Configuration;
 using SC.ObjectModel.Elements;
 using SC.ObjectModel.Interfaces;
 using SC.ObjectModel.IO.Json;
@@ -22,9 +23,8 @@ namespace SC.ObjectModel
         /// Creates a new solution
         /// </summary>
         /// <param name="instance">The instance this solution belongs to</param>
-        /// <param name="tetris">Defines whether to use tetris style in this solution</param>
-        /// <param name="meritType">The merit-type to use when using heuristics</param>
-        internal COSolution(Instance instance, bool tetris, MeritFunctionType meritType)
+        /// <param name="config">The configuration being used.</param>
+        internal COSolution(Instance instance, Configuration.Configuration config)
         {
             InstanceLinked = instance;
             ContainedPieces = new HashSet<VariablePiece>();
@@ -39,7 +39,7 @@ namespace SC.ObjectModel
             ContainerInfos = new ContainerInfo[instance.Containers.Count];
             for (int i = 0; i < instance.Containers.Count; i++)
                 ContainerInfos[i] = new ContainerInfo(this, instance.Containers[i]);
-            Objective = new Objective(tetris, ContainerInfos);
+            Objective = new Objective(this);
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -52,6 +52,10 @@ namespace SC.ObjectModel
         /// The instance this solution belongs to
         /// </summary>
         public Instance InstanceLinked { get; set; }
+        /// <summary>
+        /// The configuration this solution is based on
+        /// </summary>
+        public Configuration.Configuration Configuration { get; private set; }
 
         #region Core information
 
@@ -193,7 +197,7 @@ namespace SC.ObjectModel
                 Positions[piece.VolatileID] = null;
                 Containers[piece.VolatileID] = null;
             }
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.MFV:
                     break;
@@ -232,7 +236,7 @@ namespace SC.ObjectModel
         /// <returns>A clone of this solution</returns>
         public COSolution Clone(bool unofficial = true)
         {
-            COSolution clone = InstanceLinked.CreateSolution(TetrisMode, MeritType, unofficial);
+            COSolution clone = InstanceLinked.CreateSolution(Configuration, unofficial);
             clone.InstanceLinked = InstanceLinked;
             clone.ID = ID;
             clone.ContainedPieces = new HashSet<VariablePiece>(ContainedPieces);
@@ -258,7 +262,7 @@ namespace SC.ObjectModel
             {
                 clone.ContainerInfos[container.VolatileID] = ContainerInfos[container.VolatileID].Clone(clone);
             }
-            clone.Objective = Objective.Clone(clone.ContainerInfos);
+            clone.Objective = Objective.Clone(clone);
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
             // Add info about the virtual pieces
             clone.GenerateVirtualPieceInfo();
@@ -271,12 +275,12 @@ namespace SC.ObjectModel
             clone.EndPointsDelta = EndPointsDelta.Select(p => p.Clone()).ToArray();
             clone.PiecesByVolatileID = PiecesByVolatileID.ToArray();
             clone.ContainerByVolatileID = ContainerByVolatileID.ToArray();
-            if (MeritType == MeritFunctionType.MMPSXY)
+            if (Configuration.MeritType == MeritFunctionType.MMPSXY)
             {
                 clone.PackingMaxX = PackingMaxX.ToArray();
                 clone.PackingMaxY = PackingMaxY.ToArray();
             }
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 clone.ResidualSpace = ResidualSpace.Select(c => c.Clone()).ToList();
             }
@@ -294,16 +298,6 @@ namespace SC.ObjectModel
         #endregion
 
         #region Auxiliary information
-
-        /// <summary>
-        /// The merit-function type in use
-        /// </summary>
-        private MeritFunctionType MeritType = MeritFunctionType.None;
-
-        /// <summary>
-        /// Indicates whether we look at the pieces in all available detail or only at their bounding boxes
-        /// </summary>
-        internal bool TetrisMode = true;
 
         /// <summary>
         /// Fast access field for exploited volume
@@ -420,7 +414,7 @@ namespace SC.ObjectModel
                 ContainerByVolatileID[containerID] = container;
                 container.VolatileID = containerID++;
             }
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 ResidualSpace = new List<MeshPoint>();
             }
@@ -430,7 +424,7 @@ namespace SC.ObjectModel
             // Generate default EPs
             GenerateDefaultEPs();
             // Generate merit-info
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.None:
                 case MeritFunctionType.MFV:
@@ -464,7 +458,7 @@ namespace SC.ObjectModel
                 PushedPosition[i] = new MeshPoint();
                 EndPointsDelta[i] = new MeshPoint();
             }
-            if (TetrisMode)
+            if (Configuration.Tetris)
             {
                 EndPointsComponentInner = new MeshPoint[componentID];
                 EndPointsComponentOuter = new MeshPoint[componentID];
@@ -603,7 +597,7 @@ namespace SC.ObjectModel
         /// <param name="orientation">The orientation of the piece.</param>
         private void GenerateEPsForPiece(Container container, Piece piece, MeshPoint position, int orientation)
         {
-            if (TetrisMode)
+            if (Configuration.Tetris)
             {
                 foreach (var component in piece[orientation].Components)
                 {
@@ -724,7 +718,7 @@ namespace SC.ObjectModel
                     EndPointsBoundingBoxOuter[virtualPiece.VolatileID].Y = virtualPiece.FixedPosition.Y + virtualPiece[virtualPiece.FixedOrientation].BoundingBox[8].Y;
                     EndPointsBoundingBoxInner[virtualPiece.VolatileID].Z = virtualPiece.FixedPosition.Z;
                     EndPointsBoundingBoxOuter[virtualPiece.VolatileID].Z = virtualPiece.FixedPosition.Z + virtualPiece[virtualPiece.FixedOrientation].BoundingBox[8].Z;
-                    if (TetrisMode)
+                    if (Configuration.Tetris)
                     {
                         foreach (var component in virtualPiece[virtualPiece.FixedOrientation].Components)
                         {
@@ -764,7 +758,7 @@ namespace SC.ObjectModel
         /// <param name="eps">The EPs to add</param>
         public void AddEPs(Container container, IEnumerable<MeshPoint> eps)
         {
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 MeshPoint[] epArray = eps.ToArray();
                 foreach (var ep in epArray)
@@ -787,7 +781,7 @@ namespace SC.ObjectModel
         /// <param name="ep">The EP to add</param>
         public void AddEP(Container container, MeshPoint ep)
         {
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 ep.VolatileID = EPCounter++;
                 ResidualSpace.Add(new MeshPoint() { X = container.Mesh.Length - ep.X, Y = container.Mesh.Width - ep.Y, Z = container.Mesh.Height - ep.Z });
@@ -848,7 +842,7 @@ namespace SC.ObjectModel
                 }
             }
             // Update meta-info
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.MMPSXY:
                 case MeritFunctionType.LPXY:
@@ -932,7 +926,7 @@ namespace SC.ObjectModel
                 }
             }
             // Update meta-info
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.MMPSXY:
                 case MeritFunctionType.LPXY:
@@ -1099,7 +1093,7 @@ namespace SC.ObjectModel
         /// <returns>The score of the allocation</returns>
         public double ScorePieceAllocation(Container container, VariablePiece piece, int orientation, MeshPoint position)
         {
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.MFV: return container.Mesh.Volume - ContainerInfos[container.VolatileID].VolumeContained - piece.Volume;
                 case MeritFunctionType.MMPSXY:

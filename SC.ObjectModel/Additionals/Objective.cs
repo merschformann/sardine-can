@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using SC.ObjectModel.Elements;
 
 namespace SC.ObjectModel.Additionals
@@ -10,26 +12,35 @@ namespace SC.ObjectModel.Additionals
         /// <summary>
         /// Creates a new instance of the objective.
         /// </summary>
-        /// <param name="tetris">Indicates whether we are solving in Tetris mode.</param>
-        public Objective(bool tetris, ContainerInfo[] containerInfos)
+        /// <param name="solution">The solution this objective belongs to.</param>
+        public Objective(COSolution solution)
         {
-            TetrisMode = tetris;
-            ContainerInfos = containerInfos;
+            Solution = solution;
         }
 
         /// <summary>
-        /// Indicates whether we are solving in Tetris mode.
+        /// The solution this objective belongs to.
         /// </summary>
-        private bool TetrisMode { get; set; }
-        /// <summary>
-        /// The information trackers of all containers.
-        /// </summary>
-        private ContainerInfo[] ContainerInfos { get; set; }
+        private COSolution Solution { get; set; }
 
         /// <summary>
         /// The objective value of the corresponding solution.
         /// </summary>
-        public double Value => _volumeContained;
+        public double Value
+        {
+            get
+            {
+                switch (Solution.Configuration.Objective)
+                {
+                    case ObjectiveType.MaxVolume:
+                        return _volumeContained;
+                    case ObjectiveType.MaxDensity:
+                        return Solution.ContainerInfos.Sum(c => c.VolumeUtilizedPackingHeight);
+                    default:
+                        throw new ArgumentException($"Unknown objective type: {Solution.Configuration.Objective}");
+                }
+            }
+        }
 
         /// <summary>
         /// The volume packed inside of the containers.
@@ -44,7 +55,7 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void AddPiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            _volumeContained += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            _volumeContained += Solution.Configuration.Tetris ? piece.Volume : piece.Original.BoundingBox.Volume;
         }
 
         /// <summary>
@@ -55,7 +66,7 @@ namespace SC.ObjectModel.Additionals
         /// <param name="position">The position of the piece.</param>
         public void RemovePiece(VariablePiece piece, int orientation, MeshPoint position)
         {
-            _volumeContained -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
+            _volumeContained -= Solution.Configuration.Tetris ? piece.Volume : piece.Original.BoundingBox.Volume;
         }
 
         /// <summary>
@@ -69,10 +80,11 @@ namespace SC.ObjectModel.Additionals
         /// <summary>
         /// Clones the container info.
         /// </summary>
+        /// <param name="solution">The solution this objective belongs to.</param>
         /// <returns>A new instance of the container info.</returns>
-        public Objective Clone(ContainerInfo[] containerInfos)
+        public Objective Clone(COSolution solution)
         {
-            return new Objective(TetrisMode, containerInfos)
+            return new Objective(solution)
             {
                 _volumeContained = _volumeContained
             };
