@@ -355,7 +355,7 @@ namespace SC.ObjectModel.Configuration
         /// <summary>
         /// Defines the type of the container sorting to apply while improving.
         /// </summary>
-        public ContainerReorderType ContainerOrderReorder { get; set; } = ContainerReorderType.Capacity;
+        public ContainerReorderType ContainerOrderReorder { get; set; } = ContainerReorderType.None;
 
         /// <summary>
         /// Defines the fraction of containers to be used automatically (opened) instead of aiming to fill as few containers as possible.

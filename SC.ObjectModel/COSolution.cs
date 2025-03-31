@@ -24,10 +24,11 @@ namespace SC.ObjectModel
         /// </summary>
         /// <param name="instance">The instance this solution belongs to</param>
         /// <param name="config">The configuration being used.</param>
-        internal COSolution(Instance instance, Configuration.Configuration config)
+        internal COSolution(Instance instance, Configuration.Configuration config, Random random)
         {
             InstanceLinked = instance;
             Configuration = config;
+            _random = random;
             ContainedPieces = new HashSet<VariablePiece>();
             OffloadPieces = new HashSet<VariablePiece>(instance.Pieces);
             Orientations = new int[instance.PiecesWithVirtuals.Count()];
@@ -41,7 +42,7 @@ namespace SC.ObjectModel
             for (int i = 0; i < instance.Containers.Count; i++)
                 ContainerInfos[i] = new ContainerInfo(this, instance.Containers[i]);
             Objective = new Objective(this);
-            ContainerOrderSupply = new ContainerOrderSupply(instance.Containers, instance.Pieces, config.ContainerOrderInit, config.ContainerOrderReorder, config.ContainerOpen);
+            ContainerOrderSupply = new ContainerOrderSupply(instance.Containers, instance.Pieces, config.ContainerOrderInit, config.ContainerOrderReorder, config.ContainerOpen, _random);
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -58,6 +59,10 @@ namespace SC.ObjectModel
         /// The configuration this solution is based on
         /// </summary>
         public Configuration.Configuration Configuration { get; private set; }
+        /// <summary>
+        /// The randomizer of this solution.
+        /// </summary>
+        private Random _random = null;
 
         #region Core information
 
@@ -288,7 +293,7 @@ namespace SC.ObjectModel
             }
             clone.EPCounter = EPCounter;
             clone.LevelPackingC = LevelPackingC;
-            clone.ContainerOrderSupply = new ContainerOrderSupply(clone.InstanceLinked.Containers, clone.InstanceLinked.Pieces, Configuration.ContainerOrderInit, Configuration.ContainerOrderReorder, Configuration.ContainerOpen);
+            clone.ContainerOrderSupply = new ContainerOrderSupply(clone.InstanceLinked.Containers, clone.InstanceLinked.Pieces, Configuration.ContainerOrderInit, Configuration.ContainerOrderReorder, Configuration.ContainerOpen, clone._random);
             // Copy construction information
             if (ConstructionContainerOrder != null)
                 clone.ConstructionContainerOrder = ConstructionContainerOrder.ToList();

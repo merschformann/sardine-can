@@ -27,6 +27,11 @@ namespace SC.ObjectModel
         public string Name { get; set; }
 
         /// <summary>
+        /// The randomizer of this instance.
+        /// </summary>
+        public Random Random { get; set; } = new Random(0);
+
+        /// <summary>
         /// Contains all pieces which are part of this instance
         /// </summary>
         public List<VariablePiece> Pieces = new List<VariablePiece>();
@@ -113,7 +118,7 @@ namespace SC.ObjectModel
         /// <returns>The newly created solution</returns>
         public COSolution CreateSolution(Configuration.Configuration config, bool unofficial = false)
         {
-            COSolution solution = new COSolution(this, config);
+            COSolution solution = new COSolution(this, config, Random);
             if (!unofficial)
             {
                 solution.ID = ++_solutionCounter;

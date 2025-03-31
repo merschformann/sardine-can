@@ -1667,6 +1667,9 @@ namespace SC.Heuristics.PrimalHeuristic
             MeshPoint bestEP = null;
             double bestScore = double.PositiveInfinity;
 
+            // Reorder containers
+            containers = solution.ContainerOrderSupply.SortReorder(containers);
+
             // --> EP-Insertion
             // Try to greedy insert every piece
             foreach (var piece in pieces)
@@ -1867,6 +1870,9 @@ namespace SC.Heuristics.PrimalHeuristic
             // Init
             LinkedList<VariablePiece> pieces = new LinkedList<VariablePiece>(inputPieces);
 
+            // Reorder containers
+            containers = solution.ContainerOrderSupply.SortReorder(containers);
+
             // --> EP-Insertion with space defragmentation
             // Try to greedy insert every piece
             LinkedListNode<VariablePiece> pieceNode = pieces.First;
@@ -2041,6 +2047,9 @@ namespace SC.Heuristics.PrimalHeuristic
 
         protected void InsertAndPush(COSolution solution, List<Container> containers, List<VariablePiece> pieces, int[][] orientationsPerPiece)
         {
+            // Reorder containers
+            containers = solution.ContainerOrderSupply.SortReorder(containers);
+
             // --> EP-Insertion with space defragmentation
             // Try to greedy insert every piece
             foreach (var piece in pieces)
