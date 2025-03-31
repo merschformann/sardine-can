@@ -1155,7 +1155,7 @@ namespace SC.ObjectModel
                     }
                 case MeritFunctionType.H:
                     {
-                        return position.X + piece[orientation].BoundingBox.Length;
+                        return position.Z + piece[orientation].BoundingBox.Height;
                     }
                 case MeritFunctionType.None:
                 default: return 0.0;
