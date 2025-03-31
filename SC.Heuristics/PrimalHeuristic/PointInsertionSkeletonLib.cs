@@ -1624,7 +1624,7 @@ namespace SC.Heuristics.PrimalHeuristic
             // Init ordering
             containers = Instance.Containers.OrderByDescending(c => c.Mesh.Volume).ToList();
             VolumeOfContainers = Instance.Containers.Sum(container => container.Mesh.Volume);
-            pieces = Instance.Pieces.OrderByDescending(p => p, PieceOrderSupply.GetComparerByType(Config.PieceOrder)).ToList();
+            pieces = PieceOrderSupply.Sort(Instance.Pieces, Config.PieceOrder);
             orientationsPerPiece = new int[Instance.Pieces.Count][];
             HashSet<int> emptyForbiddenOrientations = new HashSet<int>();
             foreach (var piece in Instance.Pieces)
