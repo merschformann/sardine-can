@@ -348,9 +348,20 @@ namespace SC.ObjectModel.Configuration
         public ObjectiveType Objective { get; set; } = ObjectiveType.MaxVolume;
 
         /// <summary>
-        /// Defines the type of the container sorting to apply.
+        /// Defines the type of the container sorting to apply at the beginning.
         /// </summary>
-        public ContainerSortType ContainerSorting { get; set; } = ContainerSortType.None;
+        public ContainerInitOrderType ContainerOrderInit { get; set; } = ContainerInitOrderType.Capacity;
+
+        /// <summary>
+        /// Defines the type of the container sorting to apply while improving.
+        /// </summary>
+        public ContainerReorderType ContainerOrderReorder { get; set; } = ContainerReorderType.Capacity;
+
+        /// <summary>
+        /// Defines the fraction of containers to be used automatically (opened) instead of aiming to fill as few containers as possible.
+        // The fraction is based on the volume of the pieces and the estimated volume of the containers.
+        /// </summary>
+        public double ContainerOpen { get; set; }
 
         /// <summary>
         /// Defines the initial order of the pieces

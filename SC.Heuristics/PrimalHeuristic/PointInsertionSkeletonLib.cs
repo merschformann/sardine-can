@@ -1622,7 +1622,7 @@ namespace SC.Heuristics.PrimalHeuristic
         protected void Init(out List<Container> containers, out List<VariablePiece> pieces, out int[][] orientationsPerPiece)
         {
             // Init ordering
-            containers = Instance.Containers.OrderByDescending(c => c.Mesh.Volume).ToList();
+            containers = ContainerOrderSupply.SortInit(Instance.Containers, Config.ContainerOrderInit);
             VolumeOfContainers = Instance.Containers.Sum(container => container.Mesh.Volume);
             pieces = PieceOrderSupply.Sort(Instance.Pieces, Config.PieceOrder);
             orientationsPerPiece = new int[Instance.Pieces.Count][];
@@ -1734,7 +1734,8 @@ namespace SC.Heuristics.PrimalHeuristic
                                                 // Decide whether to break the search due to the first feasible insertion
                                                 if (Config.BestFit)
                                                 {
-                                                    if (solution.ScorePieceAllocation(container, piece, orientation, extremePoint) < bestScore)
+                                                    var score = solution.ScorePieceAllocation(container, piece, orientation, extremePoint);
+                                                    if (score < bestScore)
                                                     {
                                                         placed = true;
                                                         bestContainer = container;
@@ -1742,7 +1743,7 @@ namespace SC.Heuristics.PrimalHeuristic
                                                         bestBox = box;
                                                         bestVertexID = vertexID;
                                                         bestEP = extremePoint;
-                                                        bestScore = solution.ScorePieceAllocation(container, piece, orientation, extremePoint);
+                                                        bestScore = score;
                                                     }
                                                 }
                                                 else
@@ -1764,7 +1765,8 @@ namespace SC.Heuristics.PrimalHeuristic
                                                 // Decide whether to break the search due to the first feasible insertion
                                                 if (Config.BestFit)
                                                 {
-                                                    if (solution.ScorePieceAllocation(container, piece, orientation, extremePoint) < bestScore)
+                                                    var score = solution.ScorePieceAllocation(container, piece, orientation, extremePoint);
+                                                    if (score < bestScore)
                                                     {
                                                         placed = true;
                                                         bestContainer = container;
@@ -1772,7 +1774,7 @@ namespace SC.Heuristics.PrimalHeuristic
                                                         bestBox = null;
                                                         bestVertexID = vertexID;
                                                         bestEP = extremePoint;
-                                                        bestScore = solution.ScorePieceAllocation(container, piece, orientation, extremePoint);
+                                                        bestScore = score;
                                                     }
                                                 }
                                                 else
@@ -1795,13 +1797,14 @@ namespace SC.Heuristics.PrimalHeuristic
                                         // Decide whether to break the search due to the first feasible insertion
                                         if (Config.BestFit)
                                         {
-                                            if (solution.ScorePieceAllocation(container, piece, orientation, extremePoint) < bestScore)
+                                            var score = solution.ScorePieceAllocation(container, piece, orientation, extremePoint);
+                                            if (score < bestScore)
                                             {
                                                 placed = true;
                                                 bestContainer = container;
                                                 bestOrientation = orientation;
                                                 bestEP = extremePoint;
-                                                bestScore = solution.ScorePieceAllocation(container, piece, orientation, extremePoint);
+                                                bestScore = score;
                                             }
                                         }
                                         else

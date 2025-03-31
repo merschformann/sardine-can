@@ -41,6 +41,7 @@ namespace SC.ObjectModel
             for (int i = 0; i < instance.Containers.Count; i++)
                 ContainerInfos[i] = new ContainerInfo(this, instance.Containers[i]);
             Objective = new Objective(this);
+            ContainerOrderSupply = new ContainerOrderSupply(instance.Containers, instance.Pieces, config.ContainerOrderInit, config.ContainerOrderReorder, config.ContainerOpen);
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -287,6 +288,7 @@ namespace SC.ObjectModel
             }
             clone.EPCounter = EPCounter;
             clone.LevelPackingC = LevelPackingC;
+            clone.ContainerOrderSupply = new ContainerOrderSupply(clone.InstanceLinked.Containers, clone.InstanceLinked.Pieces, Configuration.ContainerOrderInit, Configuration.ContainerOrderReorder, Configuration.ContainerOpen);
             // Copy construction information
             if (ConstructionContainerOrder != null)
                 clone.ConstructionContainerOrder = ConstructionContainerOrder.ToList();
@@ -304,6 +306,11 @@ namespace SC.ObjectModel
         /// Fast access field for exploited volume
         /// </summary>
         public Objective Objective { get; private set; }
+
+        /// <summary>
+        /// The handler for container sorting.
+        /// </summary>
+        public ContainerOrderSupply ContainerOrderSupply { get; set; } = null;
 
         /// <summary>
         /// Fast accessible information about the number of items with the correpsonding material per container
@@ -1094,12 +1101,20 @@ namespace SC.ObjectModel
         /// <returns>The score of the allocation</returns>
         public double ScorePieceAllocation(Container container, VariablePiece piece, int orientation, MeshPoint position)
         {
+            var score = 0.0;
+            if (ContainerOrderSupply.OpenContainers.Count > 0 && ContainerOrderSupply.OpenContainers.Contains(container))
+            {
+                score -= ContainerOrderSupply.OpenContainerBigM;
+            }
             switch (Configuration.MeritType)
             {
-                case MeritFunctionType.MFV: return container.Mesh.Volume - ContainerInfos[container.VolatileID].VolumeContained - piece.Volume;
+                case MeritFunctionType.MFV:
+                    {
+                        score += container.Mesh.Volume - ContainerInfos[container.VolatileID].VolumeContained - piece.Volume;
+                    }
+                    break;
                 case MeritFunctionType.MMPSXY:
                     {
-                        double score = 0.0;
                         if (position.X + piece[orientation].BoundingBox.Length > PackingMaxX[container.VolatileID])
                         {
                             score += position.X + piece[orientation].BoundingBox.Length - PackingMaxX[container.VolatileID];
@@ -1108,11 +1123,10 @@ namespace SC.ObjectModel
                         {
                             score += position.Y + piece[orientation].BoundingBox.Width - PackingMaxY[container.VolatileID];
                         }
-                        return score;
                     }
+                    break;
                 case MeritFunctionType.LPXY:
                     {
-                        double score = 0.0;
                         if (position.X + piece[orientation].BoundingBox.Length > PackingMaxX[container.VolatileID])
                         {
                             score += (position.X + piece[orientation].BoundingBox.Length - PackingMaxX[container.VolatileID]) * LevelPackingC;
@@ -1129,37 +1143,40 @@ namespace SC.ObjectModel
                         {
                             score += PackingMaxY[container.VolatileID] - position.Y + piece[orientation].BoundingBox.Width;
                         }
-                        return score;
                     }
+                    break;
                 case MeritFunctionType.MRSU:
                     {
-                        return
-                            ResidualSpace[position.VolatileID].X - piece[orientation].BoundingBox.Length +
+                        score += ResidualSpace[position.VolatileID].X - piece[orientation].BoundingBox.Length +
                             ResidualSpace[position.VolatileID].Y - piece[orientation].BoundingBox.Width +
                             ResidualSpace[position.VolatileID].Z - piece[orientation].BoundingBox.Height;
                     }
+                    break;
                 case MeritFunctionType.MEDXYZ:
                     {
-                        return
-                            Math.Sqrt(
+                        score += Math.Sqrt(
                                 Math.Pow(position.X + piece[orientation].BoundingBox.Length, 2) +
                                 Math.Pow(position.Y + piece[orientation].BoundingBox.Width, 2) +
                                 Math.Pow(position.Z + piece[orientation].BoundingBox.Height, 2));
                     }
+                    break;
                 case MeritFunctionType.MEDXY:
                     {
-                        return
-                            Math.Sqrt(
+                        score += Math.Sqrt(
                                 Math.Pow(position.X + piece[orientation].BoundingBox.Length, 2) +
                                 Math.Pow(position.Y + piece[orientation].BoundingBox.Width, 2));
                     }
+                    break;
                 case MeritFunctionType.H:
                     {
-                        return position.Z + piece[orientation].BoundingBox.Height;
+                        score += position.Z + piece[orientation].BoundingBox.Height;
                     }
+                    break;
                 case MeritFunctionType.None:
-                default: return 0.0;
+                default:
+                    break;
             }
+            return score;
         }
 
         #endregion
