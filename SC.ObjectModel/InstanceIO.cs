@@ -222,7 +222,8 @@ namespace SC.ObjectModel
             // Create instance with given parameters
             Instance instance = new Instance
             {
-                Name = jsonInstance.Name
+                Name = jsonInstance.Name,
+                Data = jsonInstance.Data,
             };
             instance.Containers.AddRange(jsonInstance.Containers.Select(c => new Container()
             {
@@ -252,6 +253,8 @@ namespace SC.ObjectModel
 
                 foreach (var comp in p.Cubes)
                     convp.AddComponent(comp.X, comp.Y, comp.Z, comp.Length, comp.Width, comp.Height);
+
+                convp.Data = p.Data;
                 return convp;
             }));
             if (jsonInstance.Rules != null && jsonInstance.Rules.FlagRules != null)
@@ -283,6 +286,7 @@ namespace SC.ObjectModel
             var jsonInstance = new JsonInstance()
             {
                 Name = Name,
+                Data = Data,
                 Containers = Containers.Select(c =>
                     new JsonContainer()
                     {
@@ -296,6 +300,7 @@ namespace SC.ObjectModel
                     {
                         ID = p.ID,
                         Weight = p.Weight,
+                        Data = p.Data,
                         Flags = p.GetFlags().Select(f => new JsonFlag() { FlagId = f.flag, FlagValue = f.value }).ToList(),
                         ForbiddenOrientations = p.ForbiddenOrientations.ToList(),
                         Cubes = p.Original.Components.Select(c =>

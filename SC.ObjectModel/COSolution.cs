@@ -1526,9 +1526,11 @@ namespace SC.ObjectModel
                             Width = com.Width,
                             Height = com.Height,
                         }).ToList(),
+                        Data = p.Data,
                     }).ToList(),
                 }).ToList(),
                 Offload = OffloadPieces.Select(p => p.ID).ToList(),
+                Data = InstanceLinked.Data,
             };
 
             // Return the simplified representation

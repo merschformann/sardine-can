@@ -27,6 +27,11 @@ namespace SC.ObjectModel
         public string Name { get; set; }
 
         /// <summary>
+        /// This may contain user data that will be passed on to the output unmodified.
+        /// </summary>
+        public JsonElement Data { get; set; }
+
+        /// <summary>
         /// The randomizer of this instance.
         /// </summary>
         public Random Random { get; set; } = new Random(0);

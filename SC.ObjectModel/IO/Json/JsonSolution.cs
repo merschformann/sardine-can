@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace SC.ObjectModel.IO.Json
@@ -14,5 +15,7 @@ namespace SC.ObjectModel.IO.Json
         public List<JsonSolutionContainer> Containers { get; set; }
         [JsonPropertyName("offload")]
         public List<int> Offload { get; set; }
+        [JsonPropertyName("data")]
+        public JsonElement Data { get; set; }
     }
 }
