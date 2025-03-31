@@ -270,8 +270,8 @@ namespace SC.ObjectModel
             // Copy meta information
             clone.EndPointsBoundingBoxInner = EndPointsBoundingBoxInner.Select(p => p.Clone()).ToArray();
             clone.EndPointsBoundingBoxOuter = EndPointsBoundingBoxOuter.Select(p => p.Clone()).ToArray();
-            clone.EndPointsComponentInner = EndPointsComponentInner.Select(p => p.Clone()).ToArray();
-            clone.EndPointsComponentOuter = EndPointsComponentOuter.Select(p => p.Clone()).ToArray();
+            clone.EndPointsComponentInner = EndPointsComponentInner?.Select(p => p.Clone()).ToArray();
+            clone.EndPointsComponentOuter = EndPointsComponentOuter?.Select(p => p.Clone()).ToArray();
             clone.PushedPosition = PushedPosition.Select(p => p.Clone()).ToArray();
             clone.EndPointsDelta = EndPointsDelta.Select(p => p.Clone()).ToArray();
             clone.PiecesByVolatileID = PiecesByVolatileID.ToArray();
