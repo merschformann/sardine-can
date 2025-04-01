@@ -105,6 +105,7 @@ namespace SC.ObjectModel.Additionals
             VolumeContained = 0;
             WeightContained = 0;
             NumberOfPieces = 0;
+            PackingHeight = 0;
         }
 
         /// <summary>
@@ -117,7 +118,8 @@ namespace SC.ObjectModel.Additionals
             {
                 VolumeContained = VolumeContained,
                 WeightContained = WeightContained,
-                NumberOfPieces = NumberOfPieces
+                NumberOfPieces = NumberOfPieces,
+                PackingHeight = PackingHeight,
             };
         }
     }

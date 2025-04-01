@@ -269,7 +269,6 @@ namespace SC.ObjectModel
             {
                 clone.ContainerInfos[container.VolatileID] = ContainerInfos[container.VolatileID].Clone(clone);
             }
-            clone.Objective = Objective.Clone(clone);
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
             // Add info about the virtual pieces
             clone.GenerateVirtualPieceInfo();
@@ -299,6 +298,7 @@ namespace SC.ObjectModel
                 clone.ConstructionContainerOrder = ConstructionContainerOrder.ToList();
             if (ConstructionOrientationOrder != null)
                 clone.ConstructionOrientationOrder = ConstructionOrientationOrder.Select(p => p.ToArray()).ToArray();
+            clone.Objective = Objective.Clone(clone);
             // Return it
             return clone;
         }

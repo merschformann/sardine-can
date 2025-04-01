@@ -33,6 +33,10 @@ namespace SC.ObjectModel.Additionals
         /// Sorts the containers randomly.
         /// </summary>
         Random,
+        /// <summary>
+        /// Uses a round-robin approach to sort the containers.
+        /// </summary>
+        RoundRobin,
     }
 
     public class ContainerOrderSupply
@@ -60,7 +64,11 @@ namespace SC.ObjectModel.Additionals
         /// <summary>
         /// The containers to open first.
         /// </summary>
-        public HashSet<Container> OpenContainers { get; private set; }
+        public List<Container> OpenContainers { get; private set; }
+        /// <summary>
+        /// The containers that are not opened immediately.
+        /// </summary>
+        public List<Container> ReserveContainers { get; private set; }
         /// <summary>
         /// BigM value for preferring containers indicated to be opened right away.
         /// </summary>
@@ -87,7 +95,7 @@ namespace SC.ObjectModel.Additionals
             Random random)
         {
             ReorderType = type;
-            OpenContainers = new HashSet<Container>();
+            OpenContainers = new List<Container>();
             _random = random;
             if (openContainerByPieceRatio > 0)
             {
@@ -101,23 +109,45 @@ namespace SC.ObjectModel.Additionals
                         break;
                 }
             }
+            ReserveContainers = new List<Container>(containers.Except(OpenContainers));
         }
 
         /// <summary>
         /// Sorts the containers.
         /// </summary>
         /// <param name="containers">The containers to sort.</param>
+        /// <param name="pieceCounter">The counter for piece insertion, i.e., this represents the x-th piece of this insertion round.</param>
         /// <returns>The sorted containers.</returns>
-        public List<Container> SortReorder(List<Container> containers)
+        public IEnumerable<Container> Reorder(List<Container> containers, int pieceCounter)
         {
             switch (ReorderType)
             {
+                case ContainerReorderType.None:
+                    foreach (var container in containers)
+                        yield return container;
+                    break;
                 case ContainerReorderType.Capacity:
-                    return containers.OrderByDescending(c => (OpenContainers.Contains(c) ? OpenContainerBigM : 0) + c.Mesh.Volume).ToList();
+                    foreach (var container in containers.OrderByDescending(c => (OpenContainers.Contains(c) ? OpenContainerBigM : 0) + c.Mesh.Volume))
+                        yield return container;
+                    break;
                 case ContainerReorderType.Random:
-                    return containers.OrderByDescending(c => (OpenContainers.Contains(c) ? OpenContainerBigM : 0) + _random.Next()).ToList();
+                    foreach (var container in containers.OrderByDescending(c => (OpenContainers.Contains(c) ? OpenContainerBigM + OpenContainerBigM * _random.NextDouble() : 0) + c.ID))
+                        yield return container;
+                    break;
+                case ContainerReorderType.RoundRobin:
+                    {
+                        var startIndex = pieceCounter / 10 % OpenContainers.Count;
+                        for (int i = 0; i < OpenContainers.Count; i++)
+                        {
+                            var index = (i + startIndex) % OpenContainers.Count;
+                            yield return OpenContainers[index];
+                        }
+                        foreach (var container in ReserveContainers)
+                            yield return container;
+                    }
+                    break;
                 default:
-                    return containers;
+                    throw new ArgumentException($"Unknown container reorder type: {ReorderType}");
             }
         }
     }

@@ -51,7 +51,7 @@ namespace SC.ObjectModel.Configuration
                 BestFit = true;
                 MeritType = MeritFunctionType.MEDXYZ;
                 Improvement = true;
-                ScoreBasedOrder = true;
+                PieceReorder = PieceReorderType.Score;
                 RandomSalt = 0.1;
                 InflateAndReplaceInsertion = true;
                 NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
@@ -75,7 +75,7 @@ namespace SC.ObjectModel.Configuration
                                 BestFit = false;
                                 MeritType = MeritFunctionType.MEDXYZ;
                                 Improvement = true;
-                                ScoreBasedOrder = true;
+                                PieceReorder = PieceReorderType.Score;
                                 RandomSalt = 0.08368586690516754;
                                 InflateAndReplaceInsertion = false;
                                 NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
@@ -95,7 +95,7 @@ namespace SC.ObjectModel.Configuration
                                 BestFit = true;
                                 MeritType = MeritFunctionType.MFV;
                                 Improvement = true;
-                                ScoreBasedOrder = false;
+                                PieceReorder = PieceReorderType.Score;
                                 RandomSalt = 0.030644342734285967;
                                 InflateAndReplaceInsertion = false;
                                 NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
@@ -117,7 +117,7 @@ namespace SC.ObjectModel.Configuration
                             BestFit = false;
                             MeritType = MeritFunctionType.MEDXY;
                             Improvement = true;
-                            ScoreBasedOrder = false;
+                            PieceReorder = PieceReorderType.Score;
                             RandomSalt = 0.8866072829180582;
                             InflateAndReplaceInsertion = true;
                             NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
@@ -140,7 +140,7 @@ namespace SC.ObjectModel.Configuration
                                 BestFit = false;
                                 MeritType = MeritFunctionType.MEDXY;
                                 Improvement = true;
-                                ScoreBasedOrder = true;
+                                PieceReorder = PieceReorderType.Score;
                                 RandomSalt = 0.008158387839849155;
                                 InflateAndReplaceInsertion = false;
                                 NormalizationOrder = new DimensionMarker[3] { DimensionMarker.Z, DimensionMarker.X, DimensionMarker.Y };
@@ -160,7 +160,7 @@ namespace SC.ObjectModel.Configuration
                                 BestFit = false;
                                 MeritType = MeritFunctionType.MEDXY;
                                 Improvement = true;
-                                ScoreBasedOrder = true;
+                                PieceReorder = PieceReorderType.Score;
                                 RandomSalt = 0.12794130221974132;
                                 InflateAndReplaceInsertion = false;
                                 NormalizationOrder = new DimensionMarker[3] { DimensionMarker.Z, DimensionMarker.Y, DimensionMarker.X };
@@ -184,7 +184,7 @@ namespace SC.ObjectModel.Configuration
                                 BestFit = false;
                                 MeritType = MeritFunctionType.MEDXYZ;
                                 Improvement = true;
-                                ScoreBasedOrder = true;
+                                PieceReorder = PieceReorderType.Score;
                                 RandomSalt = 0.08368586690516754;
                                 InflateAndReplaceInsertion = false;
                                 NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
@@ -204,7 +204,7 @@ namespace SC.ObjectModel.Configuration
                                 BestFit = true;
                                 MeritType = MeritFunctionType.MFV;
                                 Improvement = true;
-                                ScoreBasedOrder = false;
+                                PieceReorder = PieceReorderType.Score;
                                 RandomSalt = 0.030644342734285967;
                                 InflateAndReplaceInsertion = false;
                                 NormalizationOrder = new DimensionMarker[3] { DimensionMarker.X, DimensionMarker.Y, DimensionMarker.Z };
@@ -389,9 +389,9 @@ namespace SC.ObjectModel.Configuration
         public bool ExhaustiveEPProne { get; set; } = false;
 
         /// <summary>
-        /// Defines whether to use score-based ordering of pieces or just random-order
+        /// Defines how pieces are being reordered between iterations.
         /// </summary>
-        public bool ScoreBasedOrder { get; set; } = true;
+        public PieceReorderType PieceReorder { get; set; } = PieceReorderType.Score;
 
         /// <summary>
         /// Defines the merit function when best-fit is active

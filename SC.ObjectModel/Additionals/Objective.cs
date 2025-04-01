@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using SC.ObjectModel.Elements;
+using SC.Toolbox;
 
 namespace SC.ObjectModel.Additionals
 {
@@ -16,6 +18,7 @@ namespace SC.ObjectModel.Additionals
         public Objective(COSolution solution)
         {
             Solution = solution;
+            _heightBigM = solution.InstanceLinked.Containers.Max(c => c.Mesh.Height);
         }
 
         /// <summary>
@@ -35,17 +38,29 @@ namespace SC.ObjectModel.Additionals
                     case ObjectiveType.MaxVolume:
                         return _volumeContained;
                     case ObjectiveType.MaxDensity:
-                        return Solution.ContainerInfos.Sum(c => c.VolumeUtilizedPackingHeight);
+                        {
+                            return
+                                -Solution.OffloadPieces.Count * _heightBigM * 2
+                                - Solution.ContainerInfos.Count(c => c.NumberOfPieces > 0) * _heightBigM
+                                + Solution.ContainerInfos.Where(c => c.NumberOfPieces > 0).MinOrDefault(c => c.PackingHeight) / _heightBigM;
+                        }
                     default:
                         throw new ArgumentException($"Unknown objective type: {Solution.Configuration.Objective}");
                 }
             }
         }
 
+
+
+
         /// <summary>
         /// The volume packed inside of the containers.
         /// </summary>
         private double _volumeContained;
+        /// <summary>
+        /// The big M value for container height.
+        /// </summary>
+        private double _heightBigM;
 
         /// <summary>
         /// Adds a piece to the container.

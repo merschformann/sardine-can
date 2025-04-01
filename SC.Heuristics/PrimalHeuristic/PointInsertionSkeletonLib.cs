@@ -1,10 +1,12 @@
 ﻿using SC.ObjectModel;
 using SC.ObjectModel.Additionals;
 using SC.ObjectModel.Elements;
+using SC.ObjectModel.IO;
 using SC.ObjectModel.Rules;
 using SC.Toolbox;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -1667,13 +1669,12 @@ namespace SC.Heuristics.PrimalHeuristic
             MeshPoint bestEP = null;
             double bestScore = double.PositiveInfinity;
 
-            // Reorder containers
-            containers = solution.ContainerOrderSupply.SortReorder(containers);
-
             // --> EP-Insertion
             // Try to greedy insert every piece
+            var pieceIdx = -1;
             foreach (var piece in pieces)
             {
+                pieceIdx++;
                 bestScore = double.PositiveInfinity;
                 bool placed = false;
 
@@ -1687,7 +1688,7 @@ namespace SC.Heuristics.PrimalHeuristic
                 foreach (var orientation in orientationsPerPiece[piece.VolatileID])
                 {
                     // Try to insert any of the available containers
-                    foreach (var container in containers.Where(c => ContainerCheck(solution, c, piece)))
+                    foreach (var container in solution.ContainerOrderSupply.Reorder(containers, pieceIdx).Where(c => ContainerCheck(solution, c, piece)))
                     {
                         // If already placed break the rest
                         if (placed && !Config.BestFit)
@@ -1870,15 +1871,14 @@ namespace SC.Heuristics.PrimalHeuristic
             // Init
             LinkedList<VariablePiece> pieces = new LinkedList<VariablePiece>(inputPieces);
 
-            // Reorder containers
-            containers = solution.ContainerOrderSupply.SortReorder(containers);
-
             // --> EP-Insertion with space defragmentation
             // Try to greedy insert every piece
             LinkedListNode<VariablePiece> pieceNode = pieces.First;
+            var pieceIdx = -1;
             while (pieceNode != null)
             {
                 // Init
+                pieceIdx++;
                 VariablePiece piece = pieceNode.Value;
                 bool placed = false;
 
@@ -1886,7 +1886,7 @@ namespace SC.Heuristics.PrimalHeuristic
                 foreach (var orientation in orientationsPerPiece[piece.VolatileID])
                 {
                     // Try to insert any of the available containers
-                    foreach (var container in containers.Where(c =>
+                    foreach (var container in solution.ContainerOrderSupply.Reorder(containers, pieceIdx).Where(c =>
                         solution.ContainerContent[c.VolatileID].Any() &&
                         ContainerCheck(solution, c, piece)))
                     {
@@ -2047,20 +2047,19 @@ namespace SC.Heuristics.PrimalHeuristic
 
         protected void InsertAndPush(COSolution solution, List<Container> containers, List<VariablePiece> pieces, int[][] orientationsPerPiece)
         {
-            // Reorder containers
-            containers = solution.ContainerOrderSupply.SortReorder(containers);
-
             // --> EP-Insertion with space defragmentation
             // Try to greedy insert every piece
+            var pieceIdx = -1;
             foreach (var piece in pieces)
             {
+                pieceIdx++;
                 bool placed = false;
 
                 // Try all possible orientations
                 foreach (var orientation in orientationsPerPiece[piece.VolatileID])
                 {
                     // Try to insert any of the available containers
-                    foreach (var container in containers.Where(c => ContainerCheck(solution, c, piece)))
+                    foreach (var container in solution.ContainerOrderSupply.Reorder(containers, pieceIdx).Where(c => ContainerCheck(solution, c, piece)))
                     {
                         // Try to insert relative to the basic vertex IDs of the container
                         foreach (var vertexID in Config.PushInsertionVIDs)
@@ -2264,14 +2263,15 @@ namespace SC.Heuristics.PrimalHeuristic
             // Init solution
             COSolution localSolution = Instance.CreateSolution(Config, true);
 
-
-
             // Start improvement
             while (currentIteration - lastImprovement < Config.StagnationDistance &&
                    !Cancelled &&
                    !TimeUp &&
                    !IterationsReached(currentIteration))
             {
+                // Export solution for debug purposes
+                File.WriteAllText($"solution-{currentIteration}.json", JsonIO.To(solution.ToJsonSolution()));
+
                 // Break if all pieces packed (can only break when minimization of container count is impossible)
                 if (solution.NumberOfContainersInUse == 1 && solution.NumberOfPiecesPacked == Instance.Pieces.Count)
                 {
@@ -2333,15 +2333,20 @@ namespace SC.Heuristics.PrimalHeuristic
                     }
                 }
                 // Re-order
-                if (Config.ScoreBasedOrder)
+                switch (Config.PieceReorder)
                 {
-                    // Order pieces by score
-                    pieces = Instance.Pieces.OrderByDescending(p => scorePieces[p.VolatileID]).ToList();
-                }
-                else
-                {
-                    // Order pieces randomly
-                    pieces = Instance.Pieces.OrderByDescending(p => Randomizer.NextDouble()).ToList();
+                    case PieceReorderType.Random:
+                        // Order pieces randomly
+                        pieces = Instance.Pieces.OrderByDescending(p => Randomizer.NextDouble()).ToList();
+                        break;
+                    case PieceReorderType.Score:
+                        // Order pieces by score
+                        pieces = Instance.Pieces.OrderByDescending(p => scorePieces[p.VolatileID]).ToList();
+                        break;
+                    case PieceReorderType.None:
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid piece reordering type: " + Config.PieceReorder.ToString());
                 }
                 // Search in parallel
                 Parallel.ForEach(workers, (workerID) =>
@@ -2362,93 +2367,86 @@ namespace SC.Heuristics.PrimalHeuristic
                         }
                     }
                     // Insert with new order
-                    constructionHeuristic(localSolutions[workerID], containers, pieces, orientationsPerPiece);
+                    constructionHeuristic(localSolutions[workerID], containers, pieces, workerOrientationsPerPiece[workerID]);
                 });
-                // Check all solutions
-                for (int workerID = 0; workerID < workerCount; workerID++)
+                // Keep track of best solution
+                var bestCandidate = localSolutions.ArgMax(s => s.Objective.Value);
+                if (bestCandidate.Objective.Value >= solution.Objective.Value)
                 {
-                    // Store solution if it is better
-                    if (localSolutions[workerID].Objective.Value >= solution.Objective.Value ||
-                        (localSolutions[workerID].Objective.Value == solution.Objective.Value && localSolutions[workerID].NumberOfContainersInUse < solution.NumberOfContainersInUse))
-                    {
-                        if (localSolutions[workerID].Objective.Value != solution.Objective.Value || localSolutions[workerID].NumberOfContainersInUse != solution.NumberOfContainersInUse)
-                        {
-                            lastImprovement = currentIteration;
-                            lastLongTermScoreReInit = currentIteration;
-                            possibleSwaps = Math.Min(possibleSwaps + 1, maxSwaps);
-                        }
-                        foreach (var piece in Instance.Pieces)
-                        {
-                            int index = 0;
-                            foreach (var orientation in workerOrientationsPerPiece[workerID][piece.VolatileID])
-                            {
-                                orientationsPerPiece[piece.VolatileID][index] = orientation;
-                                index++;
-                            }
-                        }
-                        solution = localSolutions[workerID].Clone();
-                    }
+                    lastImprovement = currentIteration;
+                    lastLongTermScoreReInit = currentIteration;
+                    possibleSwaps = Math.Min(possibleSwaps + 1, maxSwaps);
+                    solution = bestCandidate.Clone();
                 }
                 // Keep best one
                 localSolution = localSolutions[workers.OrderByDescending(w => localSolutions[w].Objective.Value).ThenBy(w => w).First()];
+                var localMin = localSolutions.Min(s => s.Objective.Value);
+                var localMax = localSolutions.Max(s => s.Objective.Value);
                 // Log visuals
                 LogVisuals(solution, false);
                 // Update score
-                if (Config.ScoreBasedOrder)
+                switch (Config.PieceReorder)
                 {
-                    if (currentIteration - lastLongTermScoreReInit <= longTermScoreReInitDistance)
-                    {
-                        // Update the score values of the pieces
-                        int binCount = (int)(localSolution.ContainerContent.Where(c => c.Any()).Count() / 2.0);
-                        IEnumerable<Piece> wellPackedPieces = null;
-                        if (binCount == 0)
+                    case PieceReorderType.Score:
+                        if (currentIteration - lastLongTermScoreReInit <= longTermScoreReInitDistance)
                         {
-                            wellPackedPieces = Instance.Containers.SelectMany(c => localSolution.ContainerContent[c.VolatileID]);
-                        }
-                        else
-                        {
-                            wellPackedPieces = containers.Take(binCount).SelectMany(c => localSolution.ContainerContent[c.VolatileID]);
-                        }
-                        foreach (var piece in wellPackedPieces)
-                        {
-                            // Decrease score
-                            scorePieces[piece.VolatileID] *= 1.0 - ((initialMaximumPercentageOfStoreModification / maximumPercentageOfStoreModification) * (maxSwaps - possibleSwaps));
-                        }
-                        foreach (var piece in pieces.Except(wellPackedPieces))
-                        {
-                            // Increase score
-                            scorePieces[piece.VolatileID] *= 1.0 + ((initialMaximumPercentageOfStoreModification / maximumPercentageOfStoreModification) * (maxSwaps - possibleSwaps));
-                        }
-                        // Add some random salt
-                        if (Config.RandomSalt != 0.0)
-                        {
-                            double avgScore = scorePieces.Average(s => s);
-                            foreach (var piece in pieces)
+                            // Update the score values of the pieces
+                            int binCount = (int)(localSolution.ContainerContent.Where(c => c.Any()).Count() / 2.0);
+                            IEnumerable<Piece> wellPackedPieces = null;
+                            if (binCount == 0)
                             {
-                                if (Randomizer.NextDouble() < 0.5)
+                                wellPackedPieces = Instance.Containers.SelectMany(c => localSolution.ContainerContent[c.VolatileID]);
+                            }
+                            else
+                            {
+                                wellPackedPieces = containers.Take(binCount).SelectMany(c => localSolution.ContainerContent[c.VolatileID]);
+                            }
+                            foreach (var piece in wellPackedPieces)
+                            {
+                                // Decrease score
+                                scorePieces[piece.VolatileID] *= 1.0 - ((initialMaximumPercentageOfStoreModification / maximumPercentageOfStoreModification) * (maxSwaps - possibleSwaps));
+                            }
+                            foreach (var piece in pieces.Except(wellPackedPieces))
+                            {
+                                // Increase score
+                                scorePieces[piece.VolatileID] *= 1.0 + ((initialMaximumPercentageOfStoreModification / maximumPercentageOfStoreModification) * (maxSwaps - possibleSwaps));
+                            }
+                            // Add some random salt
+                            if (Config.RandomSalt != 0.0)
+                            {
+                                double avgScore = scorePieces.Average(s => s);
+                                foreach (var piece in pieces)
                                 {
-                                    scorePieces[piece.VolatileID] -= Config.RandomSalt * avgScore;
-                                }
-                                else
-                                {
-                                    scorePieces[piece.VolatileID] += Config.RandomSalt * avgScore;
+                                    if (Randomizer.NextDouble() < 0.5)
+                                    {
+                                        scorePieces[piece.VolatileID] -= Config.RandomSalt * avgScore;
+                                    }
+                                    else
+                                    {
+                                        scorePieces[piece.VolatileID] += Config.RandomSalt * avgScore;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        // Re-Initialize the score values of the pieces
-                        lastLongTermScoreReInit = currentIteration;
-                        score = pieces.Count;
-                        activePieces = solution.ContainerContent.SelectMany(c => c);
-                        foreach (var piece in activePieces.Concat(pieces.Except(activePieces)))
+                        else
                         {
-                            scorePieces[piece.VolatileID] = score--;
+                            // Re-Initialize the score values of the pieces
+                            lastLongTermScoreReInit = currentIteration;
+                            score = pieces.Count;
+                            activePieces = solution.ContainerContent.SelectMany(c => c);
+                            foreach (var piece in activePieces.Concat(pieces.Except(activePieces)))
+                            {
+                                scorePieces[piece.VolatileID] = score--;
+                            }
+                            possibleSwaps = 1;
+                            maximumPercentageOfStoreModification += 1;
                         }
-                        possibleSwaps = 1;
-                        maximumPercentageOfStoreModification += 1;
-                    }
+                        break;
+                    case PieceReorderType.Random:
+                    case PieceReorderType.None:
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid piece reordering type: " + Config.PieceReorder.ToString());
                 }
                 // Inc iteration counter
                 currentIteration++;
@@ -2457,14 +2455,12 @@ namespace SC.Heuristics.PrimalHeuristic
                 {
                     LogOldMillis = DateTime.Now.Ticks;
                     Config.Log?.Invoke(currentIteration + ". " +
-                        solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
-                        VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-                        " (" + (solution.Objective.Value / VolumeOfContainers * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %) - Current: " +
-                        localSolution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
-                        VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-                        " (" + ((solution.Objective.Value / VolumeOfContainers - initialValue / VolumeOfContainers) * 100).ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " %)" +
-                        " Time: " + (DateTime.Now - Config.StartTimeStamp).TotalSeconds +
-                        " \n");
+                        solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
+                        " (" + localMin.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " - " +
+                        localMax.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + ")" +
+                        " | " + solution.NumberOfContainersInUse.ToString() +
+                        " | " + (DateTime.Now - Config.StartTimeStamp).TotalSeconds +
+                        "s\n");
                     Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, solution.Objective.Value);
                 }
             }
