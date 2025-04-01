@@ -2269,9 +2269,6 @@ namespace SC.Heuristics.PrimalHeuristic
                    !TimeUp &&
                    !IterationsReached(currentIteration))
             {
-                // Export solution for debug purposes
-                File.WriteAllText($"solution-{currentIteration}.json", JsonIO.To(solution.ToJsonSolution()));
-
                 // Break if all pieces packed (can only break when minimization of container count is impossible)
                 if (solution.NumberOfContainersInUse == 1 && solution.NumberOfPiecesPacked == Instance.Pieces.Count)
                 {
