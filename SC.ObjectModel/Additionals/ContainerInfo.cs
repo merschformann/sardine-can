@@ -29,7 +29,7 @@ namespace SC.ObjectModel.Additionals
         /// <summary>
         /// The container which this info is tracking.
         /// </summary>
-        private Container Container { get; set; }
+        internal Container Container { get; private set; }
 
         /// <summary>
         /// The volume packed inside of the container.

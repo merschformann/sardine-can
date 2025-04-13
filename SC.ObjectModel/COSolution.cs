@@ -1177,6 +1177,13 @@ namespace SC.ObjectModel
                         score += position.Z + piece[orientation].BoundingBox.Height;
                     }
                     break;
+                case MeritFunctionType.RHRC:
+                    {
+                        var newHeight = Math.Max(position.Z + piece[orientation].BoundingBox.Height, ContainerInfos[container.VolatileID].PackingHeight);
+                        var newVolume = ContainerInfos[container.VolatileID].VolumeContained + piece.Volume;
+                        score += newVolume / (container.Mesh.Length * container.Mesh.Width * newHeight) + ContainerInfos[container.VolatileID].NumberOfPieces > 0 ? 1 : 0;
+                    }
+                    break;
                 case MeritFunctionType.None:
                 default:
                     break;

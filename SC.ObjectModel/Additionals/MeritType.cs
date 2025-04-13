@@ -50,5 +50,10 @@ namespace SC.ObjectModel.Additionals
         /// Aims to minimize packing height
         /// </summary>
         H,
+
+        /// <summary>
+        /// Aims to minimize packing height while aiming for fewer containers (Reduce-Height-Reduce-Container)
+        /// </summary>
+        RHRC,
     }
 }

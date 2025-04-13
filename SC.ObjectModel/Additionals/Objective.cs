@@ -42,16 +42,13 @@ namespace SC.ObjectModel.Additionals
                             return
                                 -Solution.OffloadPieces.Count * _heightBigM * 2
                                 - Solution.ContainerInfos.Count(c => c.NumberOfPieces > 0) * _heightBigM
-                                + Solution.ContainerInfos.Where(c => c.NumberOfPieces > 0).MinOrDefault(c => c.PackingHeight) / _heightBigM;
+                                - Solution.ContainerInfos.Where(c => c.NumberOfPieces > 0).Sum(c => c.Container.Mesh.Height - c.PackingHeight);
                         }
                     default:
                         throw new ArgumentException($"Unknown objective type: {Solution.Configuration.Objective}");
                 }
             }
         }
-
-
-
 
         /// <summary>
         /// The volume packed inside of the containers.
