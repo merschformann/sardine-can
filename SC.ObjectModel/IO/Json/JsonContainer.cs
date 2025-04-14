@@ -21,6 +21,7 @@ namespace SC.ObjectModel.IO.Json
         public double Height { get; set; }
         [JsonPropertyName("maxWeight")]
         public double MaxWeight { get; set; } = double.PositiveInfinity;
+        [JsonPropertyName("data")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public JsonElement Data { get; set; }
     }
