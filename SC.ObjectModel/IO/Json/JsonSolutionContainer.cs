@@ -18,6 +18,7 @@ namespace SC.ObjectModel.IO.Json
         public double Height { get; set; }
         [JsonPropertyName("assignments")]
         public List<JsonAssignment> Assignments { get; set; }
+        [JsonPropertyName("data")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public JsonElement Data { get; set; }
     }
