@@ -16,6 +16,7 @@ namespace SC.ObjectModel.IO.Json
         [JsonPropertyName("offload")]
         public List<int> Offload { get; set; }
         [JsonPropertyName("data")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public JsonElement Data { get; set; }
     }
 }

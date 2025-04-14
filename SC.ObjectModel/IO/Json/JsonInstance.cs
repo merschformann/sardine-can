@@ -20,6 +20,7 @@ namespace SC.ObjectModel.IO.Json
         [JsonPropertyName("rules")]
         public JsonRuleSet Rules { get; set; }
         [JsonPropertyName("data")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public JsonElement Data { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace SC.ObjectModel.IO.Json
         [JsonPropertyName("cubes")]
         public List<JsonCube> Cubes { get; set; }
         [JsonPropertyName("data")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public JsonElement Data { get; set; }
     }
 }
