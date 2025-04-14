@@ -48,9 +48,13 @@ namespace SC.Heuristics
         protected double VolumeOfContainers { get; set; }
 
         /// <summary>
-        /// Supplies the millis of the last time logging
+        /// Last time we logged something
         /// </summary>
-        protected long LogOldMillis { get; set; }
+        protected DateTime LastLog { get; set; }
+        /// <summary>
+        /// Last time the primal heuristic logged something
+        /// </summary>
+        protected DateTime LastPrimalLog { get; set; }
 
         /// <summary>
         /// Supplies the millis of the last time logging the visuals
@@ -140,12 +144,19 @@ namespace SC.Heuristics
         /// <param name="container">The container to which the piece is added</param>
         protected void LogProgress(COSolution solution, Piece piece, Container container)
         {
-            if (Config.Log != null && DateTime.Now.Ticks - LogOldMillis > 10000000)
+            if (Config.Log == null || Config.PrimalHeuristicLogInterval <= 0)
+                return;
+            var lastTime = LastPrimalLog;
+            if (LastLog > lastTime)
+                lastTime = LastLog;
+            if ((DateTime.Now - LastLog).TotalSeconds > Config.PrimalHeuristicLogInterval)
             {
-                LogOldMillis = DateTime.Now.Ticks;
-                Config.Log(solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
-                    VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
-                    " - Piece " + piece.ID + " -> Container " + container.ID + "\n");
+                LastLog = DateTime.Now;
+                Config.Log(
+                    solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " (value) " +
+                    VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " (volume) " +
+                    solution.OffloadPieces.Count + " (offload)" +
+                    "\n");
             }
         }
 

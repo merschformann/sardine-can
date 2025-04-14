@@ -88,9 +88,9 @@ namespace SC.Heuristics.PrimalHeuristic
                 LogVisuals(Solution, false);
 
                 // Log
-                if (DateTime.Now.Ticks - LogOldMillis > 1000000)
+                if ((DateTime.Now - LastLog).TotalSeconds > 5)
                 {
-                    LogOldMillis = DateTime.Now.Ticks;
+                    LastLog = DateTime.Now;
                     Config.Log?.Invoke(currentIteration + ". " +
     Solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " / " +
     VolumeOfContainers.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +

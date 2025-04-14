@@ -343,6 +343,12 @@ namespace SC.ObjectModel.Configuration
         #region Heuristic related properties
 
         /// <summary>
+        /// The interval at which the primal heuristic logs its progress.
+        /// Since the log interval of the wrapping improvement phase is normally more interesting, this is turned off by default (0.0).
+        /// </summary>
+        public double PrimalHeuristicLogInterval { get; set; } = 0.0;
+
+        /// <summary>
         /// Defines the objective.
         /// </summary>
         public ObjectiveType Objective { get; set; } = ObjectiveType.MaxVolume;

@@ -42,7 +42,7 @@ namespace SC.ObjectModel.Additionals
                             return
                                 -Solution.OffloadPieces.Count * _heightBigM * 2
                                 - Solution.ContainerInfos.Count(c => c.NumberOfPieces > 0) * _heightBigM
-                                - Solution.ContainerInfos.Where(c => c.NumberOfPieces > 0).Sum(c => c.Container.Mesh.Height - c.PackingHeight);
+                                - Solution.ContainerInfos.Where(c => c.NumberOfPieces > 0).Sum(c => c.PackingHeight / c.Container.Mesh.Height);
                         }
                     default:
                         throw new ArgumentException($"Unknown objective type: {Solution.Configuration.Objective}");
@@ -51,13 +51,15 @@ namespace SC.ObjectModel.Additionals
         }
 
         /// <summary>
-        /// The volume packed inside of the containers.
-        /// </summary>
-        private double _volumeContained;
-        /// <summary>
         /// The big M value for container height.
         /// </summary>
         private double _heightBigM;
+
+        /// <summary>
+        /// The volume packed inside of the containers.
+        /// </summary>
+        private double _volumeContained;
+
 
         /// <summary>
         /// Adds a piece to the container.

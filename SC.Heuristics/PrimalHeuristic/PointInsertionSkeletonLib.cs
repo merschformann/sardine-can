@@ -1631,7 +1631,13 @@ namespace SC.Heuristics.PrimalHeuristic
             HashSet<int> emptyForbiddenOrientations = new HashSet<int>();
             foreach (var piece in Instance.Pieces)
             {
-                if (Config.Tetris)
+                // Check whether the piece can be handled as a cuboid
+                var isCuboid = piece.Original.Components.Count == 1
+                    && piece.Original.Components.First().RelPosition.X == 0
+                    && piece.Original.Components.First().RelPosition.Y == 0
+                    && piece.Original.Components.First().RelPosition.Z == 0;
+                // Add full orientations if tetris is requested and piece is not a regular cuboid
+                if (Config.Tetris && !isCuboid)
                 {
                     orientationsPerPiece[piece.VolatileID] =
                         Config.HandleRotatability ?
@@ -2370,6 +2376,10 @@ namespace SC.Heuristics.PrimalHeuristic
                 var bestCandidate = localSolutions.ArgMax(s => s.Objective.Value);
                 if (bestCandidate.Objective.Value >= solution.Objective.Value)
                 {
+                    // Log
+                    Config.Log?.Invoke("Improvement found: " +
+                        solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " -> " +
+                        bestCandidate.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + "\n");
                     lastImprovement = currentIteration;
                     lastLongTermScoreReInit = currentIteration;
                     possibleSwaps = Math.Min(possibleSwaps + 1, maxSwaps);
@@ -2448,9 +2458,9 @@ namespace SC.Heuristics.PrimalHeuristic
                 // Inc iteration counter
                 currentIteration++;
                 // Log
-                if (DateTime.Now.Ticks - LogOldMillis > 5000000)
+                if ((DateTime.Now - LastLog).TotalSeconds > 5)
                 {
-                    LogOldMillis = DateTime.Now.Ticks;
+                    LastLog = DateTime.Now;
                     Config.Log?.Invoke(currentIteration + ". " +
                         solution.Objective.Value.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) +
                         " (" + localMin.ToString(ExportationConstants.EXPORT_FORMAT_SHORT, ExportationConstants.FORMATTER) + " - " +
