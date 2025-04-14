@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace SC.ObjectModel.IO.Json
@@ -20,5 +21,7 @@ namespace SC.ObjectModel.IO.Json
         public double Height { get; set; }
         [JsonPropertyName("maxWeight")]
         public double MaxWeight { get; set; } = double.PositiveInfinity;
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public JsonElement Data { get; set; }
     }
 }

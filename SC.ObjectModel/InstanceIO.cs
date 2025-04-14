@@ -234,7 +234,8 @@ namespace SC.ObjectModel
                     Width = c.Width,
                     Height = c.Height
                 },
-                MaxWeight = c.MaxWeight
+                MaxWeight = c.MaxWeight,
+                Data = c.Data
             }));
             instance.Pieces.AddRange(jsonInstance.Pieces.Select(p =>
             {
@@ -291,6 +292,8 @@ namespace SC.ObjectModel
                     new JsonContainer()
                     {
                         ID = c.ID,
+                        Data = c.Data,
+                        MaxWeight = c.MaxWeight,
                         Length = c.Mesh.Length,
                         Width = c.Mesh.Width,
                         Height = c.Mesh.Height
