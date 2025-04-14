@@ -1535,6 +1535,7 @@ namespace SC.ObjectModel
                         }).ToList(),
                         Data = p.Data,
                     }).ToList(),
+                    Data = c.Data,
                 }).ToList(),
                 Offload = OffloadPieces.Select(p => p.ID).ToList(),
                 Data = InstanceLinked.Data,
