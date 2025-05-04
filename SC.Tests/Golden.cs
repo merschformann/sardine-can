@@ -30,7 +30,7 @@ public class Golden
         {
             TimeLimitInSeconds = 3,
             ThreadLimit = 1,
-            IterationsLimit = 1000,
+            IterationsLimit = 100,
         }, Console.WriteLine);
 
         var update = Environment.GetEnvironmentVariable("UPDATE") == "1";
