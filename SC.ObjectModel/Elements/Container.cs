@@ -13,6 +13,7 @@ namespace SC.ObjectModel.Elements
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
+    using System.Text.Json;
 
     /// <summary>
     /// Defines a container which can be filled with pieces
@@ -43,6 +44,11 @@ namespace SC.ObjectModel.Elements
         /// A list of all slants defining unusable areas of the container
         /// </summary>
         public List<Slant> Slants = new List<Slant>();
+
+        /// <summary>
+        /// This may contain user data that will be passed on to the output unmodified.
+        /// </summary>
+        public JsonElement Data { get; set; }
 
         /// <summary>
         /// The current ID of the virtual piece

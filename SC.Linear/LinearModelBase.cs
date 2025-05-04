@@ -156,7 +156,10 @@ namespace SC.Linear
             // Create trivial solution in case solver did not find any
             if (Solution == null)
             {
-                Solution = Instance.CreateSolution(true, MeritFunctionType.None);
+                Solution = Instance.CreateSolution(new Configuration()
+                {
+                    Tetris = true,
+                });
             }
             // Set additional info
             if (Solution != null)
@@ -189,7 +192,7 @@ namespace SC.Linear
             };
 
             // Log final timestamp
-            Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.ExploitedVolume);
+            Config.LogSolutionStatus?.Invoke((DateTime.Now - Config.StartTimeStamp).TotalSeconds, Solution.Objective.Value);
 
             // Return the result
             return result;

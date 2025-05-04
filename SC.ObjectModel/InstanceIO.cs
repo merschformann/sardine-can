@@ -198,7 +198,7 @@ namespace SC.ObjectModel
             {
                 foreach (var childNode in solutionsRoot.ChildNodes.OfType<XmlNode>())
                 {
-                    COSolution solution = instance.CreateSolution(false, MeritFunctionType.None);
+                    COSolution solution = instance.CreateSolution(new Configuration.Configuration());
                     solution.LoadXML(childNode);
                     solutions.Add(solution);
                 }
@@ -222,7 +222,8 @@ namespace SC.ObjectModel
             // Create instance with given parameters
             Instance instance = new Instance
             {
-                Name = jsonInstance.Name
+                Name = jsonInstance.Name,
+                Data = jsonInstance.Data,
             };
             instance.Containers.AddRange(jsonInstance.Containers.Select(c => new Container()
             {
@@ -233,14 +234,15 @@ namespace SC.ObjectModel
                     Width = c.Width,
                     Height = c.Height
                 },
-                MaxWeight = c.MaxWeight
+                MaxWeight = c.MaxWeight,
+                Data = c.Data
             }));
             instance.Pieces.AddRange(jsonInstance.Pieces.Select(p =>
             {
                 var convp = new VariablePiece() { ID = p.ID, Weight = p.Weight };
                 if (p.Flags != null)
                     convp.SetFlags(p.Flags.Select(f => (f.FlagId, f.FlagValue)));
-                
+
                 if (p.ForbiddenOrientations != null && p.AllowedOrientations == null)
                     convp.ForbiddenOrientations = new(p.ForbiddenOrientations);
                 if (p.AllowedOrientations != null)
@@ -249,9 +251,11 @@ namespace SC.ObjectModel
                     if (p.ForbiddenOrientations != null)
                         convp.ForbiddenOrientations.UnionWith(p.ForbiddenOrientations);
                 }
-                
+
                 foreach (var comp in p.Cubes)
                     convp.AddComponent(comp.X, comp.Y, comp.Z, comp.Length, comp.Width, comp.Height);
+
+                convp.Data = p.Data;
                 return convp;
             }));
             if (jsonInstance.Rules != null && jsonInstance.Rules.FlagRules != null)
@@ -283,10 +287,13 @@ namespace SC.ObjectModel
             var jsonInstance = new JsonInstance()
             {
                 Name = Name,
+                Data = Data,
                 Containers = Containers.Select(c =>
                     new JsonContainer()
                     {
                         ID = c.ID,
+                        Data = c.Data,
+                        MaxWeight = c.MaxWeight,
                         Length = c.Mesh.Length,
                         Width = c.Mesh.Width,
                         Height = c.Mesh.Height
@@ -296,6 +303,7 @@ namespace SC.ObjectModel
                     {
                         ID = p.ID,
                         Weight = p.Weight,
+                        Data = p.Data,
                         Flags = p.GetFlags().Select(f => new JsonFlag() { FlagId = f.flag, FlagValue = f.value }).ToList(),
                         ForbiddenOrientations = p.ForbiddenOrientations.ToList(),
                         Cubes = p.Original.Components.Select(c =>

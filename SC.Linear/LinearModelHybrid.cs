@@ -475,7 +475,7 @@ namespace SC.Linear
             // Create / reset solution
             if (Solution == null)
             {
-                Solution = Instance.CreateSolution(true, MeritFunctionType.None);
+                Solution = Instance.CreateSolution(new Configuration() { Tetris = true });
             }
             else
             {
@@ -508,7 +508,7 @@ namespace SC.Linear
             // Create / reset solution
             if (Solution == null)
             {
-                Solution = Instance.CreateSolution(true, MeritFunctionType.None);
+                Solution = Instance.CreateSolution(new Configuration() { Tetris = true });
             }
             else
             {
