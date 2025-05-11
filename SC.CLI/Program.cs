@@ -14,7 +14,7 @@ namespace SC.CLI
     {
         [Option('i', "input", Required = false, HelpText = "Input file to process")]
         public string Input { get; set; }
-        
+
         [Option('c', "config", Required = false, HelpText = "Path to configuration file")]
         public string Configuration { get; set; }
 
@@ -39,20 +39,20 @@ namespace SC.CLI
             var instance = JsonIO.From<JsonCalculation>(content);
 
             // If nothing useful was found, try to parse it as an unnested instance (without a configuration)
-            if (instance == null || instance.Instance == null && instance.Configuration == null)
+            if (instance?.Instance == null && instance.Configuration == null)
             {
                 var inst = JsonIO.From<JsonInstance>(content);
                 if (inst != null)
                     instance = new JsonCalculation() { Instance = inst };
-                
+
                 // If still nothing useful was found, abort
-                if (instance == null || instance.Instance == null)
+                if (instance?.Instance == null)
                 {
                     Console.WriteLine("No 'instance' found in input file.");
                     return;
                 }
             }
-            
+
             // Read configuration if available
             if (!string.IsNullOrWhiteSpace(opts.Configuration))
             {

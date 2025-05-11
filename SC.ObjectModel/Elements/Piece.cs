@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -19,11 +20,16 @@ namespace SC.ObjectModel.Elements
         /// The ID of this piece.
         /// </summary>
         public int ID { get; set; }
-        
+
         /// <summary>
         /// The weight of the piece.
         /// </summary>
         public double Weight { get; set; }
+
+        /// <summary>
+        /// This may contain user data that will be passed on to the output unmodified.
+        /// </summary>
+        public JsonElement Data { get; set; }
 
         /// <summary>
         /// An internal counter to supply IDs for components

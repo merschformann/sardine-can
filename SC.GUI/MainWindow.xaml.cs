@@ -500,7 +500,7 @@ namespace SC.GUI
                 else
                 {
                     // Only draw instance
-                    DrawInstance(_instance.CreateSolution(false, MeritFunctionType.None, true));
+                    DrawInstance(_instance.CreateSolution(new Configuration() { Tetris = false, }));
                 }
             }
         }
@@ -648,7 +648,7 @@ namespace SC.GUI
                 if (draw)
                 {
                     // Draw instance
-                    DrawInstance(instance.CreateSolution(false, MeritFunctionType.None, true));
+                    DrawInstance(instance.CreateSolution(new Configuration() { Tetris = false, }));
                 }
 
                 if (writeXml)
@@ -830,7 +830,7 @@ namespace SC.GUI
                                 Improvement = (CheckBoxImprovement.IsChecked == true),
                                 MeritType = _meritType,
                                 PieceOrder = _pieceOrder,
-                                ScoreBasedOrder = (CheckBoxScoreBasedOrder.IsChecked == true),
+                                PieceReorder = (CheckBoxScoreBasedOrder.IsChecked == true) ? PieceReorderType.Score : PieceReorderType.None,
                                 InflateAndReplaceInsertion = false,
                                 ThreadLimit = threads,
                                 Seed = seed
@@ -881,7 +881,7 @@ namespace SC.GUI
                                 Improvement = (CheckBoxImprovement.IsChecked == true),
                                 MeritType = MeritFunctionType.None,
                                 PieceOrder = _pieceOrder,
-                                ScoreBasedOrder = (CheckBoxScoreBasedOrder.IsChecked == true),
+                                PieceReorder = (CheckBoxScoreBasedOrder.IsChecked == true) ? PieceReorderType.Score : PieceReorderType.None,
                                 InflateAndReplaceInsertion = true,
                                 ThreadLimit = threads,
                                 Seed = seed
@@ -932,7 +932,7 @@ namespace SC.GUI
                                 Improvement = (CheckBoxImprovement.IsChecked == true),
                                 MeritType = MeritFunctionType.None,
                                 PieceOrder = _pieceOrder,
-                                ScoreBasedOrder = (CheckBoxScoreBasedOrder.IsChecked == true),
+                                PieceReorder = (CheckBoxScoreBasedOrder.IsChecked == true) ? PieceReorderType.Score : PieceReorderType.None,
                                 InflateAndReplaceInsertion = false,
                                 ThreadLimit = threads,
                                 Seed = seed
@@ -983,7 +983,7 @@ namespace SC.GUI
                                 Improvement = true,
                                 MeritType = _meritType,
                                 PieceOrder = _pieceOrder,
-                                ScoreBasedOrder = (CheckBoxScoreBasedOrder.IsChecked == true),
+                                PieceReorder = (CheckBoxScoreBasedOrder.IsChecked == true) ? PieceReorderType.Score : PieceReorderType.None,
                                 InflateAndReplaceInsertion = true,
                                 ThreadLimit = threads,
                                 Seed = seed

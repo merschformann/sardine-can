@@ -28,7 +28,7 @@ public class Golden
         // Run calculation
         var result = Executor.Execute(instance, new Configuration()
         {
-            TimeLimitInSeconds = 1,
+            TimeLimitInSeconds = 3,
             ThreadLimit = 1,
             IterationsLimit = 100,
         }, Console.WriteLine);

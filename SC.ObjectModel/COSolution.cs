@@ -1,4 +1,5 @@
 ﻿using SC.ObjectModel.Additionals;
+using SC.ObjectModel.Configuration;
 using SC.ObjectModel.Elements;
 using SC.ObjectModel.Interfaces;
 using SC.ObjectModel.IO.Json;
@@ -22,11 +23,12 @@ namespace SC.ObjectModel
         /// Creates a new solution
         /// </summary>
         /// <param name="instance">The instance this solution belongs to</param>
-        /// <param name="tetris">Defines whether to use tetris style in this solution</param>
-        /// <param name="meritType">The merit-type to use when using heuristics</param>
-        internal COSolution(Instance instance, bool tetris, MeritFunctionType meritType)
+        /// <param name="config">The configuration being used.</param>
+        internal COSolution(Instance instance, Configuration.Configuration config, Random random)
         {
             InstanceLinked = instance;
+            Configuration = config;
+            _random = random;
             ContainedPieces = new HashSet<VariablePiece>();
             OffloadPieces = new HashSet<VariablePiece>(instance.Pieces);
             Orientations = new int[instance.PiecesWithVirtuals.Count()];
@@ -36,9 +38,11 @@ namespace SC.ObjectModel
             InitMetaInfo();
             InitFlagHandling();
             ContainerContent = instance.Containers.Select(c => new HashSet<VariablePiece>()).ToArray();
-            ExploitedVolume = 0;
-            ExploitedVolumeOfContainers = new double[instance.Containers.Count];
-            ExploitedWeightOfContainers = new double[instance.Containers.Count];
+            ContainerInfos = new ContainerInfo[instance.Containers.Count];
+            for (int i = 0; i < instance.Containers.Count; i++)
+                ContainerInfos[i] = new ContainerInfo(this, instance.Containers[i]);
+            Objective = new Objective(this);
+            ContainerOrderSupply = new ContainerOrderSupply(instance.Containers, instance.Pieces, config.ContainerOrderInit, config.ContainerOrderReorder, config.ContainerOpen, _random);
             MaterialsPerContainer = new int[instance.Containers.Count, Enum.GetValues(typeof(MaterialClassification)).Length];
         }
 
@@ -51,6 +55,14 @@ namespace SC.ObjectModel
         /// The instance this solution belongs to
         /// </summary>
         public Instance InstanceLinked { get; set; }
+        /// <summary>
+        /// The configuration this solution is based on
+        /// </summary>
+        public Configuration.Configuration Configuration { get; private set; }
+        /// <summary>
+        /// The randomizer of this solution.
+        /// </summary>
+        private Random _random = null;
 
         #region Core information
 
@@ -106,9 +118,8 @@ namespace SC.ObjectModel
         /// <param name="position">The position of the piece inside the container</param>
         public void Add(Container container, VariablePiece piece, int orientation, MeshPoint position)
         {
-            ExploitedVolume += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedVolumeOfContainers[container.VolatileID] += TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedWeightOfContainers[container.VolatileID] += piece.Weight;
+            Objective.AddPiece(piece, orientation, position);
+            ContainerInfos[container.VolatileID].AddPiece(piece, orientation, position);
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]++;
             ContainedPieces.Add(piece);
             OffloadPieces.Remove(piece);
@@ -128,9 +139,8 @@ namespace SC.ObjectModel
         /// <returns>The position at which the piece was inserted</returns>
         public MeshPoint Remove(Container container, VariablePiece piece)
         {
-            ExploitedVolume -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedVolumeOfContainers[container.VolatileID] -= TetrisMode ? piece.Volume : piece.Original.BoundingBox.Volume;
-            ExploitedWeightOfContainers[container.VolatileID] -= piece.Weight;
+            Objective.RemovePiece(piece, Orientations[piece.VolatileID], Positions[piece.VolatileID]);
+            ContainerInfos[container.VolatileID].RemovePiece(piece, Orientations[piece.VolatileID], Positions[piece.VolatileID]);
             MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
             ContainedPieces.Remove(piece);
             OffloadPieces.Add(piece);
@@ -150,11 +160,10 @@ namespace SC.ObjectModel
         /// <param name="container">The container to clear</param>
         public void RemoveContainer(Container container)
         {
-            ExploitedVolume -= ContainerContent[container.VolatileID].Sum(p => { return TetrisMode ? p.Volume : p.Original.BoundingBox.Volume; });
-            ExploitedVolumeOfContainers[container.VolatileID] = 0;
-            ExploitedWeightOfContainers[container.VolatileID] = 0;
+            ContainerInfos[container.VolatileID].Clear();
             foreach (var piece in ContainerContent[container.VolatileID])
             {
+                Objective.RemovePiece(piece, Orientations[piece.VolatileID], Positions[piece.VolatileID]);
                 MaterialsPerContainer[container.VolatileID, (int)piece.Material.MaterialClass]--;
                 ContainedPieces.Remove(piece);
                 OffloadPieces.Add(piece);
@@ -177,8 +186,7 @@ namespace SC.ObjectModel
             OffloadPieces = new HashSet<VariablePiece>(InstanceLinked.Pieces);
             foreach (var container in InstanceLinked.Containers)
             {
-                ExploitedVolumeOfContainers[container.VolatileID] = 0;
-                ExploitedWeightOfContainers[container.VolatileID] = 0;
+                ContainerInfos[container.VolatileID].Clear();
                 for (int i = 0; i < Enum.GetValues(typeof(MaterialClassification)).Length; i++)
                     MaterialsPerContainer[container.VolatileID, i] = 0;
                 ContainerContent[container.VolatileID].Clear();
@@ -196,7 +204,7 @@ namespace SC.ObjectModel
                 Positions[piece.VolatileID] = null;
                 Containers[piece.VolatileID] = null;
             }
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.MFV:
                     break;
@@ -221,7 +229,7 @@ namespace SC.ObjectModel
                     break;
             }
             LevelPackingC = 0;
-            ExploitedVolume = 0.0;
+            Objective.Clear();
             ClearFlagHandling();
         }
 
@@ -235,7 +243,7 @@ namespace SC.ObjectModel
         /// <returns>A clone of this solution</returns>
         public COSolution Clone(bool unofficial = true)
         {
-            COSolution clone = InstanceLinked.CreateSolution(TetrisMode, MeritType, unofficial);
+            COSolution clone = InstanceLinked.CreateSolution(Configuration, unofficial);
             clone.InstanceLinked = InstanceLinked;
             clone.ID = ID;
             clone.ContainedPieces = new HashSet<VariablePiece>(ContainedPieces);
@@ -256,37 +264,41 @@ namespace SC.ObjectModel
                 clone.Positions[piece.VolatileID] = (Positions[piece.VolatileID] != null) ? Positions[piece.VolatileID].Clone() : null;
                 clone.Containers[piece.VolatileID] = Containers[piece.VolatileID];
             }
-            clone.ExploitedVolume = ExploitedVolume;
-            clone.ExploitedVolumeOfContainers = ExploitedVolumeOfContainers.ToArray();
-            clone.ExploitedWeightOfContainers = ExploitedWeightOfContainers.ToArray();
+            clone.ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
+            foreach (var container in InstanceLinked.Containers)
+            {
+                clone.ContainerInfos[container.VolatileID] = ContainerInfos[container.VolatileID].Clone(clone);
+            }
             clone.ExtremePoints = ExtremePoints.Select(c => c.ToList()).ToArray();
             // Add info about the virtual pieces
             clone.GenerateVirtualPieceInfo();
             // Copy meta information
             clone.EndPointsBoundingBoxInner = EndPointsBoundingBoxInner.Select(p => p.Clone()).ToArray();
             clone.EndPointsBoundingBoxOuter = EndPointsBoundingBoxOuter.Select(p => p.Clone()).ToArray();
-            clone.EndPointsComponentInner = EndPointsComponentInner.Select(p => p.Clone()).ToArray();
-            clone.EndPointsComponentOuter = EndPointsComponentOuter.Select(p => p.Clone()).ToArray();
+            clone.EndPointsComponentInner = EndPointsComponentInner?.Select(p => p.Clone()).ToArray();
+            clone.EndPointsComponentOuter = EndPointsComponentOuter?.Select(p => p.Clone()).ToArray();
             clone.PushedPosition = PushedPosition.Select(p => p.Clone()).ToArray();
             clone.EndPointsDelta = EndPointsDelta.Select(p => p.Clone()).ToArray();
             clone.PiecesByVolatileID = PiecesByVolatileID.ToArray();
             clone.ContainerByVolatileID = ContainerByVolatileID.ToArray();
-            if (MeritType == MeritFunctionType.MMPSXY)
+            if (Configuration.MeritType == MeritFunctionType.MMPSXY)
             {
                 clone.PackingMaxX = PackingMaxX.ToArray();
                 clone.PackingMaxY = PackingMaxY.ToArray();
             }
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 clone.ResidualSpace = ResidualSpace.Select(c => c.Clone()).ToList();
             }
             clone.EPCounter = EPCounter;
             clone.LevelPackingC = LevelPackingC;
+            clone.ContainerOrderSupply = new ContainerOrderSupply(clone.InstanceLinked.Containers, clone.InstanceLinked.Pieces, Configuration.ContainerOrderInit, Configuration.ContainerOrderReorder, Configuration.ContainerOpen, clone._random);
             // Copy construction information
             if (ConstructionContainerOrder != null)
                 clone.ConstructionContainerOrder = ConstructionContainerOrder.ToList();
             if (ConstructionOrientationOrder != null)
                 clone.ConstructionOrientationOrder = ConstructionOrientationOrder.Select(p => p.ToArray()).ToArray();
+            clone.Objective = Objective.Clone(clone);
             // Return it
             return clone;
         }
@@ -296,29 +308,14 @@ namespace SC.ObjectModel
         #region Auxiliary information
 
         /// <summary>
-        /// The merit-function type in use
-        /// </summary>
-        private MeritFunctionType MeritType = MeritFunctionType.None;
-
-        /// <summary>
-        /// Indicates whether we look at the pieces in all available detail or only at their bounding boxes
-        /// </summary>
-        private bool TetrisMode = true;
-
-        /// <summary>
         /// Fast access field for exploited volume
         /// </summary>
-        public double ExploitedVolume;
+        public Objective Objective { get; private set; }
 
         /// <summary>
-        /// Fast accessible information about the exploited volume per container
+        /// The handler for container sorting.
         /// </summary>
-        public double[] ExploitedVolumeOfContainers = null;
-        
-        /// <summary>
-        /// Fast accessible information about the loaded weight per container
-        /// </summary>
-        public double[] ExploitedWeightOfContainers = null;
+        public ContainerOrderSupply ContainerOrderSupply { get; set; } = null;
 
         /// <summary>
         /// Fast accessible information about the number of items with the correpsonding material per container
@@ -396,6 +393,11 @@ namespace SC.ObjectModel
         private double LevelPackingC = 0;
 
         /// <summary>
+        /// Keeps track of information on container level.
+        /// </summary>
+        public ContainerInfo[] ContainerInfos = null;
+
+        /// <summary>
         /// Initiates the meta-information for the underlying instance
         /// </summary>
         private void InitMetaInfo()
@@ -425,14 +427,17 @@ namespace SC.ObjectModel
                 ContainerByVolatileID[containerID] = container;
                 container.VolatileID = containerID++;
             }
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 ResidualSpace = new List<MeshPoint>();
             }
+            ContainerInfos = new ContainerInfo[InstanceLinked.Containers.Count];
+            foreach (var container in InstanceLinked.Containers)
+                ContainerInfos[container.VolatileID] = new ContainerInfo(this, container);
             // Generate default EPs
             GenerateDefaultEPs();
             // Generate merit-info
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.None:
                 case MeritFunctionType.MFV:
@@ -466,7 +471,7 @@ namespace SC.ObjectModel
                 PushedPosition[i] = new MeshPoint();
                 EndPointsDelta[i] = new MeshPoint();
             }
-            if (TetrisMode)
+            if (Configuration.Tetris)
             {
                 EndPointsComponentInner = new MeshPoint[componentID];
                 EndPointsComponentOuter = new MeshPoint[componentID];
@@ -605,7 +610,7 @@ namespace SC.ObjectModel
         /// <param name="orientation">The orientation of the piece.</param>
         private void GenerateEPsForPiece(Container container, Piece piece, MeshPoint position, int orientation)
         {
-            if (TetrisMode)
+            if (Configuration.Tetris)
             {
                 foreach (var component in piece[orientation].Components)
                 {
@@ -726,7 +731,7 @@ namespace SC.ObjectModel
                     EndPointsBoundingBoxOuter[virtualPiece.VolatileID].Y = virtualPiece.FixedPosition.Y + virtualPiece[virtualPiece.FixedOrientation].BoundingBox[8].Y;
                     EndPointsBoundingBoxInner[virtualPiece.VolatileID].Z = virtualPiece.FixedPosition.Z;
                     EndPointsBoundingBoxOuter[virtualPiece.VolatileID].Z = virtualPiece.FixedPosition.Z + virtualPiece[virtualPiece.FixedOrientation].BoundingBox[8].Z;
-                    if (TetrisMode)
+                    if (Configuration.Tetris)
                     {
                         foreach (var component in virtualPiece[virtualPiece.FixedOrientation].Components)
                         {
@@ -766,7 +771,7 @@ namespace SC.ObjectModel
         /// <param name="eps">The EPs to add</param>
         public void AddEPs(Container container, IEnumerable<MeshPoint> eps)
         {
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 MeshPoint[] epArray = eps.ToArray();
                 foreach (var ep in epArray)
@@ -789,7 +794,7 @@ namespace SC.ObjectModel
         /// <param name="ep">The EP to add</param>
         public void AddEP(Container container, MeshPoint ep)
         {
-            if (MeritType == MeritFunctionType.MRSU)
+            if (Configuration.MeritType == MeritFunctionType.MRSU)
             {
                 ep.VolatileID = EPCounter++;
                 ResidualSpace.Add(new MeshPoint() { X = container.Mesh.Length - ep.X, Y = container.Mesh.Width - ep.Y, Z = container.Mesh.Height - ep.Z });
@@ -850,7 +855,7 @@ namespace SC.ObjectModel
                 }
             }
             // Update meta-info
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.MMPSXY:
                 case MeritFunctionType.LPXY:
@@ -934,7 +939,7 @@ namespace SC.ObjectModel
                 }
             }
             // Update meta-info
-            switch (MeritType)
+            switch (Configuration.MeritType)
             {
                 case MeritFunctionType.MMPSXY:
                 case MeritFunctionType.LPXY:
@@ -1101,12 +1106,20 @@ namespace SC.ObjectModel
         /// <returns>The score of the allocation</returns>
         public double ScorePieceAllocation(Container container, VariablePiece piece, int orientation, MeshPoint position)
         {
-            switch (MeritType)
+            var score = 0.0;
+            if (ContainerOrderSupply.OpenContainers.Count > 0 && ContainerOrderSupply.OpenContainers.Contains(container))
             {
-                case MeritFunctionType.MFV: return container.Mesh.Volume - ExploitedVolumeOfContainers[container.VolatileID] - piece.Volume;
+                score -= ContainerOrderSupply.OpenContainerBigM;
+            }
+            switch (Configuration.MeritType)
+            {
+                case MeritFunctionType.MFV:
+                    {
+                        score += container.Mesh.Volume - ContainerInfos[container.VolatileID].VolumeContained - piece.Volume;
+                    }
+                    break;
                 case MeritFunctionType.MMPSXY:
                     {
-                        double score = 0.0;
                         if (position.X + piece[orientation].BoundingBox.Length > PackingMaxX[container.VolatileID])
                         {
                             score += position.X + piece[orientation].BoundingBox.Length - PackingMaxX[container.VolatileID];
@@ -1115,11 +1128,10 @@ namespace SC.ObjectModel
                         {
                             score += position.Y + piece[orientation].BoundingBox.Width - PackingMaxY[container.VolatileID];
                         }
-                        return score;
                     }
+                    break;
                 case MeritFunctionType.LPXY:
                     {
-                        double score = 0.0;
                         if (position.X + piece[orientation].BoundingBox.Length > PackingMaxX[container.VolatileID])
                         {
                             score += (position.X + piece[orientation].BoundingBox.Length - PackingMaxX[container.VolatileID]) * LevelPackingC;
@@ -1136,33 +1148,47 @@ namespace SC.ObjectModel
                         {
                             score += PackingMaxY[container.VolatileID] - position.Y + piece[orientation].BoundingBox.Width;
                         }
-                        return score;
                     }
+                    break;
                 case MeritFunctionType.MRSU:
                     {
-                        return
-                            ResidualSpace[position.VolatileID].X - piece[orientation].BoundingBox.Length +
+                        score += ResidualSpace[position.VolatileID].X - piece[orientation].BoundingBox.Length +
                             ResidualSpace[position.VolatileID].Y - piece[orientation].BoundingBox.Width +
                             ResidualSpace[position.VolatileID].Z - piece[orientation].BoundingBox.Height;
                     }
+                    break;
                 case MeritFunctionType.MEDXYZ:
                     {
-                        return
-                            Math.Sqrt(
+                        score += Math.Sqrt(
                                 Math.Pow(position.X + piece[orientation].BoundingBox.Length, 2) +
                                 Math.Pow(position.Y + piece[orientation].BoundingBox.Width, 2) +
                                 Math.Pow(position.Z + piece[orientation].BoundingBox.Height, 2));
                     }
+                    break;
                 case MeritFunctionType.MEDXY:
                     {
-                        return
-                            Math.Sqrt(
+                        score += Math.Sqrt(
                                 Math.Pow(position.X + piece[orientation].BoundingBox.Length, 2) +
                                 Math.Pow(position.Y + piece[orientation].BoundingBox.Width, 2));
                     }
+                    break;
+                case MeritFunctionType.H:
+                    {
+                        score += position.Z + piece[orientation].BoundingBox.Height;
+                    }
+                    break;
+                case MeritFunctionType.RHRC:
+                    {
+                        var newHeight = Math.Max(position.Z + piece[orientation].BoundingBox.Height, ContainerInfos[container.VolatileID].PackingHeight);
+                        var newVolume = ContainerInfos[container.VolatileID].VolumeContained + piece.Volume;
+                        score += newVolume / (container.Mesh.Length * container.Mesh.Width * newHeight) + ContainerInfos[container.VolatileID].NumberOfPieces > 0 ? 1 : 0;
+                    }
+                    break;
                 case MeritFunctionType.None:
-                default: return 0.0;
+                default:
+                    break;
             }
+            return score;
         }
 
         #endregion
@@ -1507,9 +1533,12 @@ namespace SC.ObjectModel
                             Width = com.Width,
                             Height = com.Height,
                         }).ToList(),
+                        Data = p.Data,
                     }).ToList(),
+                    Data = c.Data,
                 }).ToList(),
                 Offload = OffloadPieces.Select(p => p.ID).ToList(),
+                Data = InstanceLinked.Data,
             };
 
             // Return the simplified representation
