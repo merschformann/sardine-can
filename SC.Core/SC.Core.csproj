@@ -8,6 +8,8 @@
     <Authors>Marius Merschformann</Authors>
     <Description>Sardine Can is a humble three-dimensional packing solver library.</Description>
     <PackageTags>packing;solver;optimization;3d;bin packing;container loading</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +17,10 @@
     <None Remove="qconvex.exe" />
     <None Remove="qhalf" />
     <None Remove="qhalf.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
