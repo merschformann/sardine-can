@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using System.Xml.Serialization;
-using SC.Heuristics;
-using SC.Heuristics.PrimalHeuristic;
-using SC.ObjectModel;
-using SC.ObjectModel.Additionals;
-using SC.ObjectModel.Elements;
-using SC.ObjectModel.Generator;
-using SC.ObjectModel.Interfaces;
+using SC.Core.Heuristics;
+using SC.Core.Heuristics.PrimalHeuristic;
+using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Additionals;
+using SC.Core.ObjectModel.Elements;
+using SC.Core.ObjectModel.Generator;
+using SC.Core.ObjectModel.Interfaces;
 using SC.Toolbox;
-using SC.Linear;
+using SC.Core.Linear;
 using HelixToolkit;
 using HelixToolkit.Wpf;
 using System;
@@ -33,17 +33,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Button = System.Windows.Controls.Button;
 using Color = System.Windows.Media.Color;
-using Container = SC.ObjectModel.Elements.Container;
+using Container = SC.Core.ObjectModel.Elements.Container;
 using MessageBox = System.Windows.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Point = System.Windows.Point;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using TextBox = System.Windows.Controls.TextBox;
 using Timer = System.Threading.Timer;
-using SC.ObjectModel.Configuration;
+using SC.Core.ObjectModel.Configuration;
 using System.Globalization;
 using System.IO.Enumeration;
-using SC.ObjectModel.IO;
+using SC.Core.ObjectModel.IO;
 
 namespace SC.GUI
 {

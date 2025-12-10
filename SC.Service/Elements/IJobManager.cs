@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using SC.ObjectModel.IO.Json;
+using SC.Core.ObjectModel.IO.Json;
 using SC.Service.Elements.IO;
 
 namespace SC.Service.Elements

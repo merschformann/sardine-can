@@ -1,12 +1,12 @@
 ﻿using CommandLine;
-using SC.ObjectModel;
-using SC.ObjectModel.IO;
+using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.IO;
 using System;
 using System.IO;
 using SC.CLI;
-using SC.ObjectModel.Additionals;
-using SC.ObjectModel.Configuration;
-using SC.ObjectModel.IO.Json;
+using SC.Core.ObjectModel.Additionals;
+using SC.Core.ObjectModel.Configuration;
+using SC.Core.ObjectModel.IO.Json;
 
 namespace SC.CLI
 {

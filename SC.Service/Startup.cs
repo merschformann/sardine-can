@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using SC.ObjectModel.IO;
+using SC.Core.ObjectModel.IO;
 using SC.Service.Elements.IO;
 using Swashbuckle.AspNetCore.Filters;
 

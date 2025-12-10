@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using SC.CLI;
-using SC.ObjectModel;
-using SC.ObjectModel.Additionals;
-using SC.ObjectModel.IO.Json;
+using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Additionals;
+using SC.Core.ObjectModel.IO.Json;
 using SC.Service.Elements.IO;
 using SC.Toolbox;
 using System;

@@ -14,9 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SC.Heuristics\SC.Heuristics.csproj" />
-    <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
-    <ProjectReference Include="..\SC.Linear\SC.Linear.csproj" />
+    <ProjectReference Include="..\SC.Core\SC.Core.csproj" />
   </ItemGroup>
 
 </Project>

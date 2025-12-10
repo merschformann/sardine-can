@@ -1,6 +1,6 @@
-﻿using SC.ObjectModel;
-using SC.ObjectModel.Additionals;
-using SC.ObjectModel.Elements;
+﻿using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Additionals;
+using SC.Core.ObjectModel.Elements;
 using HelixToolkit.Wpf;
 using System;
 using System.Collections.Generic;

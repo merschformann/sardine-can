@@ -34,10 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SC.Heuristics\SC.Heuristics.csproj" />
-    <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
+    <ProjectReference Include="..\SC.Core\SC.Core.csproj" />
     <ProjectReference Include="..\SC.Toolbox\SC.Toolbox.csproj" />
-    <ProjectReference Include="..\SC.Linear\SC.Linear.csproj" />
   </ItemGroup>
 
   <ItemGroup>

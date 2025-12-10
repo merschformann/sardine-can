@@ -2,9 +2,9 @@ using Newtonsoft.Json.Linq;
 using FluentAssertions.Json;
 using Newtonsoft.Json;
 using SC.CLI;
-using SC.ObjectModel;
-using SC.ObjectModel.Configuration;
-using SC.ObjectModel.IO;
+using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Configuration;
+using SC.Core.ObjectModel.IO;
 
 
 namespace SC.Tests;

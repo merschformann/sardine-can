@@ -1,8 +1,8 @@
-﻿using SC.ObjectModel;
-using SC.ObjectModel.Configuration;
-using SC.ObjectModel.Elements;
-using SC.ObjectModel.IO;
-using SC.ObjectModel.Rules;
+﻿using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Configuration;
+using SC.Core.ObjectModel.Elements;
+using SC.Core.ObjectModel.IO;
+using SC.Core.ObjectModel.Rules;
 using SC.Service.Elements.IO;
 using System;
 using System.Collections.Generic;

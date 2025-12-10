@@ -1,5 +1,5 @@
 ﻿using SC.CLI;
-using SC.ObjectModel.Additionals;
+using SC.Core.ObjectModel.Additionals;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

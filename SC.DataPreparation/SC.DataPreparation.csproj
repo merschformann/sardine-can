@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SC.CLI\SC.CLI.csproj" />
-    <ProjectReference Include="..\SC.ObjectModel\SC.ObjectModel.csproj" />
+    <ProjectReference Include="..\SC.Core\SC.Core.csproj" />
   </ItemGroup>
   
 </Project>
