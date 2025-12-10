@@ -751,7 +751,7 @@ namespace SC.GUI
                             Goal = goal,
                             SolverToUse = solverToUse
                         };
-                        method = new Linear.LinearModelFLB(instance, configuration);
+                        method = new SC.Core.Linear.LinearModelFLB(instance, configuration);
                     }
                     break;
                 case MethodType.TetrisStyle:
@@ -770,7 +770,7 @@ namespace SC.GUI
                             Goal = goal,
                             SolverToUse = solverToUse
                         };
-                        method = new Linear.LinearModelTetris(instance, configuration);
+                        method = new SC.Core.Linear.LinearModelTetris(instance, configuration);
                     }
                     break;
                 case MethodType.HybridStyle:
@@ -789,7 +789,7 @@ namespace SC.GUI
                             Goal = goal,
                             SolverToUse = solverToUse
                         };
-                        method = new Linear.LinearModelHybrid(instance, configuration);
+                        method = new SC.Core.Linear.LinearModelHybrid(instance, configuration);
                     }
                     break;
                 case MethodType.SpaceIndexed:
