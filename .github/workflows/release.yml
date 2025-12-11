@@ -127,4 +127,4 @@ jobs:
         run: |
           echo "Creating NuGet package for version ${{ env.VERSION }}"
           dotnet pack -c Release -o ./nupkg SC.Core/SC.Core.csproj
-          dotnet nuget push ./nupkg/SC.Core.${{ env.VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push ./nupkg/SardineCan.Core.${{ env.VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
