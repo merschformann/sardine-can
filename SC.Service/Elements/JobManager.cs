@@ -4,7 +4,7 @@ using SC.Core.ObjectModel;
 using SC.Core.ObjectModel.Additionals;
 using SC.Core.ObjectModel.IO.Json;
 using SC.Service.Elements.IO;
-using SC.Toolbox;
+using SC.Core.Toolbox;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -34,7 +34,7 @@ namespace SC.Service.Elements
         {
             // READ CONFIG - env variables take precedence over config vars
             // Read max threads configuration
-            var threads = configuration.GetValue(CONFIG_MAX_THREADCOUNT, 1) ;
+            var threads = configuration.GetValue(CONFIG_MAX_THREADCOUNT, 1);
             var envThreadsGiven = int.TryParse(Environment.GetEnvironmentVariable("MAX_THREADS"), out var envThreads);
             if (envThreadsGiven)
                 threads = envThreads;
@@ -360,7 +360,7 @@ namespace SC.Service.Elements
 
             // If we can't access the waiting position, quit
             if (!mine) return;
-            
+
             // Get next job
             var nextJob = Fetch();
             // Put it in waiting position, if there is another job

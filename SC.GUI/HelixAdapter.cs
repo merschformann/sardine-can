@@ -1,6 +1,7 @@
 ﻿using SC.Core.ObjectModel;
 using SC.Core.ObjectModel.Additionals;
 using SC.Core.ObjectModel.Elements;
+using SC.Core.Toolbox;
 using HelixToolkit.Wpf;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using SC.Toolbox;
 
 namespace SC.GUI
 {
@@ -544,7 +544,8 @@ namespace SC.GUI
                     Width = width,
                     Height = height
                 };
-            };
+            }
+            ;
             // Make bottom frame
             model.Children.Add(makeEdge(new Point3D(x + mesh.Length / 2.0, y, z), mesh.Length, thickness, thickness));
             model.Children.Add(makeEdge(new Point3D(x + mesh.Length / 2.0, y + mesh.Width, z), mesh.Length, thickness, thickness));

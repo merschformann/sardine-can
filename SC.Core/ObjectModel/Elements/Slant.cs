@@ -1,6 +1,6 @@
 ﻿using SC.Core.ObjectModel.Additionals;
 using SC.Core.ObjectModel.Interfaces;
-using SC.Toolbox;
+using SC.Core.Toolbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -149,13 +149,13 @@ namespace SC.Core.ObjectModel.Elements
         /// <returns>Double array of length 4 with coefficients. First three containing the coordinates and last index containing the offset value.</returns>
         public double[] GetCoefficientsForQHull(MeshPoint containerCenterPoint)
         {
-            
+
             double[] coefficients = new double[4];
-            
-            coefficients[0] = (this.NormalVector.X );
-            coefficients[1] = (this.NormalVector.Y );
-            coefficients[2] = (this.NormalVector.Z );
-            coefficients[3] = (-1) * ((this.NormalVector.X ) * (this.Position.X + 1.0) + (this.NormalVector.Y ) * (this.Position.Y + 1.0) + (this.NormalVector.Z ) * (this.Position.Z + 1.0));
+
+            coefficients[0] = (this.NormalVector.X);
+            coefficients[1] = (this.NormalVector.Y);
+            coefficients[2] = (this.NormalVector.Z);
+            coefficients[3] = (-1) * ((this.NormalVector.X) * (this.Position.X + 1.0) + (this.NormalVector.Y) * (this.Position.Y + 1.0) + (this.NormalVector.Z) * (this.Position.Z + 1.0));
 
             return coefficients;
         }

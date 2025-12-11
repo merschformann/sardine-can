@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SC.Toolbox
+namespace SC.Core.Toolbox
 {
     /// <summary>
     /// Extensions for the basic list class.

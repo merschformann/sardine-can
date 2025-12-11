@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SC.Toolbox
+namespace SC.Core.Toolbox
 {
     /// <summary>
     /// Matrix class providing multiplication.
@@ -205,7 +205,7 @@ namespace SC.Toolbox
         /// <summary>
         /// Generates all rotation matrices.
         /// </summary>
-        private static (List<Matrix> rotMatrices,  List<(int alpha, int beta, int gamma)>) GenerateRotationMatrices()
+        private static (List<Matrix> rotMatrices, List<(int alpha, int beta, int gamma)>) GenerateRotationMatrices()
         {
             // Generate unique rotations by turning objects on all their sides around the z-axis
             var sideAngles = new (int alpha, int beta)[]

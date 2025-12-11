@@ -1,6 +1,6 @@
 ﻿using SC.Core.ObjectModel.Additionals;
 using SC.Core.ObjectModel.Interfaces;
-using SC.Toolbox;
+using SC.Core.Toolbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +76,7 @@ namespace SC.Core.ObjectModel.Elements
             {
                 MeshPoint centerpoint = new MeshPoint();
                 centerpoint.X = (this.Length / 2.0);
-                centerpoint.Y = (this.Width / 2.0) ;
+                centerpoint.Y = (this.Width / 2.0);
                 centerpoint.Z = (this.Height / 2.0);
                 return centerpoint;
             }
@@ -86,7 +86,7 @@ namespace SC.Core.ObjectModel.Elements
         /// Gets the halfspaces to form the basic cube
         /// </summary>
         /// <returns></returns>
-        public List<double[]> GetHalfspacesForQHull(MeshPoint fixedPosition=null)
+        public List<double[]> GetHalfspacesForQHull(MeshPoint fixedPosition = null)
         {
             List<double[]> halfspaces = new List<double[]>();
             double xShift = 1.0;
@@ -98,10 +98,10 @@ namespace SC.Core.ObjectModel.Elements
                 yShift += fixedPosition.Y;
                 zShift += fixedPosition.Z;
             }
-            halfspaces.Add(new double[4] {-1 , 0 , 0 , xShift}); //LB X
+            halfspaces.Add(new double[4] { -1, 0, 0, xShift }); //LB X
             halfspaces.Add(new double[4] { 0, -1, 0, yShift }); //LB Y
-            halfspaces.Add(new double[4] { 0, 0, -1, zShift}); //LB Z
-            halfspaces.Add(new double[4] { 1, 0, 0, (-1.0 * (this.Length + xShift))}); //UB X
+            halfspaces.Add(new double[4] { 0, 0, -1, zShift }); //LB Z
+            halfspaces.Add(new double[4] { 1, 0, 0, (-1.0 * (this.Length + xShift)) }); //UB X
             halfspaces.Add(new double[4] { 0, 1, 0, (-1.0 * (this.Width + yShift)) }); //UB Y
             halfspaces.Add(new double[4] { 0, 0, 1, (-1.0 * (this.Height + zShift)) }); //UB Z;
             return halfspaces;

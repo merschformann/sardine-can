@@ -1,6 +1,6 @@
 ﻿using SC.Core.ObjectModel.Additionals;
 using SC.Core.ObjectModel.Interfaces;
-using SC.Toolbox;
+using SC.Core.Toolbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +83,7 @@ namespace SC.Core.ObjectModel.Elements
         /// <returns>The result of the comparison. <code>true</code> if equal, <code>false</code> otherwise</returns>
         public static MeshPoint operator +(MeshPoint p1, MeshPoint p2)
         {
-            var sum = new MeshPoint{ X = p1.X + p2.X, Y = p1.Y + p2.Y, Z = p1.Z + p2.Z};
+            var sum = new MeshPoint { X = p1.X + p2.X, Y = p1.Y + p2.Y, Z = p1.Z + p2.Z };
             return sum;
         }
 
