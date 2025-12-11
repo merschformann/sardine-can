@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SC.Toolbox
+namespace SC.Core.Toolbox
 {
     /// <summary>
     /// Provdides an equality comparer for object arrays

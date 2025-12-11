@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SC.Toolbox
+namespace SC.Core.Toolbox
 {
     /// <summary>
     /// Contains auxiliary CSV I/O functionality.

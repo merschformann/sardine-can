@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SC.Toolbox
+namespace SC.Core.Toolbox
 {
     public static class EnumerableExtensions
     {

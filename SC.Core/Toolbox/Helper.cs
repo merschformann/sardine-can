@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SC.Toolbox
+namespace SC.Core.Toolbox
 {
     /// <summary>
     /// Contains simple helper methods to use in various situations

@@ -1,5 +1,5 @@
 ﻿using SC.Core.ObjectModel.Additionals;
-using SC.Toolbox;
+using SC.Core.Toolbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +43,7 @@ namespace SC.GUI
         /// <summary>
         /// A mapping for brushes to use when drawing hazardous material labels on objects
         /// </summary>
-        public static Dictionary<MaterialClassification, ImageBrush> HAZ_MAT_BRUSHES = new Dictionary<MaterialClassification, ImageBrush>() 
+        public static Dictionary<MaterialClassification, ImageBrush> HAZ_MAT_BRUSHES = new Dictionary<MaterialClassification, ImageBrush>()
         {
             { MaterialClassification.Default, null },
             { MaterialClassification.Explosive, null /* CreateBrushFromBitmap(Properties.Resources.HazMat_1_1_Explosives) */ },
@@ -57,7 +57,7 @@ namespace SC.GUI
         /// <summary>
         /// A mapping for brushes to use when drawing hazardous material labels on objects
         /// </summary>
-        public static Dictionary<HandlingInstructions, ImageBrush> HANDLING_BRUSHES = new Dictionary<HandlingInstructions, ImageBrush>() 
+        public static Dictionary<HandlingInstructions, ImageBrush> HANDLING_BRUSHES = new Dictionary<HandlingInstructions, ImageBrush>()
         {
             { HandlingInstructions.Default, null },
             { HandlingInstructions.ThisSideUp, null /* CreateBrushFromBitmap(Properties.Resources.Handling_This_side_up) */ },
