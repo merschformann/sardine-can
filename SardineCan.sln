@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Core", "SC.Core\SC.Core.csproj", "{DDCEB4E2-DDC6-4B9D-9506-EEC2495576ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.DataPreparation", "SC.DataPreparation\SC.DataPreparation.csproj", "{F5084E6D-572D-4D4C-9690-DD2E2A903555}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.GUI", "SC.GUI\SC.GUI.csproj", "{BB59B8FD-2409-4897-A0DC-9C5BFE232143}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Playground", "SC.Playground\SC.Playground.csproj", "{42583E66-22FE-4B19-9CD1-88419DA26C48}"
