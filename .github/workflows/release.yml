@@ -105,6 +105,11 @@ jobs:
         with:
           ref: ${{ inputs.VERSION }}
 
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
       - name: Get version
         run: |
           echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
