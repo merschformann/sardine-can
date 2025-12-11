@@ -1,4 +1,4 @@
-﻿using SC.ObjectModel.Additionals;
+﻿using SC.Core.ObjectModel.Additionals;
 using SC.Toolbox;
 using System;
 using System.Collections.Generic;

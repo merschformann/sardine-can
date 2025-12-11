@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using SC.ObjectModel.IO.Json;
+using SC.Core.ObjectModel.IO.Json;
 using System.Text.Json.Serialization;
-using SC.ObjectModel;
-using SC.ObjectModel.Configuration;
+using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Configuration;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace SC.Service.Elements.IO

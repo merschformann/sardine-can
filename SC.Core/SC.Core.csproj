@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Version>1.1.2</Version>
+    <SelfContained>true</SelfContained>
+    <PackageId>SardineCan.Core</PackageId>
+    <Authors>Marius Merschformann</Authors>
+    <Description>Sardine Can is a humble three-dimensional packing solver library.</Description>
+    <PackageTags>packing;solver;optimization;3d;bin packing;container loading</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="qconvex" />
+    <None Remove="qconvex.exe" />
+    <None Remove="qhalf" />
+    <None Remove="qhalf.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Atto.LinearWrap" Version="0.1.8" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SC.Toolbox\SC.Toolbox.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="qconvex">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="qconvex.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="qhalf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="qhalf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

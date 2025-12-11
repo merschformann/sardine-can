@@ -1,12 +1,12 @@
-﻿using SC.Heuristics.PrimalHeuristic;
-using SC.ObjectModel;
-using SC.ObjectModel.Additionals;
-using SC.ObjectModel.Configuration;
-using SC.ObjectModel.Elements;
-using SC.ObjectModel.Generator;
-using SC.ObjectModel.Interfaces;
+﻿using SC.Core.Heuristics.PrimalHeuristic;
+using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Additionals;
+using SC.Core.ObjectModel.Configuration;
+using SC.Core.ObjectModel.Elements;
+using SC.Core.ObjectModel.Generator;
+using SC.Core.ObjectModel.Interfaces;
 using SC.Playground.Lib;
-using SC.Linear;
+using SC.Core.Linear;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using SC.ObjectModel.IO;
+using SC.Core.ObjectModel.IO;
 
 namespace SC.Playground
 {

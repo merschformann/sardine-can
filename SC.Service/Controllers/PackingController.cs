@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SC.ObjectModel.IO.Json;
+using SC.Core.ObjectModel.IO.Json;
 using SC.Service.Elements;
 using SC.Service.Elements.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SC.ObjectModel.IO;
+using SC.Core.ObjectModel.IO;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace SC.Service.Controllers
@@ -65,7 +65,7 @@ namespace SC.Service.Controllers
             int calcId = _jobManager.GetNextId();
             var calc = new Calculation(calcId, instance, null);
             if (calc.Problem.Configuration == null) // Set a default config, if none is given
-                calc.Problem.Configuration = new ObjectModel.Configuration.Configuration(ObjectModel.MethodType.ExtremePointInsertion, false);
+                calc.Problem.Configuration = new Core.ObjectModel.Configuration.Configuration(Core.ObjectModel.MethodType.ExtremePointInsertion, false);
             calc.Status.ProblemUrl = $"{SUB_CALCULATION_PROBLEMS}/{calcId}";
             calc.Status.StatusUrl = $"{SUB_CALCULATION_PROBLEMS}/{calcId}/status";
             calc.Status.SolutionUrl = $"{SUB_CALCULATION_PROBLEMS}/{calcId}/solution";
@@ -76,7 +76,7 @@ namespace SC.Service.Controllers
             return Ok(calc.Status);
         }
 
-        [HttpGet(SUB_CALCULATION_PROBLEMS+"/status")]
+        [HttpGet(SUB_CALCULATION_PROBLEMS + "/status")]
         public ActionResult<List<JsonStatus>> StatusGet()
         {
             // Get status of all calculations

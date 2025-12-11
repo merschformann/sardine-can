@@ -1,9 +1,9 @@
-﻿using SC.Heuristics.PrimalHeuristic;
-using SC.ObjectModel;
-using SC.ObjectModel.Additionals;
-using SC.ObjectModel.Configuration;
-using SC.ObjectModel.Interfaces;
-using SC.Linear;
+﻿using SC.Core.Heuristics.PrimalHeuristic;
+using SC.Core.ObjectModel;
+using SC.Core.ObjectModel.Additionals;
+using SC.Core.ObjectModel.Configuration;
+using SC.Core.ObjectModel.Interfaces;
+using SC.Core.Linear;
 using System;
 using System.Collections.Generic;
 using System.IO;

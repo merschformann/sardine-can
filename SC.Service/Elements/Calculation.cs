@@ -1,4 +1,4 @@
-﻿using SC.ObjectModel.IO.Json;
+﻿using SC.Core.ObjectModel.IO.Json;
 using SC.Service.Elements.IO;
 using Microsoft.Extensions.Logging;
 using System;

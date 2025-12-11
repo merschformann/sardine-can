@@ -2,93 +2,120 @@ name: release
 run-name: Release ${{ inputs.VERSION }} by @${{ github.actor }} from ${{ github.ref_name }}
 
 on:
-    workflow_dispatch:
-        inputs:
-            VERSION:
-                description: "The version to release (e.g. 1.0.0)"
-                required: true
+  workflow_dispatch:
+    inputs:
+      VERSION:
+        description: "The version to release (e.g. 1.0.0)"
+        required: true
+
+permissions:
+  contents: read
 
 jobs:
-    release:
-        runs-on: ubuntu-latest
-        env:
-            VERSION: ${{ inputs.VERSION }}
-            GH_TOKEN: ${{ github.token }}
-            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        permissions:
-            contents: write
-        steps:
-            - name: configure git with the bot credentials
-              run: |
-                  mkdir -p ~/.ssh
-                  ssh-keyscan github.com >> ~/.ssh/known_hosts
-                  ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-                  ssh-add - <<< "${{ secrets.BOT_SSH_KEY }}"
+  release:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.VERSION }}
+      GH_TOKEN: ${{ github.token }}
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+    permissions:
+      contents: write
+    steps:
+      - name: configure git with the bot credentials
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.BOT_SSH_KEY }}"
 
-                  echo "${{ secrets.BOT_SIGNING_KEY }}" > ~/.ssh/signing.key
-                  chmod 600 ~/.ssh/signing.key
+          echo "${{ secrets.BOT_SIGNING_KEY }}" > ~/.ssh/signing.key
+          chmod 600 ~/.ssh/signing.key
 
-                  git config --global user.name "Merschbotmann"
-                  git config --global user.email "bot.merschformann@gmail.com"
-                  git config --global gpg.format ssh
-                  git config --global user.signingkey ~/.ssh/signing.key
+          git config --global user.name "Merschbotmann"
+          git config --global user.email "bot.merschformann@gmail.com"
+          git config --global gpg.format ssh
+          git config --global user.signingkey ~/.ssh/signing.key
 
-                  git clone git@github.com:merschformann/sardine-can.git
+          git clone git@github.com:merschformann/sardine-can.git
 
-                  cd sardine-can
-                  git checkout ${{ github.ref_name }}
+          cd sardine-can
+          git checkout ${{ github.ref_name }}
 
-                  git rev-parse --short HEAD
+          git rev-parse --short HEAD
 
-            - name: bump version in project
-              run: |
-                  python Material/Scripts/release.py --version $VERSION
-              working-directory: ./sardine-can
+      - name: bump version in project
+        run: |
+          python Material/Scripts/release.py --version $VERSION
+        working-directory: ./sardine-can
 
-            - name: commit version bump
-              run: |
-                  git commit -am "Bumping version to $VERSION"
-                  git push origin ${{ github.ref_name }}
-              working-directory: ./sardine-can
+      - name: commit version bump
+        run: |
+          git commit -am "Bumping version to $VERSION"
+          git push origin ${{ github.ref_name }}
+        working-directory: ./sardine-can
 
-            - name: push release tag
-              run: |
-                  git tag $VERSION
-                  git push origin $VERSION
-              working-directory: ./sardine-can
+      - name: push release tag
+        run: |
+          git tag $VERSION
+          git push origin $VERSION
+        working-directory: ./sardine-can
 
-            - name: create release
-              run: |
-                  gh release create $VERSION \
-                  --verify-tag \
-                  --generate-notes \
-                  --title $VERSION
-              working-directory: ./sardine-can
+      - name: create release
+        run: |
+          gh release create $VERSION \
+          --verify-tag \
+          --generate-notes \
+          --title $VERSION
+        working-directory: ./sardine-can
 
-    docker-image:
-        runs-on: ubuntu-24.04
-        needs: release
+  docker-image:
+    runs-on: ubuntu-24.04
+    needs: release
 
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  ref: ${{ inputs.VERSION }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.VERSION }}
 
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-            - name: Get version
-              run: |
-                  echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
+      - name: Get version
+        run: |
+          echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
 
-            - name: Build the SardineCan Docker image
-              run: |
-                  echo "Building SardineCan docker in ${{ env.VERSION }}"
-                  echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-                  export LATEST_TAG="ghcr.io/merschformann/sardinecan:latest"
-                  export VERSION_TAG="ghcr.io/merschformann/sardinecan:${{ env.VERSION }}"
-                  docker buildx build --platform linux/amd64,linux/arm64 --push -t $LATEST_TAG -t $VERSION_TAG -f Dockerfile ..
-              working-directory: ./SC.Service
+      - name: Build the SardineCan Docker image
+        run: |
+          echo "Building SardineCan docker in ${{ env.VERSION }}"
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          export LATEST_TAG="ghcr.io/merschformann/sardinecan:latest"
+          export VERSION_TAG="ghcr.io/merschformann/sardinecan:${{ env.VERSION }}"
+          docker buildx build --platform linux/amd64,linux/arm64 --push -t $LATEST_TAG -t $VERSION_TAG -f Dockerfile ..
+        working-directory: ./SC.Service
+
+  nuget-package:
+    runs-on: ubuntu-24.04
+    needs: release
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.VERSION }}
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Get version
+        run: |
+          echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
+
+      - name: Create NuGet package and publish to NuGet.org
+        run: |
+          echo "Creating NuGet package for version ${{ env.VERSION }}"
+          dotnet pack -c Release -o ./nupkg SC.Core/SC.Core.csproj
+          dotnet nuget push ./nupkg/SC.Core.${{ env.VERSION }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

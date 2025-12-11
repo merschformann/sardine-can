@@ -2,23 +2,26 @@ name: build
 
 on: [push]
 
-jobs:
-    build:
-        name: build & test
-        runs-on: windows-latest
-        strategy:
-            matrix:
-                dotnet-version: ["8.0.x"]
+permissions:
+  contents: read
 
-        steps:
-            - uses: actions/checkout@v4
-            - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-              uses: actions/setup-dotnet@v4.1.0
-              with:
-                  dotnet-version: ${{ matrix.dotnet-version }}
-            - name: Install dependencies
-              run: dotnet restore
-            - name: Build
-              run: dotnet build --configuration Release --no-restore
-            - name: Test
-              run: dotnet test --no-restore --verbosity normal
+jobs:
+  build:
+    name: build & test
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        dotnet-version: ["8.0.x"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
