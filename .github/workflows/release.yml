@@ -72,6 +72,10 @@ jobs:
     runs-on: ubuntu-24.04
     needs: release
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - uses: actions/checkout@v6
         with:
