@@ -1537,7 +1537,20 @@ namespace SC.Core.ObjectModel
                     }).ToList(),
                     Data = c.Data,
                 }).ToList(),
-                Offload = OffloadPieces.Select(p => p.ID).ToList(),
+                Offload = OffloadPieces.Select(p => new JsonOffload()
+                {
+                    Piece = p.ID,
+                    Cubes = p.Original.Components.Select(com => new JsonCube()
+                    {
+                        X = com.RelPosition.X,
+                        Y = com.RelPosition.Y,
+                        Z = com.RelPosition.Z,
+                        Length = com.Length,
+                        Width = com.Width,
+                        Height = com.Height,
+                    }).ToList(),
+                    Data = p.Data,
+                }).ToList(),
                 Data = InstanceLinked.Data,
             };
 

@@ -7,14 +7,14 @@ using System.Text.Json.Serialization;
 namespace SC.Core.ObjectModel.IO.Json
 {
     /// <summary>
-    /// JSON representation of a solution.
+    /// JSON representation of a piece not placed in a container.
     /// </summary>
-    public class JsonSolution
+    public class JsonOffload
     {
-        [JsonPropertyName("containers")]
-        public List<JsonSolutionContainer> Containers { get; set; }
-        [JsonPropertyName("offload")]
-        public List<JsonOffload> Offload { get; set; }
+        [JsonPropertyName("piece")]
+        public int Piece { get; set; }
+        [JsonPropertyName("cubes")]
+        public List<JsonCube> Cubes { get; set; }
         [JsonPropertyName("data")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public JsonElement Data { get; set; }
