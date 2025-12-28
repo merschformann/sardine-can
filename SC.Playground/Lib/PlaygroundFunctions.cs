@@ -10,6 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using SC.CLI;
+using SC.Core.ObjectModel.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SC.Playground.Lib
 {
@@ -22,6 +26,30 @@ namespace SC.Playground.Lib
                 Configuration config = new Configuration(method, true) { Name = method + "Default" };
                 config.TimeLimit = TimeSpan.FromMinutes(5);
                 config.Write(config.Name);
+            }
+        }
+
+        public static void UpdateGoldenFiles()
+        {
+            var inputFiles = Directory.EnumerateFiles(Path.Combine(Directory.GetCurrentDirectory(), "SC.Tests", "data"), "*.json");
+
+            foreach (var inputFile in inputFiles)
+            {
+                // Load the input file
+                var instance = Instance.ReadJson(File.ReadAllText(inputFile));
+
+                // Run calculation
+                var result = Executor.Execute(instance, new Configuration()
+                {
+                    TimeLimitInSeconds = 3,
+                    ThreadLimit = 1,
+                    IterationsLimit = 100,
+                }, Console.WriteLine);
+
+                // Just update the golden file
+                File.WriteAllText(inputFile + ".golden", JToken.Parse(JsonIO.To(result.Solution.ToJsonSolution())).ToString(formatting: Formatting.Indented));
+
+                Console.WriteLine("Updated golden file for " + Path.GetFileName(inputFile));
             }
         }
 

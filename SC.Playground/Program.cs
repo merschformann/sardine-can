@@ -24,6 +24,7 @@ namespace SC.Playground
         {
             // Choose option
             Console.WriteLine(">>> Choose option: ");
+            Console.WriteLine("9: Update golden files");
             Console.WriteLine("0: Experimental");
             char optionKey = Console.ReadKey().KeyChar; Console.WriteLine();
             switch (optionKey)
@@ -37,7 +38,7 @@ namespace SC.Playground
                 case '6': { } break;
                 case '7': { } break;
                 case '8': { } break;
-                case '9': { } break;
+                case '9': { PlaygroundFunctions.UpdateGoldenFiles(); } break;
                 case '0': { Experimental(); } break;
                 default: break;
             }
