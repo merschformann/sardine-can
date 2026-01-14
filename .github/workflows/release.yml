@@ -130,8 +130,7 @@ jobs:
     needs: release
 
     permissions:
-      contents: read
-      packages: write
+      contents: write
 
     steps:
       - uses: actions/checkout@v6
