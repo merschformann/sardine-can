@@ -9,11 +9,11 @@ attempts and linear models with CPLEX & Gurobi bindings.
 ## Outline
 
 - [SC.Service](SC.Service/)
-  - Jobmanager/runner as a RESTful service for integration with other applications
+  - Jobmanager/runner as a RESTful service for integration with other applications.
 - [SC.GUI](SC.GUI/)
-  - GUI for experimenting with the algorithms and rendering instances
+  - GUI for experimenting with the algorithms and rendering instances (download from [latest release](https://github.com/merschformann/sardine-can/releases/latest) - Windows only).
 - [SC.CLI](SC.CLI/)
-  - Command-line interface with a JSON-in/JSON-out style
+  - Command-line interface with a JSON-in/JSON-out style.
 
 ## Quickstart
 
