@@ -10,6 +10,9 @@
     <PackageTags>packing;solver;optimization;3d;bin packing;container loading</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/merschformann/sardine-can</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>images/sardines.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +24,7 @@
 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="images\sardines.png" Pack="true" PackagePath="images\" />
   </ItemGroup>
 
   <ItemGroup>
