@@ -9,7 +9,7 @@
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
-    <Version>1.3.2</Version>
+    <Version>1.3.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
