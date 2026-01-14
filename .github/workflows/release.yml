@@ -9,7 +9,7 @@ on:
         required: true
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   release:
@@ -87,16 +87,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Get version
-        run: |
-          echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
-
       - name: Build the SardineCan Docker image
         run: |
-          echo "Building SardineCan docker in ${{ env.VERSION }}"
+          echo "Building SardineCan docker in ${{ inputs.VERSION }}"
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           export LATEST_TAG="ghcr.io/merschformann/sardinecan:latest"
-          export VERSION_TAG="ghcr.io/merschformann/sardinecan:${{ env.VERSION }}"
+          export VERSION_TAG="ghcr.io/merschformann/sardinecan:${{ inputs.VERSION }}"
           docker buildx build --platform linux/amd64,linux/arm64 --push -t $LATEST_TAG -t $VERSION_TAG -f Dockerfile ..
         working-directory: ./SC.Service
 
@@ -117,10 +113,6 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      - name: Get version
-        run: |
-          echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
-
       - name: NuGet login
         uses: NuGet/login@v1
         id: login
@@ -129,9 +121,9 @@ jobs:
 
       - name: Create NuGet package and publish to NuGet.org
         run: |
-          echo "Creating NuGet package for version ${{ env.VERSION }}"
+          echo "Creating NuGet package for version ${{ inputs.VERSION }}"
           dotnet pack -c Release -o ./nupkg SC.Core/SC.Core.csproj
-          dotnet nuget push ./nupkg/SardineCan.Core.${{ env.VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push ./nupkg/SardineCan.Core.${{ inputs.VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
 
   zip-archive:
     runs-on: windows-latest
@@ -154,10 +146,6 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      - name: Get version
-        run: |
-          echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
-
       - name: Build GUI application
         run: |
           dotnet publish SC.GUI/SC.GUI.csproj --configuration Release --os win --arch x64 --self-contained
@@ -165,12 +153,10 @@ jobs:
       - name: Create ZIP archive
         run: |
           $outputDir = "SC.GUI/bin/Release/net8.0-windows/win-x64/publish"
-          $zipPath = "SardineCan-GUI-${{ env.VERSION }}.zip"
+          $zipPath = "SardineCan-GUI-${{ inputs.VERSION }}.zip"
           Compress-Archive -Path $outputDir\* -DestinationPath $zipPath
           echo "Created ZIP archive at $zipPath"
 
-      - name: Upload ZIP as artifact
-        uses: actions/upload-artifact@v6
-        with:
-          name: SardineCan-GUI-${{ env.VERSION }}.zip
-          path: SardineCan-GUI-${{ env.VERSION }}.zip
+      - name: Attach ZIP to Release
+        run: |
+          gh release upload ${{ inputs.VERSION }} "SardineCan-GUI-${{ inputs.VERSION }}.zip" --clobber
