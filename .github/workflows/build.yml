@@ -25,5 +25,8 @@ jobs:
         run: dotnet build --configuration Release --no-restore
       - name: Test
         run: dotnet test --no-restore --verbosity normal
-      - name: Package
+      - name: Test package
         run: dotnet pack -c Release -o ./nupkg SC.Core/SC.Core.csproj
+      - name: Test binary
+        run: |
+          dotnet publish SC.GUI/SC.GUI.csproj --configuration Release --os win --arch x64 --self-contained

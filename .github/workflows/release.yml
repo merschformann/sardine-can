@@ -132,3 +132,45 @@ jobs:
           echo "Creating NuGet package for version ${{ env.VERSION }}"
           dotnet pack -c Release -o ./nupkg SC.Core/SC.Core.csproj
           dotnet nuget push ./nupkg/SardineCan.Core.${{ env.VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+
+  zip-archive:
+    runs-on: windows-latest
+    needs: release
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.VERSION }}
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Get version
+        run: |
+          echo "VERSION=$(cat VERSION.txt)" >> $GITHUB_ENV
+
+      - name: Build GUI application
+        run: |
+          dotnet publish SC.GUI/SC.GUI.csproj --configuration Release --os win --arch x64 --self-contained
+
+      - name: Create ZIP archive
+        run: |
+          $outputDir = "SC.GUI/bin/Release/net8.0-windows/win-x64/publish"
+          $zipPath = "SardineCan-GUI-${{ env.VERSION }}.zip"
+          Compress-Archive -Path $outputDir\* -DestinationPath $zipPath
+          echo "Created ZIP archive at $zipPath"
+
+      - name: Upload ZIP as artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: SardineCan-GUI-${{ env.VERSION }}.zip
+          path: SardineCan-GUI-${{ env.VERSION }}.zip
